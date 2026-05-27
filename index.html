@@ -16,7 +16,6 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0f172a 0%, #1e1b2e 100%);
@@ -24,7 +23,6 @@
             overflow-x: hidden;
             color: #f1f5f9;
         }
-
         .login-container {
             min-height: 100vh;
             display: flex;
@@ -37,7 +35,6 @@
             width: 100%;
             z-index: 1000;
         }
-
         .login-card {
             background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(20px);
@@ -47,7 +44,6 @@
             max-width: 400px;
             border: 1px solid rgba(233, 30, 99, 0.3);
         }
-
         .login-card h2 {
             text-align: center;
             background: linear-gradient(135deg, #ff6b9d, #e91e63);
@@ -56,7 +52,6 @@
             color: transparent;
             margin-bottom: 1.5rem;
         }
-
         .login-card input {
             width: 100%;
             padding: 14px 18px;
@@ -67,7 +62,6 @@
             color: white;
             font-size: 16px;
         }
-
         .login-card button {
             width: 100%;
             padding: 14px;
@@ -79,7 +73,6 @@
             cursor: pointer;
             font-size: 16px;
         }
-
         .forgot-link {
             text-align: center;
             display: block;
@@ -88,14 +81,12 @@
             font-size: 0.8rem;
             cursor: pointer;
         }
-
         .app-container {
             display: none;
             width: 100%;
             min-height: 100vh;
             background: linear-gradient(135deg, #0f172a 0%, #1a1a2e 100%);
         }
-
         .app-header {
             display: flex;
             justify-content: space-between;
@@ -108,23 +99,19 @@
             top: 0;
             z-index: 100;
         }
-
         .logo-area {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .logo-area i {
             font-size: 1.6rem;
             color: #e91e63;
         }
-
         .logo-area h2 {
             font-size: 1.2rem;
             font-weight: 600;
         }
-
         .profile-btn {
             display: flex;
             align-items: center;
@@ -134,7 +121,6 @@
             border-radius: 40px;
             cursor: pointer;
         }
-
         .profile-avatar {
             width: 36px;
             height: 36px;
@@ -148,7 +134,6 @@
             font-size: 1.2rem;
             text-transform: uppercase;
         }
-
         .swipe-container {
             display: flex;
             overflow-x: auto;
@@ -158,11 +143,9 @@
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
         }
-
         .swipe-container::-webkit-scrollbar {
             display: none;
         }
-
         .swipe-page {
             flex: 0 0 100%;
             scroll-snap-align: start;
@@ -170,7 +153,6 @@
             padding: 16px;
             height: 100%;
         }
-
         .page-indicators {
             position: fixed;
             bottom: 16px;
@@ -181,7 +163,6 @@
             gap: 12px;
             z-index: 50;
         }
-
         .indicator {
             width: 8px;
             height: 8px;
@@ -189,13 +170,11 @@
             background: rgba(255, 255, 255, 0.4);
             transition: 0.2s;
         }
-
         .indicator.active {
             width: 24px;
             border-radius: 10px;
             background: #e91e63;
         }
-
         .card {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(12px);
@@ -204,7 +183,6 @@
             margin-bottom: 1rem;
             border: 1px solid rgba(233, 30, 99, 0.25);
         }
-
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -214,8 +192,6 @@
             gap: 8px;
             color: #ffb6c1;
         }
-
-        /* Alerta de estoque baixo */
         .alerta-estoque {
             background: rgba(239, 68, 68, 0.9);
             backdrop-filter: blur(8px);
@@ -228,36 +204,30 @@
             border-left: 6px solid #ffb74d;
             animation: pulse 0.5s ease;
         }
-
         .alerta-estoque i {
             font-size: 1.6rem;
             color: #ffb74d;
         }
-
         .alerta-estoque .alerta-texto {
             flex: 1;
             font-size: 0.9rem;
             font-weight: 500;
         }
-
         .alerta-estoque .alerta-lista {
             font-size: 0.85rem;
             margin-top: 4px;
             opacity: 0.9;
         }
-
         @keyframes pulse {
             0% { transform: scale(0.98); opacity: 0.7; }
             100% { transform: scale(1); opacity: 1; }
         }
-
         .saldo-card {
             background: linear-gradient(135deg, rgba(233, 30, 99, 0.25), rgba(156, 39, 176, 0.25));
             border: 1px solid rgba(233, 30, 99, 0.6);
             text-align: center;
             padding: 1.5rem;
         }
-
         .saldos-container {
             display: flex;
             justify-content: space-around;
@@ -265,29 +235,24 @@
             flex-wrap: wrap;
             margin: 1rem 0;
         }
-
         .saldo-item {
             flex: 1;
             min-width: 120px;
         }
-
         .saldo-label {
             font-size: 0.85rem;
             opacity: 0.8;
         }
-
         .saldo-value-caixa {
             font-size: 2rem;
             font-weight: 800;
             color: #ffb74d;
         }
-
         .saldo-value-receber {
             font-size: 2rem;
             font-weight: 800;
             color: #4ade80;
         }
-
         .btn {
             padding: 12px 20px;
             border-radius: 50px;
@@ -301,40 +266,33 @@
             transition: 0.2s;
             font-size: 0.9rem;
         }
-
         .btn-primary {
             background: linear-gradient(95deg, #e91e63, #c2185b);
             color: white;
         }
-
         .btn-secondary {
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(233, 30, 99, 0.4);
         }
-
         .btn-success {
             background: #10b981;
             color: white;
         }
-
         .btn-danger {
             background: #ef4444;
             color: white;
         }
-
         .btn-warning {
             background: #f59e0b;
             color: white;
         }
-
         .btn-group {
             display: flex;
             gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
-
         .venda-item {
             display: flex;
             gap: 8px;
@@ -345,9 +303,7 @@
             padding: 10px;
             border-radius: 60px;
         }
-
-        .venda-item select,
-        .venda-item input {
+        .venda-item select, .venda-item input {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid #e91e63;
             padding: 10px 12px;
@@ -355,16 +311,13 @@
             color: white;
             font-size: 14px;
         }
-
         .venda-item select {
             flex: 2;
         }
-
         .venda-item input {
             width: 80px;
             text-align: center;
         }
-
         .total-venda {
             background: rgba(233, 30, 99, 0.2);
             border-radius: 40px;
@@ -376,7 +329,6 @@
             gap: 12px;
             margin-top: 12px;
         }
-
         .mov-item {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
@@ -384,21 +336,17 @@
             margin-bottom: 8px;
             border-left: 4px solid;
         }
-
         .mov-entrada {
             border-left-color: #10b981;
         }
-
         .mov-saida {
             border-left-color: #ef4444;
         }
-
         .estoque-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 14px;
         }
-
         .estoque-item {
             background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(4px);
@@ -410,7 +358,6 @@
             text-align: center;
             border: 1px solid rgba(233, 30, 99, 0.4);
         }
-
         .estoque-nome {
             font-size: 1.1rem;
             font-weight: 600;
@@ -420,18 +367,15 @@
             align-items: center;
             gap: 6px;
         }
-
         .estoque-emoji {
             font-size: 2.2rem;
         }
-
         .estoque-quantidade {
             font-size: 1.8rem;
             font-weight: 800;
             color: #ffb74d;
             margin: 8px 0 6px;
         }
-
         .estoque-controles {
             display: flex;
             align-items: center;
@@ -439,7 +383,6 @@
             justify-content: center;
             margin: 8px 0;
         }
-
         .estoque-controles input {
             width: 60px;
             text-align: center;
@@ -450,7 +393,6 @@
             padding: 8px;
             font-size: 1rem;
         }
-
         .qty-btn {
             background: rgba(233, 30, 99, 0.6);
             border: none;
@@ -462,7 +404,6 @@
             font-size: 1.3rem;
             cursor: pointer;
         }
-
         .btn-remover {
             margin-top: 8px;
             background: rgba(239, 68, 68, 0.8);
@@ -471,13 +412,11 @@
             font-size: 0.8rem;
             width: auto;
         }
-
         .ingredientes-estoque-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
-
         .ingrediente-estoque-item {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 60px;
@@ -488,24 +427,20 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
         .ingrediente-info {
             display: flex;
             align-items: center;
             gap: 12px;
             flex: 2;
         }
-
         .ingrediente-nome {
             font-weight: 600;
             font-size: 1rem;
         }
-
         .ingrediente-unidade {
             font-size: 0.8rem;
             color: #ccc;
         }
-
         .ingrediente-quantidade {
             font-size: 1.3rem;
             font-weight: 700;
@@ -513,13 +448,11 @@
             min-width: 80px;
             text-align: center;
         }
-
         .ingrediente-controles {
             display: flex;
             gap: 8px;
             align-items: center;
         }
-
         .ingrediente-controles input {
             width: 70px;
             text-align: center;
@@ -529,13 +462,11 @@
             color: white;
             padding: 8px;
         }
-
         .devedores-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
-
         .devedor-item {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 60px;
@@ -546,19 +477,24 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-
         .devedor-info {
             display: flex;
             align-items: center;
             gap: 12px;
             flex: 2;
+            flex-wrap: wrap;
         }
-
         .devedor-nome {
             font-weight: 600;
             font-size: 1rem;
+            min-width: 120px;
         }
-
+        .devedor-data {
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-left: 0;
+            margin-top: 4px;
+        }
         .devedor-valor {
             font-size: 1.3rem;
             font-weight: 700;
@@ -566,13 +502,11 @@
             min-width: 100px;
             text-align: center;
         }
-
         .devedor-controles {
             display: flex;
             gap: 8px;
             align-items: center;
         }
-
         .devedor-controles input {
             width: 100px;
             text-align: center;
@@ -582,14 +516,12 @@
             color: white;
             padding: 8px;
         }
-
         .btn-quitar-individual {
             background: #10b981;
             padding: 8px 16px;
             border-radius: 40px;
             font-size: 0.8rem;
         }
-
         .rank-row {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 50px;
@@ -599,7 +531,6 @@
             align-items: center;
             margin-bottom: 8px;
         }
-
         .rank-number {
             background: #e91e63;
             width: 32px;
@@ -611,14 +542,12 @@
             font-size: 0.9rem;
             margin-right: 12px;
         }
-
         .pedido-card {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 24px;
             padding: 12px;
             margin-bottom: 12px;
         }
-
         .ingrediente-item {
             display: flex;
             gap: 8px;
@@ -629,9 +558,7 @@
             border-radius: 20px;
             align-items: center;
         }
-
-        .ingrediente-item input,
-        .ingrediente-item select {
+        .ingrediente-item select, .ingrediente-item input {
             background: rgba(0, 0, 0, 0.6);
             border: 1px solid #e91e63;
             padding: 8px 10px;
@@ -639,22 +566,27 @@
             color: white;
             font-size: 14px;
         }
-
-        .ingrediente-item .nome-input {
+        .ingrediente-item .nome-select {
             flex: 2;
-            min-width: 120px;
+            min-width: 150px;
         }
-
+        .ingrediente-item .quantidade-input {
+            width: 80px;
+        }
+        .ingrediente-item .unidade-select {
+            width: 100px;
+        }
+        .ingrediente-item .custo-input {
+            width: 100px;
+        }
         .filter-btn {
             padding: 8px 16px;
             font-size: 0.8rem;
         }
-
         .active-filter {
             background: #e91e63 !important;
             border-color: #e91e63 !important;
         }
-
         .toast-message {
             position: fixed;
             bottom: 80px;
@@ -670,51 +602,18 @@
             animation: fadeUp 0.3s ease;
             font-size: 0.9rem;
         }
-
         @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
         @media (max-width: 480px) {
-            .swipe-page {
-                padding: 12px;
-            }
-
-            .card {
-                padding: 0.9rem;
-            }
-
-            .btn {
-                padding: 10px 16px;
-                font-size: 0.85rem;
-            }
-
-            .estoque-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .saldos-container {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .ingrediente-estoque-item,
-            .devedor-item {
-                flex-direction: column;
-                align-items: stretch;
-                border-radius: 24px;
-            }
-
-            .devedor-info {
-                justify-content: space-between;
-            }
+            .swipe-page { padding: 12px; }
+            .card { padding: 0.9rem; }
+            .btn { padding: 10px 16px; font-size: 0.85rem; }
+            .estoque-grid { grid-template-columns: 1fr; }
+            .saldos-container { flex-direction: column; gap: 0.5rem; }
+            .ingrediente-estoque-item, .devedor-item { flex-direction: column; align-items: stretch; border-radius: 24px; }
+            .devedor-info { justify-content: space-between; }
         }
     </style>
 </head>
@@ -746,7 +645,6 @@
     <div class="swipe-container" id="swipeContainer">
         <!-- Página 0: Caixa e Vendas -->
         <div class="swipe-page" data-page="0">
-            <!-- ALERTA DE ESTOQUE BAIXO -->
             <div id="alertaEstoqueBaixo" class="alerta-estoque" style="display: none;">
                 <i class="fas fa-exclamation-triangle"></i>
                 <div class="alerta-texto">
@@ -754,7 +652,6 @@
                     <div id="listaEstoqueBaixo" class="alerta-lista"></div>
                 </div>
             </div>
-
             <div class="card saldo-card">
                 <div class="card-title"><i class="fas fa-cash-register"></i> Caixa</div>
                 <div class="saldos-container">
@@ -845,21 +742,28 @@
                 <div class="card">
                     <div class="card-title"><i class="fas fa-list"></i> Ingredientes para <span id="saborSelecionadoNome"></span></div>
                     <div id="ingredientesLista" class="ingredientes-lista"></div>
-                    <button class="btn btn-secondary" onclick="adicionarIngrediente()" style="margin-top:8px;"><i class="fas fa-plus"></i> Adicionar Ingrediente</button>
+                    <div class="btn-group" style="margin-top: 8px;">
+                        <button class="btn btn-secondary" onclick="adicionarIngrediente()"><i class="fas fa-plus"></i> Adicionar Ingrediente</button>
+                        <button class="btn btn-secondary" onclick="sincronizarNomesIngredientes()"><i class="fas fa-sync-alt"></i> Sincronizar Nomes</button>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-title"><i class="fas fa-cubes"></i> Produção</div>
                     <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                        <span>Quantidade:</span>
-                        <input type="number" id="quantidadeProduzir" value="10" min="1" style="width:90px; padding:10px; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid #e91e63; color:white;">
+                        <span>Rendimento (unidades produzidas nesta panela):</span>
+                        <input type="number" id="quantidadeProduzir" value="10" min="1" style="width:100px; padding:10px; border-radius:40px; background:rgba(0,0,0,0.5); border:1px solid #e91e63; color:white;">
                         <button class="btn btn-success" id="btnProduzir"><i class="fas fa-flask"></i> Produzir</button>
                     </div>
                     <div id="resumoProducao" style="margin-top:12px; background:rgba(0,0,0,0.3); border-radius:20px; padding:12px;"></div>
+                    <div class="alert alert-info" style="margin-top:8px; font-size:0.8rem; opacity:0.7;">
+                        <i class="fas fa-info-circle"></i> Os ingredientes acima são para UMA panela. O rendimento informado será adicionado ao estoque.
+                    </div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-title"><i class="fas fa-history"></i> Histórico de Produções</div>
                 <div id="historicoProducoes" style="max-height: 250px; overflow-y: auto;"></div>
+                <button class="btn btn-danger" onclick="limparHistoricoProducao()" style="margin-top: 12px; width: 100%;"><i class="fas fa-trash-alt"></i> Limpar Histórico</button>
             </div>
         </div>
 
@@ -906,7 +810,7 @@
             </div>
         </div>
 
-        <!-- Página 7: Devedores -->
+        <!-- Página 7: Devedores (COM DATA/HORA) -->
         <div class="swipe-page" data-page="7">
             <div class="card">
                 <div class="card-title"><i class="fas fa-hand-holding-usd"></i> Devedores</div>
@@ -953,23 +857,113 @@
     let ingredientesEstoque = {};
     let devedores = [];
 
-    function showToast(msg, error = false) {
-        const existing = document.querySelector('.toast-message');
-        if (existing) existing.remove();
-        const toast = document.createElement('div');
-        toast.className = 'toast-message';
-        toast.innerHTML = `<i class="fas ${error ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${msg}`;
-        toast.style.background = error ? '#c62828e6' : '#2e7d32e6';
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
+    // ========== CONVERSÃO DE UNIDADES ==========
+    const conversaoPeso = {
+        'g': 1, 'grama': 1, 'gramas': 1,
+        'kg': 1000, 'quilo': 1000, 'quilograma': 1000
+    };
+    const conversaoVolume = {
+        'ml': 1, 'mililitro': 1,
+        'l': 1000, 'litro': 1000, 'litros': 1000
+    };
+    const unidadesDiscretas = ['unidade', 'caixa', 'pacote', 'saco', 'fardo', 'lata', 'garrafa'];
+
+    function converterQuantidade(quantidade, unidadeOrigem, unidadeDestino) {
+        const orig = unidadeOrigem.toLowerCase();
+        const dest = unidadeDestino.toLowerCase();
+        if (orig === dest) return { quantidadeConvertida: quantidade, sucesso: true };
+        const fatorOrig = conversaoPeso[orig];
+        const fatorDest = conversaoPeso[dest];
+        if (fatorOrig && fatorDest) {
+            const emGramas = quantidade * fatorOrig;
+            return { quantidadeConvertida: emGramas / fatorDest, sucesso: true };
+        }
+        const fatorVolOrig = conversaoVolume[orig];
+        const fatorVolDest = conversaoVolume[dest];
+        if (fatorVolOrig && fatorVolDest) {
+            const emMl = quantidade * fatorVolOrig;
+            return { quantidadeConvertida: emMl / fatorVolDest, sucesso: true };
+        }
+        if (unidadesDiscretas.includes(orig) && unidadesDiscretas.includes(dest)) {
+            if (orig === dest) return { quantidadeConvertida: quantidade, sucesso: true };
+            else return { quantidadeConvertida: 0, sucesso: false, mensagem: `Unidades diferentes: ${unidadeOrigem} vs ${unidadeDestino}. Use a mesma unidade.` };
+        }
+        return { quantidadeConvertida: 0, sucesso: false, mensagem: `Não foi possível converter ${unidadeOrigem} para ${unidadeDestino}. Use unidades compatíveis (kg/g, L/ml).` };
     }
 
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
+    function normalizarNome(nome) {
+        return nome.trim().toLowerCase();
     }
 
-    // ========== ALERTA DE ESTOQUE BAIXO ==========
+    function verificarIngredienteNoEstoque(nomeIngrediente, quantidade, unidade) {
+        const nomeNorm = normalizarNome(nomeIngrediente);
+        for (const [nomeEstoque, dados] of Object.entries(ingredientesEstoque)) {
+            if (normalizarNome(nomeEstoque) === nomeNorm) {
+                const conversao = converterQuantidade(quantidade, unidade, dados.unidade);
+                if (!conversao.sucesso) {
+                    showToast(conversao.mensagem, true);
+                    return false;
+                }
+                return dados.quantidade >= conversao.quantidadeConvertida - 0.0001;
+            }
+        }
+        return false;
+    }
+
+    function descontarIngrediente(nomeIngrediente, quantidade, unidade) {
+        const nomeNorm = normalizarNome(nomeIngrediente);
+        for (const [nomeEstoque, dados] of Object.entries(ingredientesEstoque)) {
+            if (normalizarNome(nomeEstoque) === nomeNorm) {
+                const conversao = converterQuantidade(quantidade, unidade, dados.unidade);
+                if (!conversao.sucesso) {
+                    showToast(conversao.mensagem, true);
+                    return false;
+                }
+                dados.quantidade -= conversao.quantidadeConvertida;
+                if (dados.quantidade < 0) dados.quantidade = 0;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    window.sincronizarNomesIngredientes = async () => {
+        if (!ingredientesEstoque || Object.keys(ingredientesEstoque).length === 0) {
+            showToast("Nenhum ingrediente cadastrado no armazém para sincronizar.", true);
+            return;
+        }
+        let alterado = false;
+        for (const sabor in ingredientesPorSabor) {
+            for (const ing of ingredientesPorSabor[sabor]) {
+                const nomeNorm = normalizarNome(ing.nome);
+                let nomeCorrigido = ing.nome;
+                for (const nomeEstoque of Object.keys(ingredientesEstoque)) {
+                    if (normalizarNome(nomeEstoque) === nomeNorm) {
+                        nomeCorrigido = nomeEstoque;
+                        break;
+                    }
+                }
+                if (nomeCorrigido !== ing.nome) {
+                    ing.nome = nomeCorrigido;
+                    alterado = true;
+                }
+            }
+        }
+        if (alterado) {
+            await db.collection('config').doc('ingredientesPorSabor').set({ ingredientes: ingredientesPorSabor });
+            const saborSelecionado = document.getElementById('selectSaborProducao').value;
+            if (saborSelecionado) mostrarIngredientes(saborSelecionado);
+            showToast("Nomes dos ingredientes sincronizados com o armazém!");
+        } else {
+            showToast("Todos os nomes já estão sincronizados.");
+        }
+    };
+
+    function atualizarTotalReceber() {
+        const total = devedores.reduce((acc, d) => acc + (d.valor || 0), 0);
+        document.getElementById('totalReceber').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
+
     function verificarEstoqueBaixo() {
         if (!estoqueObj || Object.keys(estoqueObj).length === 0) return;
         const baixos = [];
@@ -988,10 +982,20 @@
         }
     }
 
-    // Função para atualizar total a receber (já existente)
-    function atualizarTotalReceber() {
-        const total = devedores.reduce((acc, d) => acc + (d.valor || 0), 0);
-        document.getElementById('totalReceber').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    function showToast(msg, error = false) {
+        const existing = document.querySelector('.toast-message');
+        if (existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.innerHTML = `<i class="fas ${error ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i> ${msg}`;
+        toast.style.background = error ? '#c62828e6' : '#2e7d32e6';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m]));
     }
 
     // ========== CAIXA ==========
@@ -1089,7 +1093,6 @@
     };
     window.removerItemVenda = (idx) => { carrinhoPresencial.splice(idx, 1); atualizarCarrinho(); };
 
-    // Finalizar venda à vista
     document.getElementById('finalizarVendaBtn')?.addEventListener('click', async () => {
         if (carrinhoPresencial.length === 0) return showToast("Adicione itens à venda", true);
         const total = carrinhoPresencial.reduce((s, i) => s + (i.qtd * PRECO_VENDA), 0);
@@ -1120,37 +1123,35 @@
         carregarVendasPresenciais();
         renderizarRanking();
         carregarRelatorios();
-        verificarEstoqueBaixo(); // verifica estoque baixo após alteração
+        verificarEstoqueBaixo();
     });
 
-    // Finalizar venda a prazo
     document.getElementById('finalizarVendaPrazoBtn')?.addEventListener('click', async () => {
         if (carrinhoPresencial.length === 0) return showToast("Adicione itens à venda", true);
         const nomeCliente = document.getElementById('nomeClientePrazo').value.trim();
         if (!nomeCliente) return showToast("Digite o nome do cliente para venda a prazo", true);
-        
         const total = carrinhoPresencial.reduce((s, i) => s + (i.qtd * PRECO_VENDA), 0);
-        
         for (const item of carrinhoPresencial) {
             if ((estoqueObj[item.sabor] || 0) < item.qtd) return showToast(`Estoque insuficiente para ${item.sabor}`, true);
         }
-        
         const novoEstoque = { ...estoqueObj };
         for (const item of carrinhoPresencial) novoEstoque[item.sabor] -= item.qtd;
         await db.collection('config').doc('cardapio').update({ estoque: novoEstoque });
         estoqueObj = novoEstoque;
         renderizarEstoqueUI();
-        
+
+        const agora = new Date();
         const novaDivida = {
             nome: nomeCliente,
             valor: total,
-            criadoEm: new Date().toISOString()
+            dataHora: agora.toISOString(),
+            criadoEm: agora.toISOString()
         };
         const docRef = await db.collection('devedores').add(novaDivida);
         devedores.push({ id: docRef.id, ...novaDivida });
         renderizarDevedoresUI();
         atualizarTotalReceber();
-        
+
         await db.collection('vendasPresenciais').add({
             itens: [...carrinhoPresencial],
             total,
@@ -1159,15 +1160,13 @@
             data: new Date().toISOString(),
             dataLegivel: new Date().toLocaleString('pt-BR')
         });
-        
         showToast(`✅ Venda a prazo para ${nomeCliente} registrada! Débito de R$ ${total.toFixed(2)} adicionado.`);
-        
         carrinhoPresencial = [];
         document.getElementById('nomeClientePrazo').value = '';
         atualizarCarrinho();
         carregarVendasPresenciais();
         renderizarRanking();
-        verificarEstoqueBaixo(); // verifica estoque baixo após alteração
+        verificarEstoqueBaixo();
     });
 
     async function carregarVendasPresenciais() {
@@ -1192,10 +1191,8 @@
         const container = document.getElementById('listaPedidos');
         if (!container) return;
         if (filtrados.length === 0) { container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhum pedido encontrado</div>'; return; }
-
         const statusMap = { pendente: '⏳ Pendente', preparando: '🍳 Preparando', pronto: '✅ Pronto', retirado: '📦 Retirado' };
         const nextStatus = { pendente: 'preparando', preparando: 'pronto', pronto: 'retirado', retirado: null };
-
         container.innerHTML = filtrados.map(p => `
             <div class="pedido-card">
                 <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
@@ -1231,7 +1228,7 @@
             atualizarSelectSaboresProducao();
             atualizarCarrinho();
             renderizarRanking();
-            verificarEstoqueBaixo(); // verifica ao carregar
+            verificarEstoqueBaixo();
         } catch (err) {
             showToast("Erro ao carregar sabores", true);
         }
@@ -1276,7 +1273,7 @@
                 atualizaDisplay();
             }
         }
-        verificarEstoqueBaixo(); // sempre que renderizar, verifica alerta
+        verificarEstoqueBaixo();
     }
 
     window.alterarQtdLocal = (inputId, sabor, delta) => {
@@ -1288,7 +1285,6 @@
             const display = document.getElementById(`qtdDisplay_${inputId}`);
             if (display) display.innerText = novoValor;
         }
-        // não precisa verificar estoque aqui, porque só salva depois
     };
 
     window.adicionarSabor = async () => {
@@ -1369,16 +1365,26 @@
         });
     }
 
-    document.getElementById('selectSaborProducao')?.addEventListener('change', (e) => {
-        const sabor = e.target.value;
-        if (!sabor) {
-            document.getElementById('ingredientesPanel').style.display = 'none';
-            return;
-        }
-        document.getElementById('ingredientesPanel').style.display = 'block';
-        document.getElementById('saborSelecionadoNome').innerText = sabor;
-        mostrarIngredientes(sabor);
-    });
+    function getIngredienteHTML(sabor, ing, idx) {
+        const ingredientesDisponiveis = Object.keys(ingredientesEstoque).sort();
+        const options = ingredientesDisponiveis.map(nome => 
+            `<option value="${escapeHtml(nome)}" ${ing.nome === nome ? 'selected' : ''}>${escapeHtml(nome)}</option>`
+        ).join('');
+        return `
+            <div class="ingrediente-item">
+                <select class="nome-select" onchange="atualizarIngrediente('${sabor}', ${idx}, 'nome', this.value)">
+                    <option value="">Selecione um ingrediente</option>
+                    ${options}
+                </select>
+                <input type="number" class="quantidade-input" value="${ing.quantidade || 1}" step="any" onchange="atualizarIngrediente('${sabor}', ${idx}, 'quantidade', parseFloat(this.value)||0)">
+                <select class="unidade-select" onchange="atualizarIngrediente('${sabor}', ${idx}, 'unidade', this.value)">
+                    ${UNIDADES.map(u => `<option value="${u}" ${ing.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
+                </select>
+                <input type="number" class="custo-input" value="${ing.custoTotal || 0}" step="0.01" onchange="atualizarIngrediente('${sabor}', ${idx}, 'custoTotal', parseFloat(this.value)||0)">
+                <button class="btn btn-danger" style="padding:4px 12px;" onclick="removerIngrediente('${sabor}', ${idx})"><i class="fas fa-trash"></i></button>
+            </div>
+        `;
+    }
 
     function mostrarIngredientes(sabor) {
         const ingredientes = ingredientesPorSabor[sabor] || [];
@@ -1386,17 +1392,7 @@
         if (ingredientes.length === 0) {
             container.innerHTML = '<div style="padding:20px; text-align:center;">Nenhum ingrediente cadastrado para este sabor.</div>';
         } else {
-            container.innerHTML = ingredientes.map((ing, idx) => `
-                <div class="ingrediente-item">
-                    <input type="text" class="nome-input" value="${escapeHtml(ing.nome)}" placeholder="Nome" onchange="atualizarIngrediente('${sabor}', ${idx}, 'nome', this.value)">
-                    <input type="number" class="quantidade-input" value="${ing.quantidade || 1}" placeholder="Qtd" step="any" onchange="atualizarIngrediente('${sabor}', ${idx}, 'quantidade', parseFloat(this.value)||0)">
-                    <select class="unidade-select" onchange="atualizarIngrediente('${sabor}', ${idx}, 'unidade', this.value)">
-                        ${UNIDADES.map(u => `<option value="${u}" ${ing.unidade === u ? 'selected' : ''}>${u}</option>`).join('')}
-                    </select>
-                    <input type="number" class="custo-input" value="${ing.custoTotal || 0}" placeholder="R$" step="0.01" onchange="atualizarIngrediente('${sabor}', ${idx}, 'custoTotal', parseFloat(this.value)||0)">
-                    <button class="btn btn-danger" style="padding:4px 12px;" onclick="removerIngrediente('${sabor}', ${idx})"><i class="fas fa-trash"></i></button>
-                </div>
-            `).join('');
+            container.innerHTML = ingredientes.map((ing, idx) => getIngredienteHTML(sabor, ing, idx)).join('');
         }
         calcularResumoProducao(sabor);
     }
@@ -1412,8 +1408,12 @@
     window.adicionarIngrediente = () => {
         const sabor = document.getElementById('selectSaborProducao').value;
         if (!sabor) return showToast("Selecione um sabor", true);
+        if (Object.keys(ingredientesEstoque).length === 0) {
+            return showToast("Cadastre ingredientes no armazém primeiro.", true);
+        }
         if (!ingredientesPorSabor[sabor]) ingredientesPorSabor[sabor] = [];
-        ingredientesPorSabor[sabor].push({ nome: "Novo ingrediente", quantidade: 1, unidade: "Unidade", custoTotal: 0 });
+        const primeiroIngrediente = Object.keys(ingredientesEstoque)[0];
+        ingredientesPorSabor[sabor].push({ nome: primeiroIngrediente, quantidade: 1, unidade: "Unidade", custoTotal: 0 });
         db.collection('config').doc('ingredientesPorSabor').set({ ingredientes: ingredientesPorSabor }).then(() => {
             mostrarIngredientes(sabor);
             showToast("Ingrediente adicionado à receita");
@@ -1438,7 +1438,7 @@
         const receita = quantidade * PRECO_VENDA;
         const lucro = receita - custoTotal;
         document.getElementById('resumoProducao').innerHTML = `
-            <div><strong>💰 Custo total dos ingredientes:</strong> R$ ${custoTotal.toFixed(2)}</div>
+            <div><strong>💰 Custo total dos ingredientes (panela):</strong> R$ ${custoTotal.toFixed(2)}</div>
             <div><strong>📈 Receita (${quantidade} un.):</strong> R$ ${receita.toFixed(2)}</div>
             <div><strong>📊 Lucro estimado:</strong> R$ ${lucro.toFixed(2)}</div>
         `;
@@ -1448,43 +1448,40 @@
     document.getElementById('btnProduzir')?.addEventListener('click', async () => {
         const sabor = document.getElementById('selectSaborProducao').value;
         if (!sabor) return showToast("Selecione um sabor", true);
-        const quantidade = parseInt(document.getElementById('quantidadeProduzir').value) || 0;
-        if (quantidade <= 0) return showToast("Quantidade inválida", true);
+        const quantidadeProduzida = parseInt(document.getElementById('quantidadeProduzir').value) || 0;
+        if (quantidadeProduzida <= 0) return showToast("Informe quantas unidades saíram desta panela", true);
 
         const receita = ingredientesPorSabor[sabor] || [];
         if (receita.length === 0) {
-            showToast("Este sabor não tem receita. Produzindo sem baixa no estoque.", true);
-        } else {
-            for (const ing of receita) {
-                const nomeIng = ing.nome;
-                const qtdNecessaria = (ing.quantidade || 0) * quantidade;
-                const estoqueAtual = ingredientesEstoque[nomeIng]?.quantidade || 0;
-                if (estoqueAtual < qtdNecessaria) {
-                    return showToast(`Ingrediente insuficiente: ${nomeIng}. Necessário ${qtdNecessaria} ${ing.unidade}, disponível ${estoqueAtual}`, true);
-                }
-            }
-            for (const ing of receita) {
-                const nomeIng = ing.nome;
-                const qtdNecessaria = (ing.quantidade || 0) * quantidade;
-                ingredientesEstoque[nomeIng].quantidade -= qtdNecessaria;
-            }
-            await salvarIngredientesEstoqueFirestore();
-            renderizarIngredientesEstoqueUI();
+            showToast("Este sabor não tem receita. Cadastre os ingredientes primeiro.", true);
+            return;
         }
 
-        estoqueObj[sabor] = (estoqueObj[sabor] || 0) + quantidade;
+        for (const ing of receita) {
+            if (!verificarIngredienteNoEstoque(ing.nome, ing.quantidade, ing.unidade)) {
+                return showToast(`Ingrediente insuficiente: ${ing.nome}. Necessário ${ing.quantidade} ${ing.unidade}.`, true);
+            }
+        }
+        for (const ing of receita) {
+            descontarIngrediente(ing.nome, ing.quantidade, ing.unidade);
+        }
+        await salvarIngredientesEstoqueFirestore();
+        renderizarIngredientesEstoqueUI();
+
+        estoqueObj[sabor] = (estoqueObj[sabor] || 0) + quantidadeProduzida;
         await db.collection('config').doc('cardapio').update({ estoque: estoqueObj });
         renderizarEstoqueUI();
 
         const custoTotal = receita.reduce((acc, ing) => acc + (parseFloat(ing.custoTotal) || 0), 0);
         await db.collection('producoes').add({
-            sabor, quantidade, custoTotal, data: new Date().toISOString(), dataLegivel: new Date().toLocaleString('pt-BR')
+            sabor, quantidade: quantidadeProduzida, custoTotal,
+            data: new Date().toISOString(), dataLegivel: new Date().toLocaleString('pt-BR')
         });
 
-        showToast(`✅ ${quantidade} unidades de ${sabor} produzidas!`);
+        showToast(`✅ Produção registrada! ${quantidadeProduzida} unidades de ${sabor} adicionadas ao estoque.`);
         carregarHistoricoProducoes();
         carregarResumoFinanceiroProducao();
-        verificarEstoqueBaixo(); // verifica após produção (aumentou estoque)
+        verificarEstoqueBaixo();
     });
 
     async function carregarHistoricoProducoes() {
@@ -1514,6 +1511,25 @@
         document.getElementById('totalUnidades').innerHTML = totalUnidades;
     }
 
+    window.limparHistoricoProducao = async () => {
+        if (!confirm("⚠️ Tem certeza que deseja apagar TODO o histórico de produções? Esta ação não pode ser desfeita.")) return;
+        showToast("Limpando histórico...");
+        try {
+            const snapshot = await db.collection('producoes').get();
+            if (snapshot.empty) { showToast("Histórico já está vazio."); return; }
+            const batch = db.batch();
+            let count = 0;
+            snapshot.forEach(doc => { batch.delete(doc.ref); count++; });
+            await batch.commit();
+            carregarHistoricoProducoes();
+            carregarResumoFinanceiroProducao();
+            showToast(`✅ ${count} registros de produção removidos.`);
+        } catch (error) {
+            console.error("Erro ao limpar histórico:", error);
+            showToast("Erro ao limpar histórico. Tente novamente.", true);
+        }
+    };
+
     // ========== ESTOQUE DE INGREDIENTES (ARMÁRIO) ==========
     async function carregarIngredientesEstoque() {
         const doc = await db.collection('config').doc('ingredientesEstoque').get();
@@ -1521,13 +1537,16 @@
             ingredientesEstoque = doc.data().ingredientes || {};
         } else {
             ingredientesEstoque = {
-                "Leite": { quantidade: 50, unidade: "Litro" },
-                "Açúcar": { quantidade: 30, unidade: "kg" },
-                "Cacau": { quantidade: 10, unidade: "kg" }
+                "Leite integral": { quantidade: 1, unidade: "Litro" },
+                "Leite Condensado": { quantidade: 1, unidade: "Caixa" },
+                "Creme de Leite": { quantidade: 1, unidade: "Caixa" },
+                "Liga neutra": { quantidade: 15, unidade: "Grama" }
             };
             await db.collection('config').doc('ingredientesEstoque').set({ ingredientes: ingredientesEstoque });
         }
         renderizarIngredientesEstoqueUI();
+        const saborSelecionado = document.getElementById('selectSaborProducao').value;
+        if (saborSelecionado) mostrarIngredientes(saborSelecionado);
     }
 
     function renderizarIngredientesEstoqueUI() {
@@ -1621,28 +1640,21 @@
         await db.collection('config').doc('ingredientesEstoque').set({ ingredientes: ingredientesEstoque });
     }
 
-    // ========== DEVEDORES ==========
+    // ========== DEVEDORES (COM DATA/HORA) ==========
+    function formatarDataHora(isoString) {
+        if (!isoString) return '';
+        const data = new Date(isoString);
+        return data.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
     async function carregarDevedores() {
-        const snapshot = await db.collection('devedores').get();
+        const snapshot = await db.collection('devedores').orderBy('dataHora', 'desc').get();
         devedores = [];
         snapshot.forEach(doc => {
             devedores.push({ id: doc.id, ...doc.data() });
         });
         renderizarDevedoresUI();
         atualizarTotalReceber();
-    }
-
-    async function quitarDevedorIndividual(devedor) {
-        const valor = devedor.valor || 0;
-        if (valor <= 0) return;
-        if (!confirm(`Quitar a dívida de ${devedor.nome} no valor de R$ ${valor.toFixed(2)}? O valor será adicionado ao caixa.`)) return;
-
-        await registrarMovimentacao('entrada', valor, `Recebimento de venda a prazo - ${devedor.nome}`);
-        await db.collection('devedores').doc(devedor.id).delete();
-        devedores = devedores.filter(d => d.id !== devedor.id);
-        renderizarDevedoresUI();
-        atualizarTotalReceber();
-        showToast(`R$ ${valor.toFixed(2)} quitado de ${devedor.nome} e adicionado ao caixa.`);
     }
 
     function renderizarDevedoresUI() {
@@ -1658,10 +1670,15 @@
             const idSanitized = devedor.id;
             const nome = devedor.nome || '';
             const valor = devedor.valor || 0;
+            const dataHora = devedor.dataHora || devedor.criadoEm || new Date().toISOString();
+            const dataFormatada = formatarDataHora(dataHora);
             container.innerHTML += `
                 <div class="devedor-item">
                     <div class="devedor-info">
-                        <span class="devedor-nome">${escapeHtml(nome)}</span>
+                        <div>
+                            <span class="devedor-nome">${escapeHtml(nome)}</span>
+                            <div class="devedor-data">📅 ${dataFormatada}</div>
+                        </div>
                         <span class="devedor-valor" id="devedorValorDisplay_${idSanitized}">R$ ${valor.toFixed(2)}</span>
                     </div>
                     <div class="devedor-controles">
@@ -1688,23 +1705,41 @@
         }
     }
 
-    window.quitarDevedorIndividualById = async (id) => {
-        const devedor = devedores.find(d => d.id === id);
-        if (devedor) await quitarDevedorIndividual(devedor);
-    };
-
     window.adicionarDevedor = async () => {
         const nome = document.getElementById('novoDevedorNome').value.trim();
         const valor = parseFloat(document.getElementById('novoDevedorValor').value);
         if (!nome) return showToast("Digite o nome do devedor", true);
         if (isNaN(valor) || valor <= 0) return showToast("Valor inválido", true);
-        const novoDevedor = { nome, valor, criadoEm: new Date().toISOString() };
+        const agora = new Date();
+        const novoDevedor = {
+            nome,
+            valor,
+            dataHora: agora.toISOString(),
+            criadoEm: agora.toISOString()
+        };
         const docRef = await db.collection('devedores').add(novoDevedor);
         devedores.push({ id: docRef.id, ...novoDevedor });
         renderizarDevedoresUI();
         document.getElementById('novoDevedorNome').value = '';
         document.getElementById('novoDevedorValor').value = '';
-        showToast(`Devedor ${nome} adicionado`);
+        showToast(`Devedor ${nome} adicionado em ${formatarDataHora(agora.toISOString())}`);
+    };
+
+    async function quitarDevedorIndividual(devedor) {
+        const valor = devedor.valor || 0;
+        if (valor <= 0) return;
+        if (!confirm(`Quitar a dívida de ${devedor.nome} no valor de R$ ${valor.toFixed(2)}? O valor será adicionado ao caixa.`)) return;
+        await registrarMovimentacao('entrada', valor, `Recebimento de venda a prazo - ${devedor.nome}`);
+        await db.collection('devedores').doc(devedor.id).delete();
+        devedores = devedores.filter(d => d.id !== devedor.id);
+        renderizarDevedoresUI();
+        atualizarTotalReceber();
+        showToast(`R$ ${valor.toFixed(2)} quitado de ${devedor.nome} e adicionado ao caixa.`);
+    }
+
+    window.quitarDevedorIndividualById = async (id) => {
+        const devedor = devedores.find(d => d.id === id);
+        if (devedor) await quitarDevedorIndividual(devedor);
     };
 
     window.removerDevedor = async (id) => {
@@ -1833,6 +1868,13 @@
             escutarPedidos();
             setupSwipe();
             configurarFiltros();
+
+            const selectSabor = document.getElementById('selectSaborProducao');
+            if (selectSabor && selectSabor.value) {
+                document.getElementById('ingredientesPanel').style.display = 'block';
+                document.getElementById('saborSelecionadoNome').innerText = selectSabor.value;
+                mostrarIngredientes(selectSabor.value);
+            }
         } else {
             loginScreen.style.display = 'flex';
             appContainer.style.display = 'none';
@@ -1847,6 +1889,18 @@
     };
 
     if (logoutBtn) logoutBtn.onclick = () => auth.signOut();
+
+    document.getElementById('selectSaborProducao')?.addEventListener('change', (e) => {
+        const sabor = e.target.value;
+        const panel = document.getElementById('ingredientesPanel');
+        if (!sabor) {
+            panel.style.display = 'none';
+            return;
+        }
+        panel.style.display = 'block';
+        document.getElementById('saborSelecionadoNome').innerText = sabor;
+        mostrarIngredientes(sabor);
+    });
 </script>
 </body>
 </html>
