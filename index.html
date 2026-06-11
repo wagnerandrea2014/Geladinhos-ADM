@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* (todos os estilos anteriores permanecem EXATAMENTE iguais até a linha 646) */
+        /* Todos os estilos existentes permanecem EXATAMENTE iguais */
         * {
             margin: 0;
             padding: 0;
@@ -780,7 +780,6 @@
 </head>
 <body>
 
-<!-- TELA DE LOGIN -->
 <div id="loginScreen" class="login-container">
     <div class="login-card">
         <h2><i class="fas fa-ice-cream"></i> Andrea Geladinhos ADM</h2>
@@ -847,7 +846,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Meta de faturamento semanal -->
             <div class="card">
                 <div class="card-title"><i class="fas fa-chart-line"></i> Meta de faturamento semanal</div>
                 <div class="meta-info"><span>Meta: R$ <span id="metaSemanalValor">2000</span></span><span>Vendas esta semana: R$ <span id="vendasSemana">0</span></span></div>
@@ -857,18 +855,36 @@
             <div class="card"><div class="card-title"><i class="fas fa-history"></i> Últimas Movimentações</div><div id="historicoMovimentacoes" style="max-height: 300px; overflow-y: auto;"></div></div>
         </div>
 
-        <!-- Página 1: Pedidos Online -->
+        <!-- Página 1: Pedidos (UNIFICADO: online + presenciais) -->
         <div class="swipe-page" data-page="1">
             <div class="card">
-                <div class="card-title"><i class="fas fa-clipboard-list"></i> Pedidos Online</div>
-                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-                    <button class="btn btn-secondary filter-btn" data-filter="todos">Todos</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="pendente">⏳ Pendente</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="preparando">🍳 Preparando</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="pronto">✅ Pronto</button>
-                    <button class="btn btn-secondary filter-btn" data-filter="retirado">📦 Retirado</button>
+                <div class="card-title"><i class="fas fa-clipboard-list"></i> Histórico de Vendas</div>
+                <!-- Filtros de tipo e status -->
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label>Tipo de venda</label>
+                        <select id="filtroTipoVenda">
+                            <option value="todos">Todos</option>
+                            <option value="online">Online</option>
+                            <option value="presencial">Presencial</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Status (online)</label>
+                        <select id="filtroStatusVenda">
+                            <option value="todos">Todos</option>
+                            <option value="pendente">⏳ Pendente</option>
+                            <option value="preparando">🍳 Preparando</option>
+                            <option value="pronto">✅ Pronto</option>
+                            <option value="retirado">📦 Retirado</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>&nbsp;</label>
+                        <button id="aplicarFiltrosVendas" class="btn btn-primary">Filtrar</button>
+                    </div>
                 </div>
-                <div id="listaPedidos" style="max-height: 500px; overflow-y: auto;"></div>
+                <div id="listaVendasUnificadas" style="max-height: 500px; overflow-y: auto;"></div>
             </div>
         </div>
 
@@ -1052,7 +1068,7 @@
             </div>
         </div>
 
-        <!-- NOVA PÁGINA 10: Análise Semanal de Vendas -->
+        <!-- Página 10: Análise Semanal -->
         <div class="swipe-page" data-page="10">
             <div class="card">
                 <div class="card-title"><i class="fas fa-chart-simple"></i> Análise Semanal de Vendas</div>
@@ -1077,7 +1093,7 @@
 
 <div class="bottom-nav">
     <button class="nav-btn" data-page="0"><i class="fas fa-cash-register"></i><span>Caixa</span></button>
-    <button class="nav-btn" data-page="1"><i class="fas fa-clipboard-list"></i><span>Pedidos</span></button>
+    <button class="nav-btn" data-page="1"><i class="fas fa-clipboard-list"></i><span>Vendas</span></button>
     <button class="nav-btn" data-page="2"><i class="fas fa-boxes"></i><span>Sabores</span></button>
     <button class="nav-btn" data-page="3"><i class="fas fa-flask"></i><span>Produção</span></button>
     <button class="nav-btn" data-page="4"><i class="fas fa-trophy"></i><span>Ranking</span></button>
@@ -1199,7 +1215,6 @@
         carregarRelatorios();
         addNotification('movimentacao', `${tipo === 'entrada' ? 'Entrada' : 'Saída'} de R$ ${valor.toFixed(2)} - ${descricao}`);
     }
-    // Desfazer última venda (mantido igual)
     document.getElementById('desfazerUltimaVendaBtn')?.addEventListener('click', async () => {
         if (ultimasVendasCache.length === 0) { showToast("Nenhuma venda para desfazer", true); return; }
         const ultima = ultimasVendasCache[ultimasVendasCache.length - 1];
@@ -1237,7 +1252,8 @@
             await atualizarMetaSemanalProgresso();
             verificarEstoqueBaixo();
             carregarListaCompras();
-            carregarAnaliseSemanal(); // atualiza análise
+            carregarAnaliseSemanal();
+            carregarVendasUnificadas(); // atualiza página de vendas
         } catch (err) { console.error(err); showToast("Erro ao desfazer venda", true); }
     });
 
@@ -1309,11 +1325,12 @@
         await atualizarVendasSemana();
         await atualizarMetaSemanalProgresso();
         carregarListaCompras();
-        carregarAnaliseSemanal(); // atualiza página de análise
+        carregarAnaliseSemanal();
+        carregarVendasUnificadas(); // atualiza página de vendas
     }
     document.getElementById('finalizarVendaBtn')?.addEventListener('click', () => finalizarVenda('avista'));
     document.getElementById('finalizarVendaPrazoBtn')?.addEventListener('click', () => finalizarVenda('prazo'));
-    async function carregarVendasPresenciais() { try { const snapshot = await db.collection('vendasPresenciais').orderBy('data', 'desc').limit(50).get(); vendasPresenciaisArray = snapshot.docs.map(doc => doc.data()); } catch (err) { console.error(err); } }
+    async function carregarVendasPresenciais() { try { const snapshot = await db.collection('vendasPresenciais').orderBy('data', 'desc').limit(100).get(); vendasPresenciaisArray = snapshot.docs.map(doc => doc.data()); } catch (err) { console.error(err); } }
 
     // ========== META SEMANAL ==========
     async function carregarMetaSemanal() {
@@ -1431,104 +1448,189 @@
     document.getElementById('verEntradasSemana')?.addEventListener('click', () => carregarFluxoEntradas('semana'));
     document.getElementById('verEntradasMensal')?.addEventListener('click', () => carregarFluxoEntradas('mensal'));
 
-    // ========== NOVA ANÁLISE SEMANAL ==========
-    function carregarAnaliseSemanal() {
-        const hoje = new Date();
-        const inicioSemana = new Date(hoje);
-        inicioSemana.setDate(hoje.getDate() - hoje.getDay());
-        // Juntar todas as vendas da semana (online + presenciais)
-        let vendasSemana = [];
-        pedidosArray.forEach(p => {
-            if (p.data && new Date(p.data) >= inicioSemana) {
-                vendasSemana.push(p);
-            }
-        });
-        vendasPresenciaisArray.forEach(v => {
-            if (v.data && new Date(v.data) >= inicioSemana) {
-                vendasSemana.push(v);
-            }
-        });
+    // ========== PÁGINA DE VENDAS UNIFICADAS (NOVA) ==========
+    let filtroTipoAtual = 'todos';
+    let filtroStatusAtual = 'todos';
 
-        // 1. Sabores mais vendidos (quantidade)
-        const qtdPorSabor = new Map();
-        vendasSemana.forEach(v => {
-            const itens = v.itens || [];
-            itens.forEach(item => {
-                const nomeSabor = item.sabor;
-                const qtd = item.quantidade || item.qtd || 0;
-                qtdPorSabor.set(nomeSabor, (qtdPorSabor.get(nomeSabor) || 0) + qtd);
+    function carregarVendasUnificadas() {
+        // Combinar pedidos online e vendas presenciais
+        let todasVendas = [];
+        // Pedidos online
+        pedidosArray.forEach(p => {
+            todasVendas.push({
+                id: p.id,
+                tipo: 'online',
+                cliente: p.cliente || 'Cliente',
+                itens: p.itens || [],
+                total: p.total || 0,
+                data: p.data,
+                dataLegivel: p.dataLegivel || new Date(p.data).toLocaleString('pt-BR'),
+                status: p.status || 'pendente',
+                pagamento: p.pagamento || '-',
+                origem: 'online'
             });
         });
-        const rankingSabores = Array.from(qtdPorSabor.entries())
-            .map(([sabor, qtd]) => ({ sabor, qtd, emoji: saboresMap[sabor] || '🍧' }))
-            .sort((a, b) => b.qtd - a.qtd);
-        const containerSabores = document.getElementById('analiseRankingSabores');
-        if (rankingSabores.length === 0) {
-            containerSabores.innerHTML = '<div>Nenhuma venda nesta semana.</div>';
-        } else {
-            containerSabores.innerHTML = rankingSabores.map(r => `<div class="ranking-sabor"><span>${r.emoji} ${escapeHtml(r.sabor)}</span><span>${r.qtd} vendidos</span></div>`).join('');
-        }
-
-        // 2. Horários de pico (agrupar por hora)
-        const vendasPorHora = new Array(24).fill(0);
-        vendasSemana.forEach(v => {
-            let dataVenda = v.data ? new Date(v.data) : null;
-            if (dataVenda && !isNaN(dataVenda)) {
-                const hora = dataVenda.getHours();
-                vendasPorHora[hora]++;
-            }
+        // Vendas presenciais
+        vendasPresenciaisArray.forEach(v => {
+            todasVendas.push({
+                id: v.id || Math.random().toString(),
+                tipo: 'presencial',
+                cliente: v.cliente || 'Cliente',
+                itens: v.itens || [],
+                total: v.total || 0,
+                data: v.data,
+                dataLegivel: v.dataLegivel || new Date(v.data).toLocaleString('pt-BR'),
+                status: v.tipo === 'a prazo' ? 'a prazo' : 'concluída',
+                pagamento: v.tipo === 'a prazo' ? 'A prazo' : 'À vista',
+                origem: 'presencial'
+            });
         });
-        // Encontrar horários com mais vendas (top 3)
-        const horariosRank = vendasPorHora.map((qtd, hora) => ({ hora, qtd })).sort((a, b) => b.qtd - a.qtd);
-        const topHorarios = horariosRank.slice(0, 3).filter(h => h.qtd > 0);
-        const containerHorarios = document.getElementById('analiseHorarios');
-        if (topHorarios.length === 0) {
-            containerHorarios.innerHTML = '<div>Nenhuma venda registrada.</div>';
-        } else {
-            containerHorarios.innerHTML = topHorarios.map(h => `<span class="badge-horario">${h.hora}:00 - ${h.hora+1}:00 (${h.qtd} vendas)</span>`).join('');
+        // Ordenar por data decrescente
+        todasVendas.sort((a, b) => new Date(b.data) - new Date(a.data));
+        // Aplicar filtros
+        let filtradas = todasVendas;
+        if (filtroTipoAtual !== 'todos') {
+            filtradas = filtradas.filter(v => v.tipo === filtroTipoAtual);
         }
-
-        // 3. Dia da semana com maior faturamento
-        const faturamentoPorDia = new Array(7).fill(0); // 0=domingo
-        vendasSemana.forEach(v => {
-            let dataVenda = v.data ? new Date(v.data) : null;
-            if (dataVenda && !isNaN(dataVenda)) {
-                const diaSemana = dataVenda.getDay(); // 0=domingo
-                faturamentoPorDia[diaSemana] += (v.total || 0);
+        if (filtroStatusAtual !== 'todos') {
+            filtradas = filtradas.filter(v => v.status === filtroStatusAtual);
+        }
+        const container = document.getElementById('listaVendasUnificadas');
+        if (!container) return;
+        if (!filtradas.length) {
+            container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma venda encontrada.</div>';
+            return;
+        }
+        const statusMap = {
+            pendente: '⏳ Pendente',
+            preparando: '🍳 Preparando',
+            pronto: '✅ Pronto',
+            retirado: '📦 Retirado',
+            concluída: '✅ Concluída',
+            'a prazo': '📅 A prazo'
+        };
+        const nextStatus = {
+            pendente: 'preparando',
+            preparando: 'pronto',
+            pronto: 'retirado',
+            retirado: null
+        };
+        container.innerHTML = filtradas.map(v => {
+            const itensHtml = v.itens.map(i => `${i.quantidade || i.qtd}x ${i.sabor}`).join(', ');
+            const tipoBadge = v.tipo === 'online' ? '🖥️ Online' : '🏪 Presencial';
+            let botoes = '';
+            if (v.tipo === 'online' && nextStatus[v.status]) {
+                botoes = `<button class="btn btn-success btn-small" data-id="${v.id}" data-status="${nextStatus[v.status]}">Avançar</button>`;
             }
+            if (v.tipo === 'presencial') {
+                botoes = `<button class="btn btn-danger btn-small" data-id="${v.id}" data-excluir-presencial="true">Excluir</button>`;
+            } else {
+                botoes += `<button class="btn btn-danger btn-small" data-id="${v.id}" data-excluir="true">Excluir</button>`;
+            }
+            return `<div class="pedido-card" data-id="${v.id}" data-tipo="${v.tipo}">
+                <div style="display:flex; justify-content:space-between;">
+                    <strong>${escapeHtml(v.cliente)}</strong>
+                    <span>${tipoBadge} | ${statusMap[v.status] || v.status}</span>
+                </div>
+                <div style="margin:8px 0;">${itensHtml}</div>
+                <div>Total: R$ ${(v.total || 0).toFixed(2)} | ${v.pagamento}</div>
+                <div style="margin-top:4px; font-size:0.7rem;">📅 ${v.dataLegivel}</div>
+                <div style="display:flex; gap:8px; margin-top:8px;">
+                    ${botoes}
+                </div>
+            </div>`;
+        }).join('');
+        // Eventos para botões de avançar (online)
+        document.querySelectorAll('#listaVendasUnificadas .btn-success').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const id = btn.dataset.id;
+                const status = btn.dataset.status;
+                await db.collection('pedidos').doc(id).update({ status });
+                showToast("Status atualizado");
+                addNotification('pedido', `Pedido ${id} atualizado para ${status}`);
+                carregarVendasUnificadas();
+                carregarAnaliseSemanal();
+            });
         });
-        const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-        let melhorDiaIndex = 0;
-        for (let i = 1; i < 7; i++) {
-            if (faturamentoPorDia[i] > faturamentoPorDia[melhorDiaIndex]) melhorDiaIndex = i;
-        }
-        const melhorDia = diasSemana[melhorDiaIndex];
-        const melhorValor = faturamentoPorDia[melhorDiaIndex];
-        document.getElementById('analiseDiaSemana').innerHTML = `<div><strong>${melhorDia}</strong> com faturamento de <strong>R$ ${melhorValor.toFixed(2)}</strong></div>`;
+        // Eventos para excluir (online)
+        document.querySelectorAll('#listaVendasUnificadas .btn-danger[data-excluir="true"]').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const id = btn.dataset.id;
+                if (await Swal.fire({ title: 'Excluir pedido?', icon: 'warning', showCancelButton: true }).then(r => r.isConfirmed)) {
+                    await db.collection('pedidos').doc(id).delete();
+                    addNotification('pedido', `Pedido ${id} excluído`);
+                    carregarVendasUnificadas();
+                    carregarAnaliseSemanal();
+                }
+            });
+        });
+        // Eventos para excluir venda presencial
+        document.querySelectorAll('#listaVendasUnificadas .btn-danger[data-excluir-presencial="true"]').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const card = btn.closest('.pedido-card');
+                const id = btn.dataset.id;
+                // Tentar encontrar no array de vendas presenciais e remover do Firestore
+                const venda = vendasPresenciaisArray.find(v => v.id === id);
+                if (!venda) {
+                    showToast("Venda não encontrada para exclusão", true);
+                    return;
+                }
+                if (await Swal.fire({ title: 'Excluir venda presencial?', text: `Remover venda de R$ ${venda.total.toFixed(2)}?`, icon: 'warning', showCancelButton: true }).then(r => r.isConfirmed)) {
+                    // Reverter estoque
+                    for (const item of venda.itens) {
+                        if (estoqueObj[item.sabor] !== undefined) {
+                            estoqueObj[item.sabor] += item.qtd;
+                        }
+                    }
+                    await db.collection('config').doc('cardapio').update({ estoque: estoqueObj });
+                    renderizarEstoqueUI();
+                    // Se for a prazo, remover devedor
+                    if (venda.tipo === 'a prazo' && venda.cliente) {
+                        const devedor = devedores.find(d => d.nome === venda.cliente && Math.abs(d.valor - venda.total) < 0.01);
+                        if (devedor) {
+                            await db.collection('devedores').doc(devedor.id).delete();
+                            devedores = devedores.filter(d => d.id !== devedor.id);
+                            renderizarDevedoresUI();
+                            atualizarTotalReceber();
+                        }
+                    }
+                    // Remover do Firestore
+                    if (venda.id && venda.id.toString().length > 5) {
+                        await db.collection('vendasPresenciais').doc(venda.id).delete();
+                    } else {
+                        // Se não tiver id (cache), remover por data aproximada (fallback)
+                        const snapshot = await db.collection('vendasPresenciais').where('data', '==', venda.data).get();
+                        for (const doc of snapshot.docs) {
+                            if (doc.data().total === venda.total) await doc.ref.delete();
+                        }
+                    }
+                    await carregarVendasPresenciais();
+                    showToast("Venda presencial excluída");
+                    addNotification('venda', `Venda presencial excluída (R$ ${venda.total.toFixed(2)})`);
+                    carregarVendasUnificadas();
+                    carregarAnaliseSemanal();
+                    atualizarGraficos();
+                }
+            });
+        });
     }
+    document.getElementById('aplicarFiltrosVendas')?.addEventListener('click', () => {
+        filtroTipoAtual = document.getElementById('filtroTipoVenda').value;
+        filtroStatusAtual = document.getElementById('filtroStatusVenda').value;
+        carregarVendasUnificadas();
+    });
 
-    // ========== PEDIDOS ONLINE ==========
+    // ========== PEDIDOS ONLINE (escuta em tempo real) ==========
     function escutarPedidos() {
         db.collection('pedidos').orderBy('data', 'desc').onSnapshot(snapshot => {
             pedidosArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), status: doc.data().status || 'pendente' }));
-            carregarPedidosUI();
             renderizarRanking();
             carregarRelatorios();
             atualizarGraficos();
             atualizarVendasSemana().then(() => atualizarMetaSemanalProgresso());
             carregarAnaliseSemanal();
+            carregarVendasUnificadas(); // atualiza página de vendas
         });
-    }
-    function carregarPedidosUI() {
-        const filtrados = pedidosArray.filter(p => filtroStatus === 'todos' || p.status === filtroStatus);
-        const container = document.getElementById('listaPedidos');
-        if (!container) return;
-        if (!filtrados.length) { container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhum pedido encontrado</div>'; return; }
-        const statusMap = { pendente: '⏳ Pendente', preparando: '🍳 Preparando', pronto: '✅ Pronto', retirado: '📦 Retirado' };
-        const nextStatus = { pendente: 'preparando', preparando: 'pronto', pronto: 'retirado', retirado: null };
-        container.innerHTML = filtrados.map(p => `<div class="pedido-card"><div style="display:flex; justify-content:space-between;"><strong>${p.cliente || 'Cliente'}</strong><span>${statusMap[p.status]}</span></div><div style="margin:8px 0;">${p.itens?.map(i => `${i.quantidade}x ${i.sabor}`).join(', ') || '-'}</div><div>Total: R$ ${(p.total || 0).toFixed(2)} | ${p.pagamento || '-'}</div><div style="display:flex; gap:8px; margin-top:8px;">${nextStatus[p.status] ? `<button class="btn btn-success" style="padding:6px 12px;" data-id="${p.id}" data-status="${nextStatus[p.status]}">Avançar</button>` : ''}<button class="btn btn-danger" style="padding:6px 12px;" data-id="${p.id}" data-excluir="true">Excluir</button></div></div>`).join('');
-        document.querySelectorAll('#listaPedidos .btn-success').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.dataset.id, status = btn.dataset.status; await db.collection('pedidos').doc(id).update({ status }); showToast("Status atualizado"); addNotification('pedido', `Pedido ${id} atualizado para ${status}`); carregarAnaliseSemanal(); }));
-        document.querySelectorAll('#listaPedidos .btn-danger').forEach(btn => btn.addEventListener('click', async (e) => { const id = btn.dataset.id; if (await Swal.fire({ title: 'Excluir pedido?', icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { await db.collection('pedidos').doc(id).delete(); addNotification('pedido', `Pedido ${id} excluído`); carregarAnaliseSemanal(); } }));
     }
 
     // ========== ESTOQUE SABORES ==========
@@ -1563,14 +1665,14 @@
             if (input && display) { input.addEventListener('input', () => { display.innerText = input.value; }); display.innerText = input.value; }
         }
         document.querySelectorAll('.qty-btn').forEach(btn => btn.addEventListener('click', (e) => { const sabor = btn.dataset.sabor; const delta = parseInt(btn.dataset.delta); const input = document.getElementById(`qtd_${sabor.replace(/[^a-zA-Z0-9]/g, '_')}`); if (input) { let novo = (parseInt(input.value) || 0) + delta; if (novo < 0) novo = 0; input.value = novo; document.getElementById(`qtdDisplay_${sabor.replace(/[^a-zA-Z0-9]/g, '_')}`).innerText = novo; } }));
-        document.querySelectorAll('.btn-remover').forEach(btn => btn.addEventListener('click', async () => { const sabor = btn.dataset.sabor; if (await Swal.fire({ title: `Remover ${sabor}?`, icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { delete saboresMap[sabor]; delete estoqueObj[sabor]; await db.collection('config').doc('cardapio').set({ sabores: saboresMap, estoque: estoqueObj }); renderizarEstoqueUI(); atualizarSelectSaboresProducao(); atualizarCarrinho(); showToast(`Sabor ${sabor} removido`); verificarEstoqueBaixo(); carregarAnaliseSemanal(); } }));
+        document.querySelectorAll('.btn-remover').forEach(btn => btn.addEventListener('click', async () => { const sabor = btn.dataset.sabor; if (await Swal.fire({ title: `Remover ${sabor}?`, icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { delete saboresMap[sabor]; delete estoqueObj[sabor]; await db.collection('config').doc('cardapio').set({ sabores: saboresMap, estoque: estoqueObj }); renderizarEstoqueUI(); atualizarSelectSaboresProducao(); atualizarCarrinho(); showToast(`Sabor ${sabor} removido`); verificarEstoqueBaixo(); carregarAnaliseSemanal(); carregarVendasUnificadas(); } }));
         verificarEstoqueBaixo();
     }
     document.getElementById('addSaborBtn')?.addEventListener('click', async () => { const sabor = document.getElementById('novoSabor').value.trim(); const emoji = document.getElementById('novoEmoji').value.trim() || '🍧'; if (!sabor) return showToast("Digite o nome do sabor", true); if (saboresMap[sabor]) return showToast("Sabor já existe", true); saboresMap[sabor] = emoji; estoqueObj[sabor] = 20; await db.collection('config').doc('cardapio').set({ sabores: saboresMap, estoque: estoqueObj }); renderizarEstoqueUI(); atualizarSelectSaboresProducao(); atualizarCarrinho(); document.getElementById('novoSabor').value = ''; showToast(`Sabor ${sabor} adicionado`); verificarEstoqueBaixo(); });
     document.getElementById('salvarEstoqueBtn')?.addEventListener('click', async () => { const novoEstoque = {}; for (const sabor of Object.keys(saboresMap)) { const saborId = sabor.replace(/[^a-zA-Z0-9]/g, '_'); const input = document.getElementById(`qtd_${saborId}`); novoEstoque[sabor] = input ? (parseInt(input.value) || 0) : (estoqueObj[sabor] || 0); } await db.collection('config').doc('cardapio').update({ estoque: novoEstoque }); estoqueObj = novoEstoque; renderizarEstoqueUI(); showToast("Estoque de sabores salvo!"); verificarEstoqueBaixo(); });
     function verificarEstoqueBaixo() { const baixos = Object.entries(estoqueObj).filter(([_, qtd]) => qtd < 5).map(([s, q]) => `${saboresMap[s] || '🍧'} ${s} (${q})`); const alertDiv = document.getElementById('alertaEstoqueBaixo'); const listaDiv = document.getElementById('listaEstoqueBaixo'); if (baixos.length) { alertDiv.style.display = 'flex'; listaDiv.innerHTML = `🔻 ${baixos.join(', ')}`; } else alertDiv.style.display = 'none'; }
 
-    // ========== INGREDIENTES E PRODUÇÃO ==========
+    // ========== INGREDIENTES E PRODUÇÃO (resumido) ==========
     async function carregarIngredientes() { try { const doc = await db.collection('config').doc('ingredientesPorSabor').get(); ingredientesPorSabor = doc.exists ? doc.data().ingredientes || {} : {}; atualizarSelectSaboresProducao(); carregarHistoricoProducoes(); carregarResumoFinanceiroProducao(); } catch (err) { console.error(err); } }
     function atualizarSelectSaboresProducao() { const select = document.getElementById('selectSaborProducao'); if (!select) return; select.innerHTML = '<option value="">Selecione um sabor</option>'; Object.keys(saboresMap).sort().forEach(s => select.innerHTML += `<option value="${s}">${saboresMap[s] || '🍧'} ${s}</option>`); }
     function mostrarIngredientes(sabor) {
@@ -1679,7 +1781,7 @@
         } catch (err) { console.error(err); }
     }
 
-    // ========== DEVEDORES AGRUPADOS (mantido) ==========
+    // ========== DEVEDORES (mantido igual) ==========
     async function carregarDevedores() {
         try {
             const snapshot = await db.collection('devedores').orderBy('dataHora', 'desc').get();
@@ -1738,6 +1840,7 @@
             showToast(`R$ ${devedor.valor.toFixed(2)} quitado de ${devedor.nome}`);
             addNotification('devedor', `Recebido R$ ${devedor.valor.toFixed(2)} de ${devedor.nome}`);
             carregarAnaliseSemanal();
+            carregarVendasUnificadas();
         }
     }
     document.getElementById('addDevedorBtn')?.addEventListener('click', async () => {
@@ -1755,7 +1858,7 @@
         addNotification('devedor', `Novo devedor: ${nome} - R$ ${valor.toFixed(2)}`);
     });
 
-    // ========== DESPESAS ==========
+    // ========== DESPESAS (mantido) ==========
     async function carregarDespesas() { try { const snapshot = await db.collection('despesas').orderBy('data', 'desc').limit(50).get(); despesasArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderizarDespesas(); carregarResumoDespesas(); } catch (err) { console.error(err); } }
     function renderizarDespesas() {
         const container = document.getElementById('listaDespesas');
@@ -1885,6 +1988,34 @@
         } catch (err) { console.error(err); }
     }
 
+    // ========== ANÁLISE SEMANAL ==========
+    function carregarAnaliseSemanal() {
+        const hoje = new Date();
+        const inicioSemana = new Date(hoje);
+        inicioSemana.setDate(hoje.getDate() - hoje.getDay());
+        let vendasSemana = [];
+        pedidosArray.forEach(p => { if (p.data && new Date(p.data) >= inicioSemana) vendasSemana.push(p); });
+        vendasPresenciaisArray.forEach(v => { if (v.data && new Date(v.data) >= inicioSemana) vendasSemana.push(v); });
+        const qtdPorSabor = new Map();
+        vendasSemana.forEach(v => { (v.itens || []).forEach(item => { const nome = item.sabor; const qtd = item.quantidade || item.qtd || 0; qtdPorSabor.set(nome, (qtdPorSabor.get(nome) || 0) + qtd); }); });
+        const rankingSabores = Array.from(qtdPorSabor.entries()).map(([s, q]) => ({ s, q, e: saboresMap[s] || '🍧' })).sort((a,b) => b.q - a.q);
+        const containerSabores = document.getElementById('analiseRankingSabores');
+        if (rankingSabores.length === 0) containerSabores.innerHTML = '<div>Nenhuma venda nesta semana.</div>';
+        else containerSabores.innerHTML = rankingSabores.map(r => `<div class="ranking-sabor"><span>${r.e} ${escapeHtml(r.s)}</span><span>${r.q} vendidos</span></div>`).join('');
+        const vendasPorHora = new Array(24).fill(0);
+        vendasSemana.forEach(v => { let dataVenda = v.data ? new Date(v.data) : null; if (dataVenda && !isNaN(dataVenda)) vendasPorHora[dataVenda.getHours()]++; });
+        const topHorarios = vendasPorHora.map((q, h) => ({ h, q })).sort((a,b) => b.q - a.q).filter(h => h.q > 0).slice(0,3);
+        const containerHorarios = document.getElementById('analiseHorarios');
+        if (topHorarios.length === 0) containerHorarios.innerHTML = '<div>Nenhuma venda registrada.</div>';
+        else containerHorarios.innerHTML = topHorarios.map(h => `<span class="badge-horario">${h.h}:00 - ${h.h+1}:00 (${h.q} vendas)</span>`).join('');
+        const faturamentoPorDia = new Array(7).fill(0);
+        vendasSemana.forEach(v => { let dataVenda = v.data ? new Date(v.data) : null; if (dataVenda && !isNaN(dataVenda)) faturamentoPorDia[dataVenda.getDay()] += (v.total || 0); });
+        let melhorDiaIndex = 0;
+        for (let i = 1; i < 7; i++) if (faturamentoPorDia[i] > faturamentoPorDia[melhorDiaIndex]) melhorDiaIndex = i;
+        const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+        document.getElementById('analiseDiaSemana').innerHTML = `<div><strong>${diasSemana[melhorDiaIndex]}</strong> com faturamento de <strong>R$ ${faturamentoPorDia[melhorDiaIndex].toFixed(2)}</strong></div>`;
+    }
+
     // ========== BACKUP AUTOMÁTICO ==========
     async function performAutoBackup(showNotif = false) { if (!autoBackupEnabled) return false; try { const dados = { pedidos: pedidosArray, estoqueObj, saboresMap, vendasPresenciais: vendasPresenciaisArray, movimentacoesCaixa, ingredientesPorSabor, ingredientesEstoque, devedores, despesas: despesasArray, metaSemanal }; localStorage.setItem('andreageladinhos_backup', JSON.stringify(dados)); localStorage.setItem('andreageladinhos_last_backup', Date.now().toString()); lastBackupTimestamp = Date.now(); document.getElementById('lastBackupDate').innerText = new Date().toLocaleString('pt-BR'); if (showNotif) { showToast('Backup automático realizado'); addNotification('backup', 'Backup automático concluído'); } return true; } catch (err) { console.error(err); return false; } }
     function carregarConfigBackup() { const enabled = localStorage.getItem('andreageladinhos_auto_backup') === 'true'; const interval = localStorage.getItem('andreageladinhos_backup_interval') || 'weekly'; const last = parseInt(localStorage.getItem('andreageladinhos_last_backup') || '0'); autoBackupEnabled = enabled; backupInterval = interval; lastBackupTimestamp = last; document.getElementById('autoBackupToggle').checked = enabled; document.getElementById('backupInterval').value = interval; if (last) document.getElementById('lastBackupDate').innerText = new Date(last).toLocaleString('pt-BR'); if (autoBackupEnabled) startBackupScheduler(); }
@@ -1907,7 +2038,7 @@
         container.addEventListener('scroll', updateIndicators); setTimeout(updateIndicators, 100);
         document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => { const page = parseInt(btn.dataset.page); container.scrollTo({ left: container.clientWidth * page, behavior: 'smooth' }); }));
     }
-    function configurarFiltros() { document.querySelectorAll('.filter-btn').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter')); btn.classList.add('active-filter'); filtroStatus = btn.dataset.filter; carregarPedidosUI(); }; }); }
+    function configurarFiltros() { /* filtros de pedidos online foram movidos para página de vendas unificada */ }
 
     // ========== TEMA ==========
     function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('lightTheme', isLight ? 'enabled' : 'disabled'); document.getElementById('theme-icon-header').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
@@ -1943,7 +2074,7 @@
                     carregarFluxoEntradas('semana')
                 ]);
             } catch (err) { console.error("Erro ao carregar dados iniciais:", err); showToast("Erro ao carregar alguns dados. Tente recarregar.", true); }
-            escutarPedidos(); setupSwipe(); configurarFiltros(); carregarConfigBackup(); carregarNotificacoes(); atualizarBadgeNotificacoes(); popularFiltroRelatorio(); carregarListaCompras(); carregarAnaliseSemanal();
+            escutarPedidos(); setupSwipe(); carregarConfigBackup(); carregarNotificacoes(); atualizarBadgeNotificacoes(); popularFiltroRelatorio(); carregarListaCompras(); carregarAnaliseSemanal(); carregarVendasUnificadas();
             document.getElementById('selectSaborProducao').addEventListener('change', (e) => { const sabor = e.target.value; const panel = document.getElementById('ingredientesPanel'); if (!sabor) { panel.style.display = 'none'; return; } panel.style.display = 'block'; document.getElementById('saborSelecionadoNome').innerText = sabor; mostrarIngredientes(sabor); });
             atualizarGraficos();
             showLoading(false);
