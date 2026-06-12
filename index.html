@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Andrea Geladinhos ADM - Gestão Completa</title>
+    <title>Geladinhos ADM - Gestão Completa</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* Todos os estilos existentes permanecem EXATAMENTE iguais */
+        /* ========== RESET E ESTILOS GLOBAIS ========== */
         * {
             margin: 0;
             padding: 0;
@@ -40,7 +40,7 @@
             background: #ffe4e8;
             color: #1a1a1a;
         }
-        button, .btn, .btn-small, input, select, textarea, .profile-btn, .theme-icon {
+        button, .btn, .btn-small, input, select, textarea, .profile-btn, .theme-icon, .bell-icon {
             touch-action: manipulation;
         }
         button, .btn, .btn-small {
@@ -60,18 +60,9 @@
             transform: scale(0.96);
             box-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
-        .btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-        }
-        .btn-success {
-            background: linear-gradient(135deg, #4caf50, #2e7d32);
-            color: white;
-        }
-        .btn-danger {
-            background: linear-gradient(135deg, #f44336, #c62828);
-            color: white;
-        }
+        .btn-primary { background: var(--primary-gradient); color: white; }
+        .btn-success { background: linear-gradient(135deg, #4caf50, #2e7d32); color: white; }
+        .btn-danger { background: linear-gradient(135deg, #f44336, #c62828); color: white; }
         .btn-secondary {
             background: rgba(255,255,255,0.08);
             backdrop-filter: blur(4px);
@@ -84,15 +75,10 @@
             border: 1px solid rgba(0,0,0,0.2);
             color: #1a1a1a;
         }
-        .btn-small {
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            min-height: 36px;
-        }
-        .btn-warning {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            color: white;
-        }
+        .btn-small { padding: 6px 14px; font-size: 0.75rem; min-height: 36px; }
+        .btn-warning { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; }
+
+        /* ========== BARRA DE NAVEGAÇÃO (BOTTOM NAV) ========== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -149,6 +135,8 @@
         }
         body.light-theme .nav-btn { color: rgba(0,0,0,0.6); }
         body.light-theme .nav-btn.active { color: var(--primary-color); }
+
+        /* ========== CARDS E CONTAINERS ========== */
         input, select, textarea {
             font-size: 0.9rem;
             padding: 10px 14px;
@@ -207,19 +195,24 @@
             background: #000000;
             flex-direction: column;
         }
+
+        /* ========== CABEÇALHO ========== */
         .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
             background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--primary-color);
             position: sticky;
             top: 0;
             z-index: 100;
-            flex-wrap: wrap;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
             gap: 8px;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .logo-area {
             display: flex;
@@ -234,21 +227,40 @@
             font-size: 1.1rem;
             font-weight: 700;
         }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .profile-btn {
+        .calendar-container {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 12px;
-            border-radius: 40px;
+        }
+        .calendar-header {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--primary-color);
             cursor: pointer;
-            border: 1px solid var(--primary-color);
-            min-height: 36px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .month-display {
+            font-size: 0.9rem;
+            font-weight: 500;
+            background: rgba(233,30,99,0.2);
+            padding: 4px 10px;
+            border-radius: 30px;
+        }
+        .header-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .profile-avatar {
             min-width: 32px;
@@ -268,6 +280,15 @@
             text-overflow: ellipsis;
             max-width: 90px;
         }
+        .user-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
         .theme-icon, .bell-icon {
             background: none;
             border: none;
@@ -282,22 +303,44 @@
             border-radius: 50%;
             transition: 0.2s;
             position: relative;
+            overflow: visible;
         }
         .bell-icon .badge {
             position: absolute;
-            top: 0;
-            right: 0;
-            background: #f44336;
+            top: -6px;
+            right: -6px;
+            background: #ff3b30;
             color: white;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
+            font-weight: bold;
             border-radius: 50%;
-            width: 16px;
-            height: 16px;
+            min-width: 18px;
+            height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 4px rgba(0,0,0,0.5);
+            line-height: 1;
+            padding: 0 4px;
+            z-index: 10;
         }
+        .logout-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+
+        /* ========== PÁGINAS E CARDS ========== */
         .swipe-container {
             display: flex;
             overflow-x: auto;
@@ -435,11 +478,15 @@
             margin-bottom: 6px;
             font-size: 0.85rem;
         }
-        .venda-item, .ingrediente-item, .pedido-card, .rank-row, .estoque-item, .despesa-item, .entrada-item {
+        .venda-item, .ingrediente-item, .pedido-card, .rank-row, .estoque-item, .despesa-item, .entrada-item, .avaria-item {
             background: rgba(233,30,99,0.1);
             border-radius: 20px;
             padding: 12px;
             margin-bottom: 10px;
+        }
+        .avaria-item {
+            background: rgba(244, 67, 54, 0.15);
+            border-left: 4px solid #f44336;
         }
         .venda-campos {
             display: flex;
@@ -782,7 +829,7 @@
 
 <div id="loginScreen" class="login-container">
     <div class="login-card">
-        <h2><i class="fas fa-ice-cream"></i> Andrea Geladinhos ADM</h2>
+        <h2><i class="fas fa-ice-cream"></i> Geladinhos ADM</h2>
         <input type="email" id="loginEmail" placeholder="E-mail">
         <input type="password" id="loginPassword" placeholder="Senha">
         <button id="loginBtn" class="btn btn-primary" style="width:100%;">Entrar</button>
@@ -797,17 +844,27 @@
 </div>
 
 <div id="appContainer" class="app-container">
+    <!-- CABEÇALHO -->
     <div class="app-header">
-        <div class="logo-area">
-            <i class="fas fa-ice-cream"></i>
-            <h2>Andrea Geladinhos ADM</h2>
+        <div class="header-top">
+            <div class="logo-area">
+                <i class="fas fa-ice-cream"></i>
+                <h2>Geladinhos ADM</h2>
+            </div>
+            <div class="calendar-container">
+                <button id="calendarBtn" class="calendar-header" title="Selecionar mês"><i class="fas fa-calendar-alt"></i></button>
+                <span id="globalMonthDisplay" class="month-display"></span>
+            </div>
         </div>
-        <div class="header-right">
-            <button id="bellIcon" class="bell-icon"><i class="fas fa-bell"></i><span id="bellBadge" class="badge" style="display:none;">0</span></button>
-            <button id="theme-icon-header" class="theme-icon"><i class="fas fa-moon"></i></button>
-            <div class="profile-btn" id="logoutBtn">
+        <div class="header-bottom">
+            <div class="user-info">
                 <div id="userAvatar" class="profile-avatar">A</div>
-                <i class="fas fa-sign-out-alt"></i>
+                <span id="userNameDisplay" class="user-name"></span>
+            </div>
+            <div class="header-actions">
+                <button id="bellIcon" class="bell-icon"><i class="fas fa-bell"></i><span id="bellBadge" class="badge" style="display:none;">0</span></button>
+                <button id="themeIconHeader" class="theme-icon"><i class="fas fa-moon"></i></button>
+                <button id="logoutBtn" class="logout-btn" title="Sair"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </div>
     </div>
@@ -855,34 +912,14 @@
             <div class="card"><div class="card-title"><i class="fas fa-history"></i> Últimas Movimentações</div><div id="historicoMovimentacoes" style="max-height: 300px; overflow-y: auto;"></div></div>
         </div>
 
-        <!-- Página 1: Pedidos (UNIFICADO: online + presenciais) -->
+        <!-- Página 1: Histórico de Vendas (online + presenciais) -->
         <div class="swipe-page" data-page="1">
             <div class="card">
                 <div class="card-title"><i class="fas fa-clipboard-list"></i> Histórico de Vendas</div>
-                <!-- Filtros de tipo e status -->
                 <div class="filters-row">
-                    <div class="filter-group">
-                        <label>Tipo de venda</label>
-                        <select id="filtroTipoVenda">
-                            <option value="todos">Todos</option>
-                            <option value="online">Online</option>
-                            <option value="presencial">Presencial</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>Status (online)</label>
-                        <select id="filtroStatusVenda">
-                            <option value="todos">Todos</option>
-                            <option value="pendente">⏳ Pendente</option>
-                            <option value="preparando">🍳 Preparando</option>
-                            <option value="pronto">✅ Pronto</option>
-                            <option value="retirado">📦 Retirado</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>&nbsp;</label>
-                        <button id="aplicarFiltrosVendas" class="btn btn-primary">Filtrar</button>
-                    </div>
+                    <div class="filter-group"><label>Tipo de venda</label><select id="filtroTipoVenda"><option value="todos">Todos</option><option value="online">Online</option><option value="presencial">Presencial</option></select></div>
+                    <div class="filter-group"><label>Status (online)</label><select id="filtroStatusVenda"><option value="todos">Todos</option><option value="pendente">⏳ Pendente</option><option value="preparando">🍳 Preparando</option><option value="pronto">✅ Pronto</option><option value="retirado">📦 Retirado</option></select></div>
+                    <div class="filter-group"><label>&nbsp;</label><button id="aplicarFiltrosVendas" class="btn btn-primary">Filtrar</button></div>
                 </div>
                 <div id="listaVendasUnificadas" style="max-height: 500px; overflow-y: auto;"></div>
             </div>
@@ -890,199 +927,71 @@
 
         <!-- Página 2: Estoque de Sabores -->
         <div class="swipe-page" data-page="2">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-boxes"></i> Estoque de Sabores</div>
-                <div id="listaEstoque" class="estoque-grid"></div>
-                <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
-                    <input type="text" id="novoSabor" placeholder="Novo sabor" style="flex:2;">
-                    <input type="text" id="novoEmoji" placeholder="Emoji" value="🍧" style="width:70px;">
-                    <button class="btn btn-success" id="addSaborBtn"><i class="fas fa-plus"></i> Adicionar</button>
-                </div>
+            <div class="card"><div class="card-title"><i class="fas fa-boxes"></i> Estoque de Sabores</div><div id="listaEstoque" class="estoque-grid"></div>
+                <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;"><input type="text" id="novoSabor" placeholder="Novo sabor" style="flex:2;"><input type="text" id="novoEmoji" placeholder="Emoji" value="🍧" style="width:70px;"><button class="btn btn-success" id="addSaborBtn"><i class="fas fa-plus"></i> Adicionar</button></div>
                 <button class="btn btn-primary" id="salvarEstoqueBtn"><i class="fas fa-save"></i> Salvar Estoque</button>
             </div>
         </div>
 
-        <!-- Página 3: Produção e Ingredientes -->
+        <!-- Página 3: Produção -->
         <div class="swipe-page" data-page="3">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-line"></i> Gastos e Lucros</div>
-                <div id="resumoFinanceiro" style="background:rgba(0,0,0,0.3); border-radius:24px; padding:12px; margin-bottom:16px;">
-                    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center;">
-                        <div><small>💰 Gastos</small><div id="totalGasto" style="font-size:1.2rem; font-weight:700;">R$ 0</div></div>
-                        <div><small>📊 Lucro</small><div id="totalLucro" style="font-size:1.2rem; font-weight:700;">R$ 0</div></div>
-                        <div><small>🍦 Unidades</small><div id="totalUnidades" style="font-size:1.2rem; font-weight:700;">0</div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-cookie-bite"></i> Selecionar Sabor</div>
-                <select id="selectSaborProducao" style="width:100%; padding:12px; border-radius:40px; background:#1a1a1a; border:1px solid var(--primary-color); color:white;">
-                    <option value="">Selecione um sabor</option>
-                </select>
-            </div>
-            <div id="ingredientesPanel" style="display:none;">
-                <div class="card">
-                    <div class="card-title"><i class="fas fa-list"></i> Ingredientes para <span id="saborSelecionadoNome"></span></div>
-                    <div id="ingredientesLista" class="ingredientes-lista"></div>
-                    <div class="btn-group" style="margin-top: 8px;">
-                        <button class="btn btn-secondary" id="addIngredienteBtn"><i class="fas fa-plus"></i> Adicionar Ingrediente</button>
-                        <button class="btn btn-secondary" id="sincronizarIngredientesBtn"><i class="fas fa-sync-alt"></i> Sincronizar Nomes</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-title"><i class="fas fa-cubes"></i> Produção</div>
-                    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                        <span>Rendimento (unidades):</span>
-                        <input type="number" id="quantidadeProduzir" value="10" min="1" style="width:100px;">
-                        <button class="btn btn-success" id="btnProduzir"><i class="fas fa-flask"></i> Produzir</button>
-                    </div>
-                    <div id="resumoProducao" style="margin-top:12px; background:rgba(0,0,0,0.3); border-radius:20px; padding:12px;"></div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-history"></i> Histórico de Produções</div>
-                <div id="historicoProducoes" style="max-height: 250px; overflow-y: auto;"></div>
-                <button class="btn btn-danger" id="limparHistoricoBtn"><i class="fas fa-trash-alt"></i> Limpar Histórico</button>
-            </div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Gastos e Lucros</div><div id="resumoFinanceiro" style="background:rgba(0,0,0,0.3); border-radius:24px; padding:12px; margin-bottom:16px;"><div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; text-align:center;"><div><small>💰 Gastos</small><div id="totalGasto" style="font-size:1.2rem; font-weight:700;">R$ 0</div></div><div><small>📊 Lucro</small><div id="totalLucro" style="font-size:1.2rem; font-weight:700;">R$ 0</div></div><div><small>🍦 Unidades</small><div id="totalUnidades" style="font-size:1.2rem; font-weight:700;">0</div></div></div></div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-cookie-bite"></i> Selecionar Sabor</div><select id="selectSaborProducao" style="width:100%; padding:12px; border-radius:40px; background:#1a1a1a; border:1px solid var(--primary-color); color:white;"><option value="">Selecione um sabor</option></select></div>
+            <div id="ingredientesPanel" style="display:none;"><div class="card"><div class="card-title"><i class="fas fa-list"></i> Ingredientes para <span id="saborSelecionadoNome"></span></div><div id="ingredientesLista" class="ingredientes-lista"></div><div class="btn-group" style="margin-top: 8px;"><button class="btn btn-secondary" id="addIngredienteBtn"><i class="fas fa-plus"></i> Adicionar Ingrediente</button><button class="btn btn-secondary" id="sincronizarIngredientesBtn"><i class="fas fa-sync-alt"></i> Sincronizar Nomes</button></div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-cubes"></i> Produção</div><div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;"><span>Rendimento (unidades):</span><input type="number" id="quantidadeProduzir" value="10" min="1" style="width:100px;"><button class="btn btn-success" id="btnProduzir"><i class="fas fa-flask"></i> Produzir</button></div><div id="resumoProducao" style="margin-top:12px; background:rgba(0,0,0,0.3); border-radius:20px; padding:12px;"></div></div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-history"></i> Histórico de Produções</div><div id="historicoProducoes" style="max-height: 250px; overflow-y: auto;"></div><button class="btn btn-danger" id="limparHistoricoBtn"><i class="fas fa-trash-alt"></i> Limpar Histórico</button></div>
         </div>
 
         <!-- Página 4: Ranking e Gráficos -->
         <div class="swipe-page" data-page="4">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-trophy"></i> Top Sabores Mais Vendidos</div>
-                <div id="rankingLista" class="ranking-grid"></div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-line"></i> Vendas Últimos 7 Dias</div>
-                <canvas id="vendasChart" style="max-height:200px;"></canvas>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-line"></i> Evolução Mensal do Faturamento</div>
-                <canvas id="evolucaoMensalChart" style="max-height:200px;"></canvas>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-pie"></i> Lucro por Sabor (Top 5)</div>
-                <canvas id="lucroChart" style="max-height:200px;"></canvas>
-            </div>
+            <div class="card"><div class="card-title"><i class="fas fa-trophy"></i> Top Sabores Mais Vendidos</div><div id="rankingLista" class="ranking-grid"></div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Vendas Últimos 7 Dias</div><canvas id="vendasChart" style="max-height:200px;"></canvas></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Evolução Mensal do Faturamento</div><canvas id="evolucaoMensalChart" style="max-height:200px;"></canvas></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-pie"></i> Lucro por Sabor (Top 5)</div><canvas id="lucroChart" style="max-height:200px;"></canvas></div>
         </div>
 
         <!-- Página 5: Relatório Financeiro -->
         <div class="swipe-page" data-page="5">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-line"></i> Relatório Financeiro</div>
-                <div class="filters-row">
-                    <div class="filter-group"><label>Mês</label><select id="relatorioMes"></select></div>
-                    <div class="filter-group"><label>Ano</label><select id="relatorioAno"></select></div>
-                    <div class="filter-group"><label>&nbsp;</label><button id="aplicarFiltroRelatorio" class="btn btn-primary">Filtrar</button></div>
-                </div>
-                <div id="relatorioResumo"></div>
-                <button class="btn btn-secondary" id="exportarCSVBtn"><i class="fas fa-download"></i> Exportar CSV</button>
-                <button class="btn btn-primary" id="exportarPDFBtn" style="margin-top:8px;"><i class="fas fa-file-pdf"></i> Exportar PDF</button>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-cloud-upload-alt"></i> Backup Automático</div>
-                <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                    <div style="flex:1;"><label>Ativar backup</label><input type="checkbox" id="autoBackupToggle"></div>
-                    <div style="flex:1;"><label>Intervalo</label><select id="backupInterval"><option value="daily">Diário</option><option value="weekly" selected>Semanal</option><option value="monthly">Mensal</option></select></div>
-                </div>
-                <div style="margin-top:8px;"><small>Último backup: <span id="lastBackupDate">Nunca</span></small></div>
-                <button class="btn btn-secondary" id="forceBackupBtn" style="margin-top:8px;"><i class="fas fa-database"></i> Forçar Backup</button>
-                <button class="btn btn-secondary" id="restoreBackupBtn" style="margin-top:8px;"><i class="fas fa-upload"></i> Restaurar Backup</button>
-                <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
-                <button class="btn btn-danger" id="exportAllDataBtn" style="margin-top:8px;"><i class="fas fa-file-export"></i> Exportar Todos os Dados (JSON)</button>
-            </div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Relatório Financeiro</div><div class="filters-row"><div class="filter-group"><label>Mês</label><select id="relatorioMes"></select></div><div class="filter-group"><label>Ano</label><select id="relatorioAno"></select></div><div class="filter-group"><label>&nbsp;</label><button id="aplicarFiltroRelatorio" class="btn btn-primary">Filtrar</button></div></div><div id="relatorioResumo"></div><button class="btn btn-secondary" id="exportarCSVBtn"><i class="fas fa-download"></i> Exportar CSV</button><button class="btn btn-primary" id="exportarPDFBtn" style="margin-top:8px;"><i class="fas fa-file-pdf"></i> Exportar PDF</button></div>
+            <div class="card"><div class="card-title"><i class="fas fa-cloud-upload-alt"></i> Backup Automático</div><div style="display:flex; gap:12px; flex-wrap:wrap;"><div style="flex:1;"><label>Ativar backup</label><input type="checkbox" id="autoBackupToggle"></div><div style="flex:1;"><label>Intervalo</label><select id="backupInterval"><option value="daily">Diário</option><option value="weekly" selected>Semanal</option><option value="monthly">Mensal</option></select></div></div><div style="margin-top:8px;"><small>Último backup: <span id="lastBackupDate">Nunca</span></small></div><button class="btn btn-secondary" id="forceBackupBtn" style="margin-top:8px;"><i class="fas fa-database"></i> Forçar Backup</button><button class="btn btn-secondary" id="restoreBackupBtn" style="margin-top:8px;"><i class="fas fa-upload"></i> Restaurar Backup</button><input type="file" id="restoreFileInput" accept=".json" style="display:none;"><button class="btn btn-danger" id="exportAllDataBtn" style="margin-top:8px;"><i class="fas fa-file-export"></i> Exportar Todos os Dados (JSON)</button></div>
         </div>
 
-        <!-- Página 6: Estoque de Ingredientes + Lista de Compras -->
+        <!-- Página 6: Estoque Ingredientes + Lista de Compras -->
         <div class="swipe-page" data-page="6">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-warehouse"></i> Estoque de Ingredientes</div>
-                <div id="listaIngredientesEstoque" class="ingredientes-estoque-grid"></div>
-                <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
-                    <input type="text" id="novoIngredienteNome" placeholder="Nome do ingrediente" style="flex:2;">
-                    <select id="novoIngredienteUnidade" style="width:100px;">
-                        <option value="kg">kg</option><option value="Litro">Litro</option><option value="Pacote">Pacote</option>
-                        <option value="Caixa">Caixa</option><option value="Quilo">Quilo</option><option value="Grama">Grama</option>
-                        <option value="Unidade">Unidade</option><option value="Saco">Saco</option><option value="Fardo">Fardo</option>
-                        <option value="Lata">Lata</option><option value="Garrafa">Garrafa</option>
-                    </select>
-                    <button class="btn btn-success" id="addIngredienteEstoqueBtn"><i class="fas fa-plus"></i> Adicionar</button>
-                </div>
-                <button class="btn btn-primary" id="salvarIngredientesEstoqueBtn"><i class="fas fa-save"></i> Salvar Estoque</button>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-shopping-cart"></i> Lista de Compras Sugerida</div>
-                <div id="listaCompras" style="font-size:0.85rem;"></div>
-            </div>
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-simple"></i> Projeção de Estoque (Ingredientes)</div>
-                <div id="projecaoEstoqueContainer"></div>
-            </div>
+            <div class="card"><div class="card-title"><i class="fas fa-warehouse"></i> Estoque de Ingredientes</div><div id="listaIngredientesEstoque" class="ingredientes-estoque-grid"></div><div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;"><input type="text" id="novoIngredienteNome" placeholder="Nome do ingrediente" style="flex:2;"><select id="novoIngredienteUnidade" style="width:100px;"><option value="kg">kg</option><option value="Litro">Litro</option><option value="Pacote">Pacote</option><option value="Caixa">Caixa</option><option value="Quilo">Quilo</option><option value="Grama">Grama</option><option value="Unidade">Unidade</option><option value="Saco">Saco</option><option value="Fardo">Fardo</option><option value="Lata">Lata</option><option value="Garrafa">Garrafa</option></select><button class="btn btn-success" id="addIngredienteEstoqueBtn"><i class="fas fa-plus"></i> Adicionar</button></div><button class="btn btn-primary" id="salvarIngredientesEstoqueBtn"><i class="fas fa-save"></i> Salvar Estoque</button></div>
+            <div class="card"><div class="card-title"><i class="fas fa-shopping-cart"></i> Lista de Compras Sugerida</div><div id="listaCompras" style="font-size:0.85rem;"></div></div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Projeção de Estoque (Ingredientes)</div><div id="projecaoEstoqueContainer"></div></div>
         </div>
 
         <!-- Página 7: Devedores (agrupado) -->
         <div class="swipe-page" data-page="7">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-hand-holding-usd"></i> Devedores</div>
-                <div id="listaDevedores" class="devedores-grid"></div>
-                <div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;">
-                    <input type="text" id="novoDevedorNome" placeholder="Nome do cliente" style="flex:2;">
-                    <input type="number" id="novoDevedorValor" placeholder="Valor R$" step="0.01" style="width:130px;">
-                    <button class="btn btn-success" id="addDevedorBtn"><i class="fas fa-plus"></i> Adicionar</button>
-                </div>
-            </div>
+            <div class="card"><div class="card-title"><i class="fas fa-hand-holding-usd"></i> Devedores</div><div id="listaDevedores" class="devedores-grid"></div><div style="display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap;"><input type="text" id="novoDevedorNome" placeholder="Nome do cliente" style="flex:2;"><input type="number" id="novoDevedorValor" placeholder="Valor R$" step="0.01" style="width:130px;"><button class="btn btn-success" id="addDevedorBtn"><i class="fas fa-plus"></i> Adicionar</button></div></div>
         </div>
 
         <!-- Página 8: Despesas Operacionais -->
         <div class="swipe-page" data-page="8">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-file-invoice-dollar"></i> Despesas Operacionais</div>
-                <div id="listaDespesas" style="max-height: 400px; overflow-y: auto;"></div>
-                <div class="form-row" style="margin-top: 16px; gap: 8px; display: flex; flex-wrap: wrap;">
-                    <input type="text" id="novaDespesaDesc" placeholder="Descrição" style="flex:2;">
-                    <input type="number" id="novaDespesaValor" placeholder="Valor R$" step="0.01" style="width:120px;">
-                    <select id="novaDespesaCategoria" style="width:130px;">
-                        <option value="Aluguel">Aluguel</option><option value="Energia">Energia</option><option value="Água">Água</option>
-                        <option value="Salários">Salários</option><option value="Manutenção">Manutenção</option><option value="Marketing">Marketing</option>
-                        <option value="Outros">Outros</option>
-                    </select>
-                    <input type="date" id="novaDespesaData" value="" style="width:130px;">
-                    <button class="btn btn-success" id="addDespesaBtn"><i class="fas fa-plus"></i> Adicionar</button>
-                </div>
-                <div class="card" style="margin-top: 12px;">
-                    <div class="card-title"><i class="fas fa-chart-pie"></i> Total de Despesas por Categoria</div>
-                    <div id="resumoDespesasCategorias"></div>
-                </div>
-            </div>
+            <div class="card"><div class="card-title"><i class="fas fa-file-invoice-dollar"></i> Despesas Operacionais</div><div id="listaDespesas" style="max-height: 400px; overflow-y: auto;"></div><div class="form-row" style="margin-top: 16px; gap: 8px; display: flex; flex-wrap: wrap;"><input type="text" id="novaDespesaDesc" placeholder="Descrição" style="flex:2;"><input type="number" id="novaDespesaValor" placeholder="Valor R$" step="0.01" style="width:120px;"><select id="novaDespesaCategoria" style="width:130px;"><option value="Aluguel">Aluguel</option><option value="Energia">Energia</option><option value="Água">Água</option><option value="Salários">Salários</option><option value="Manutenção">Manutenção</option><option value="Marketing">Marketing</option><option value="Outros">Outros</option></select><input type="date" id="novaDespesaData" value="" style="width:130px;"><button class="btn btn-success" id="addDespesaBtn"><i class="fas fa-plus"></i> Adicionar</button></div><div class="card" style="margin-top: 12px;"><div class="card-title"><i class="fas fa-chart-pie"></i> Total de Despesas por Categoria</div><div id="resumoDespesasCategorias"></div></div></div>
         </div>
 
         <!-- Página 9: Fluxo de Caixa (entradas) -->
         <div class="swipe-page" data-page="9">
-            <div class="card">
-                <div class="card-title"><i class="fas fa-chart-line"></i> Fluxo de Caixa - Entradas</div>
-                <div class="filters-row">
-                    <button class="btn btn-secondary" id="verEntradasSemana">📅 Últimos 7 dias</button>
-                    <button class="btn btn-secondary" id="verEntradasMensal">📆 Últimos 30 dias</button>
-                </div>
-                <div id="fluxoEntradasContainer" class="fluxo-entradas-lista"></div>
-            </div>
+            <div class="card"><div class="card-title"><i class="fas fa-chart-line"></i> Fluxo de Caixa - Entradas</div><div class="filters-row"><button class="btn btn-secondary" id="verEntradasSemana">📅 Últimos 7 dias</button><button class="btn btn-secondary" id="verEntradasMensal">📆 Últimos 30 dias</button></div><div id="fluxoEntradasContainer" class="fluxo-entradas-lista"></div></div>
         </div>
 
         <!-- Página 10: Análise Semanal -->
         <div class="swipe-page" data-page="10">
+            <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Análise Semanal de Vendas</div><div class="analise-item"><div class="analise-titulo">🍦 Sabores mais vendidos (quantidade)</div><div id="analiseRankingSabores"></div></div><div class="analise-item"><div class="analise-titulo">⏰ Horários de pico</div><div id="analiseHorarios"></div></div><div class="analise-item"><div class="analise-titulo">📆 Dia da semana com maior faturamento</div><div id="analiseDiaSemana"></div></div></div>
+        </div>
+
+        <!-- NOVA PÁGINA 11: AVARIAS -->
+        <div class="swipe-page" data-page="11">
             <div class="card">
-                <div class="card-title"><i class="fas fa-chart-simple"></i> Análise Semanal de Vendas</div>
-                <div class="analise-item">
-                    <div class="analise-titulo">🍦 Sabores mais vendidos (quantidade)</div>
-                    <div id="analiseRankingSabores"></div>
-                </div>
-                <div class="analise-item">
-                    <div class="analise-titulo">⏰ Horários de pico</div>
-                    <div id="analiseHorarios"></div>
-                </div>
-                <div class="analise-item">
-                    <div class="analise-titulo">📆 Dia da semana com maior faturamento</div>
-                    <div id="analiseDiaSemana"></div>
+                <div class="card-title"><i class="fas fa-boxes"></i> Controle de Avarias (Perda de Estoque)</div>
+                <div id="listaAvariasEstoque"></div>
+                <div class="card" style="margin-top: 16px;">
+                    <div class="card-title"><i class="fas fa-history"></i> Histórico de Avarias</div>
+                    <div id="historicoAvarias" style="max-height: 300px; overflow-y: auto;"></div>
+                    <button class="btn btn-danger" id="limparHistoricoAvariasBtn" style="margin-top: 12px; width: 100%;"><i class="fas fa-trash-alt"></i> Limpar Histórico</button>
                 </div>
             </div>
         </div>
@@ -1103,6 +1012,7 @@
     <button class="nav-btn" data-page="8"><i class="fas fa-file-invoice-dollar"></i><span>Despesas</span></button>
     <button class="nav-btn" data-page="9"><i class="fas fa-chart-simple"></i><span>Fluxo</span></button>
     <button class="nav-btn" data-page="10"><i class="fas fa-chart-line"></i><span>Análise</span></button>
+    <button class="nav-btn" data-page="11"><i class="fas fa-exclamation-triangle"></i><span>Avarias</span></button>
 </div>
 
 <div id="notificationsModal" class="notifications-modal">
@@ -1131,16 +1041,46 @@
     const PRECO_VENDA = 2.00;
     const UNIDADES = ["Litro", "Pacote", "Caixa", "Quilo", "Grama", "Unidade", "Saco", "Fardo", "Lata", "Garrafa"];
 
-    // Variáveis globais
-    let pedidosArray = [], estoqueObj = {}, saboresMap = {}, filtroStatus = 'todos';
+    // ========== VARIÁVEIS GLOBAIS ==========
+    let pedidosArray = [], estoqueObj = {}, saboresMap = {};
     let saldoAtualCaixa = 0, carrinhoPresencial = [], vendasPresenciaisArray = [], movimentacoesCaixa = [];
-    let ingredientesPorSabor = {}, ingredientesEstoque = {}, devedores = [], despesasArray = [];
-    let notificacoes = [], ultimoRegistroVenda = null;
+    let ingredientesPorSabor = {}, ingredientesEstoque = {}, devedores = [], despesasArray = [], avariasArray = [];
+    let notificacoes = [], ultimasVendasCache = [];
     let autoBackupEnabled = false, backupInterval = 'weekly', lastBackupTimestamp = 0, backupCheckInterval = null;
     let vendasChart = null, lucroChart = null, evolucaoMensalChart = null;
-    let metaSemanal = 2000, ultimasVendasCache = [];
+    let metaSemanal = 2000;
+    let selectedMonth = new Date().getMonth();
 
-    // Funções auxiliares
+    // ========== ALERTA SONORO ==========
+    let audioContext = null;
+    let audioAllowed = false;
+    let lastUnreadCount = 0;
+
+    function enableAudio() {
+        if (audioAllowed) return;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            audioAllowed = true;
+        } catch (e) { console.warn("Web Audio API não suportada"); }
+    }
+    function playBeep() {
+        if (!audioAllowed || !audioContext) return;
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.frequency.value = 880;
+        gain.gain.value = 0.3;
+        osc.start();
+        gain.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 0.5);
+        osc.stop(audioContext.currentTime + 0.5);
+    }
+    document.addEventListener('click', function enableAudioOnClick() {
+        enableAudio();
+        document.removeEventListener('click', enableAudioOnClick);
+    }, { once: true });
+
+    // ========== FUNÇÕES AUXILIARES ==========
     function showLoading(show) { document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none'; }
     function showToast(msg, error = false) {
         const existing = document.querySelector('.toast-message');
@@ -1166,17 +1106,31 @@
         if (!notificacoes.length) { container.innerHTML = '<div style="text-align:center; padding:16px;">Nenhuma atividade.</div>'; return; }
         container.innerHTML = notificacoes.map(n => `<div class="notification-item"><div class="notification-time">${n.data}</div><div>${escapeHtml(n.description)}</div></div>`).join('');
     }
-    async function atualizarBadgeNotificacoes() { const snap = await db.collection('notificacoes').get(); const badge = document.getElementById('bellBadge'); if (badge) { if (snap.size > 0) { badge.style.display = 'flex'; badge.innerText = snap.size > 9 ? '9+' : snap.size; } else badge.style.display = 'none'; } }
+    async function atualizarBadgeNotificacoes() {
+        const snap = await db.collection('notificacoes').get();
+        const currentCount = snap.size;
+        if (currentCount > lastUnreadCount) playBeep();
+        lastUnreadCount = currentCount;
+        const badge = document.getElementById('bellBadge');
+        if (badge) {
+            if (currentCount > 0) {
+                badge.style.display = 'flex';
+                badge.innerText = currentCount > 9 ? '9+' : currentCount;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+    }
     function atualizarTotalReceber() { const total = devedores.reduce((acc, d) => acc + (d.valor || 0), 0); document.getElementById('totalReceber').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`; }
 
-    // ========== CAIXA (com sabores nas movimentações) ==========
+    // ========== CAIXA (mantido igual, mas incluindo avaria como saída) ==========
     async function carregarCaixa() {
         try {
             const doc = await db.collection('config').doc('caixa').get();
             saldoAtualCaixa = doc.exists ? doc.data().saldo || 0 : 0;
             document.getElementById('saldoCaixa').innerHTML = `R$ ${saldoAtualCaixa.toFixed(2).replace('.', ',')}`;
             await carregarMovimentacoes();
-        } catch (err) { console.error("Erro carregarCaixa:", err); }
+        } catch (err) { console.error(err); }
     }
     async function carregarMovimentacoes() {
         try {
@@ -1185,21 +1139,16 @@
             const container = document.getElementById('historicoMovimentacoes');
             if (!movimentacoesCaixa.length) { container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma movimentação</div>'; return; }
             container.innerHTML = movimentacoesCaixa.map(m => {
-                let descricaoExtra = '';
+                let saboresExtra = '';
                 if (m.tipo === 'entrada' && m.vendaData && m.vendaData.itens) {
-                    const sabores = m.vendaData.itens.map(i => `${i.qtd}x ${i.sabor}`).join(', ');
-                    descricaoExtra = `<div style="font-size:0.75rem; opacity:0.8; margin-top:4px;">🍦 ${sabores}</div>`;
+                    saboresExtra = `<div style="font-size:0.75rem; opacity:0.8; margin-top:4px;">🍦 ${m.vendaData.itens.map(i => `${i.qtd}x ${i.sabor}`).join(', ')}</div>`;
                 }
                 return `<div class="mov-item ${m.tipo === 'entrada' ? 'mov-entrada' : 'mov-saida'}">
-                    <div style="display:flex; justify-content:space-between;">
-                        <strong>${m.tipo === 'entrada' ? '💰 Entrada' : '💸 Saída'}</strong>
-                        <span>${m.dataLegivel || new Date(m.data).toLocaleString('pt-BR')}</span>
-                    </div>
-                    <div>R$ ${(m.valor || 0).toFixed(2)} - ${m.descricao || ''}</div>
-                    ${descricaoExtra}
+                    <div style="display:flex; justify-content:space-between;"><strong>${m.tipo === 'entrada' ? '💰 Entrada' : '💸 Saída'}</strong><span>${m.dataLegivel || new Date(m.data).toLocaleString('pt-BR')}</span></div>
+                    <div>R$ ${(m.valor || 0).toFixed(2)} - ${m.descricao || ''}</div>${saboresExtra}
                 </div>`;
             }).join('');
-        } catch (err) { console.error("Erro carregarMovimentacoes:", err); }
+        } catch (err) { console.error(err); }
     }
     async function registrarMovimentacao(tipo, valor, descricao, vendaData = null) {
         const novoSaldo = tipo === 'entrada' ? saldoAtualCaixa + valor : saldoAtualCaixa - valor;
@@ -1215,49 +1164,23 @@
         carregarRelatorios();
         addNotification('movimentacao', `${tipo === 'entrada' ? 'Entrada' : 'Saída'} de R$ ${valor.toFixed(2)} - ${descricao}`);
     }
-    document.getElementById('desfazerUltimaVendaBtn')?.addEventListener('click', async () => {
-        if (ultimasVendasCache.length === 0) { showToast("Nenhuma venda para desfazer", true); return; }
-        const ultima = ultimasVendasCache[ultimasVendasCache.length - 1];
-        const confirm = await Swal.fire({
-            title: 'Desfazer última venda?',
-            text: `Venda de R$ ${ultima.total.toFixed(2)} (${ultima.tipo})`,
-            icon: 'warning',
-            showCancelButton: true
-        });
-        if (!confirm.isConfirmed) return;
-        try {
-            const novoEstoque = { ...estoqueObj };
-            for (const item of ultima.itens) {
-                novoEstoque[item.sabor] = (novoEstoque[item.sabor] || 0) + item.qtd;
-            }
-            await db.collection('config').doc('cardapio').update({ estoque: novoEstoque });
-            estoqueObj = novoEstoque;
-            renderizarEstoqueUI();
-            if (ultima.tipo === 'à vista') {
-                await registrarMovimentacao('saida', ultima.total, `Desfazer venda - ${ultima.id || ''}`);
-            } else {
-                const devedorParaRemover = devedores.find(d => d.nome === ultima.cliente && Math.abs(d.valor - ultima.total) < 0.01);
-                if (devedorParaRemover) {
-                    await db.collection('devedores').doc(devedorParaRemover.id).delete();
-                    devedores = devedores.filter(d => d.id !== devedorParaRemover.id);
-                    renderizarDevedoresUI();
-                    atualizarTotalReceber();
-                }
-            }
-            ultimasVendasCache.pop();
-            await carregarVendasPresenciais();
-            showToast("Última venda desfeita com sucesso");
-            addNotification('venda', `Desfez venda de R$ ${ultima.total.toFixed(2)}`);
-            await atualizarVendasSemana();
-            await atualizarMetaSemanalProgresso();
-            verificarEstoqueBaixo();
-            carregarListaCompras();
-            carregarAnaliseSemanal();
-            carregarVendasUnificadas(); // atualiza página de vendas
-        } catch (err) { console.error(err); showToast("Erro ao desfazer venda", true); }
+    document.getElementById('definirSaldoBtn')?.addEventListener('click', async () => {
+        const { value: novo } = await Swal.fire({ title: 'Novo saldo', input: 'number', inputValue: saldoAtualCaixa, showCancelButton: true });
+        if (novo === null || isNaN(parseFloat(novo))) return;
+        const diff = parseFloat(novo) - saldoAtualCaixa;
+        await registrarMovimentacao(diff > 0 ? 'entrada' : 'saida', Math.abs(diff), "Ajuste manual");
+        showToast(`Saldo alterado para R$ ${parseFloat(novo).toFixed(2)}`);
+    });
+    document.getElementById('sacarBtn')?.addEventListener('click', async () => {
+        const { value: valor } = await Swal.fire({ title: 'Valor a sacar', input: 'number', inputValue: 0, showCancelButton: true });
+        if (valor === null || isNaN(parseFloat(valor)) || parseFloat(valor) <= 0) return;
+        if (parseFloat(valor) > saldoAtualCaixa) return showToast("Saldo insuficiente", true);
+        const { value: motivo } = await Swal.fire({ title: 'Motivo', input: 'text', inputValue: 'Saque', showCancelButton: true });
+        await registrarMovimentacao('saida', parseFloat(valor), motivo || "Saque");
+        showToast(`Saque de R$ ${parseFloat(valor).toFixed(2)} realizado`);
     });
 
-    // ========== VENDA RÁPIDA ==========
+    // ========== VENDA RÁPIDA (PRESENCIAL) ==========
     function atualizarCarrinho() {
         const container = document.getElementById('itensVendaContainer');
         if (!container) return;
@@ -1326,11 +1249,40 @@
         await atualizarMetaSemanalProgresso();
         carregarListaCompras();
         carregarAnaliseSemanal();
-        carregarVendasUnificadas(); // atualiza página de vendas
+        carregarVendasUnificadas();
     }
     document.getElementById('finalizarVendaBtn')?.addEventListener('click', () => finalizarVenda('avista'));
     document.getElementById('finalizarVendaPrazoBtn')?.addEventListener('click', () => finalizarVenda('prazo'));
     async function carregarVendasPresenciais() { try { const snapshot = await db.collection('vendasPresenciais').orderBy('data', 'desc').limit(100).get(); vendasPresenciaisArray = snapshot.docs.map(doc => doc.data()); } catch (err) { console.error(err); } }
+    document.getElementById('desfazerUltimaVendaBtn')?.addEventListener('click', async () => {
+        if (ultimasVendasCache.length === 0) { showToast("Nenhuma venda para desfazer", true); return; }
+        const ultima = ultimasVendasCache[ultimasVendasCache.length - 1];
+        const confirm = await Swal.fire({ title: 'Desfazer última venda?', text: `Venda de R$ ${ultima.total.toFixed(2)} (${ultima.tipo})`, icon: 'warning', showCancelButton: true });
+        if (!confirm.isConfirmed) return;
+        try {
+            const novoEstoque = { ...estoqueObj };
+            for (const item of ultima.itens) novoEstoque[item.sabor] = (novoEstoque[item.sabor] || 0) + item.qtd;
+            await db.collection('config').doc('cardapio').update({ estoque: novoEstoque });
+            estoqueObj = novoEstoque;
+            renderizarEstoqueUI();
+            if (ultima.tipo === 'à vista') await registrarMovimentacao('saida', ultima.total, `Desfazer venda - ${ultima.id || ''}`);
+            else {
+                const devedor = devedores.find(d => d.nome === ultima.cliente && Math.abs(d.valor - ultima.total) < 0.01);
+                if (devedor) {
+                    await db.collection('devedores').doc(devedor.id).delete();
+                    devedores = devedores.filter(d => d.id !== devedor.id);
+                    renderizarDevedoresUI();
+                    atualizarTotalReceber();
+                }
+            }
+            ultimasVendasCache.pop();
+            await carregarVendasPresenciais();
+            showToast("Última venda desfeita com sucesso");
+            addNotification('venda', `Desfez venda de R$ ${ultima.total.toFixed(2)}`);
+            await atualizarVendasSemana(); await atualizarMetaSemanalProgresso();
+            verificarEstoqueBaixo(); carregarListaCompras(); carregarAnaliseSemanal(); carregarVendasUnificadas();
+        } catch (err) { console.error(err); showToast("Erro ao desfazer venda", true); }
+    });
 
     // ========== META SEMANAL ==========
     async function carregarMetaSemanal() {
@@ -1369,271 +1321,7 @@
         }
     });
 
-    // ========== LISTA DE COMPRAS ==========
-    async function carregarListaCompras() {
-        try {
-            const producoesSnap = await db.collection('producoes').where('data', '>=', new Date(Date.now() - 7*24*60*60*1000).toISOString()).get();
-            const consumoMap = {};
-            for (const doc of producoesSnap.docs) {
-                const data = doc.data();
-                const receita = ingredientesPorSabor[data.sabor] || [];
-                for (const ing of receita) {
-                    consumoMap[ing.nome] = (consumoMap[ing.nome] || 0) + (ing.quantidade * data.quantidade);
-                }
-            }
-            const consumoDiario = {};
-            for (const [nome, total] of Object.entries(consumoMap)) consumoDiario[nome] = total / 7;
-            const container = document.getElementById('listaCompras');
-            if (!container) return;
-            const nomes = Object.keys(ingredientesEstoque).sort();
-            let html = '';
-            for (const nome of nomes) {
-                const qtdAtual = ingredientesEstoque[nome].quantidade;
-                const consumo = consumoDiario[nome] || 0;
-                let dias = consumo > 0 ? Math.floor(qtdAtual / consumo) : 999;
-                if (dias < 3 && qtdAtual > 0) {
-                    html += `<div>⚠️ ${escapeHtml(nome)}: estoque para ~${dias} dias. Recomenda-se comprar.</div>`;
-                } else if (qtdAtual === 0) {
-                    html += `<div>🔴 ${escapeHtml(nome)}: em falta! Comprar urgente.</div>`;
-                }
-            }
-            if (html === '') html = '<div style="text-align:center;">✅ Estoque saudável. Nenhuma compra urgente.</div>';
-            container.innerHTML = html;
-        } catch (err) { console.error(err); }
-    }
-
-    // ========== FLUXO DE CAIXA ==========
-    async function carregarFluxoEntradas(tipo = 'semana') {
-        try {
-            const agora = new Date();
-            let dataInicio;
-            if (tipo === 'semana') {
-                dataInicio = new Date(agora);
-                dataInicio.setDate(agora.getDate() - 7);
-            } else {
-                dataInicio = new Date(agora);
-                dataInicio.setDate(agora.getDate() - 30);
-            }
-            const snapshot = await db.collection('movimentacoesCaixa')
-                .where('data', '>=', dataInicio.toISOString())
-                .orderBy('data', 'desc')
-                .get();
-            const entradas = snapshot.docs
-                .map(doc => doc.data())
-                .filter(mov => mov.tipo === 'entrada');
-            const container = document.getElementById('fluxoEntradasContainer');
-            if (!container) return;
-            if (!entradas.length) {
-                container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma entrada no período.</div>';
-                return;
-            }
-            let total = 0;
-            let html = '';
-            entradas.forEach(e => {
-                total += e.valor || 0;
-                let saboresHtml = '';
-                if (e.vendaData && e.vendaData.itens) {
-                    const sabores = e.vendaData.itens.map(i => `${i.qtd}x ${i.sabor}`).join(', ');
-                    saboresHtml = `<div style="font-size:0.75rem; opacity:0.8; margin-top:4px;">🍦 ${sabores}</div>`;
-                }
-                html += `<div class="entrada-item"><div><strong>${e.dataLegivel || new Date(e.data).toLocaleString('pt-BR')}</strong></div><div>R$ ${(e.valor || 0).toFixed(2)} - ${e.descricao || ''}</div>${saboresHtml}</div>`;
-            });
-            container.innerHTML = `<div class="fluxo-card">📊 Total de entradas no período: <strong>R$ ${total.toFixed(2)}</strong></div>${html}`;
-        } catch (err) {
-            console.error("Erro ao carregar fluxo de entradas:", err);
-            const container = document.getElementById('fluxoEntradasContainer');
-            if (container) container.innerHTML = '<div class="card" style="color:red;">Erro ao carregar dados. Tente novamente.</div>';
-        }
-    }
-    document.getElementById('verEntradasSemana')?.addEventListener('click', () => carregarFluxoEntradas('semana'));
-    document.getElementById('verEntradasMensal')?.addEventListener('click', () => carregarFluxoEntradas('mensal'));
-
-    // ========== PÁGINA DE VENDAS UNIFICADAS (NOVA) ==========
-    let filtroTipoAtual = 'todos';
-    let filtroStatusAtual = 'todos';
-
-    function carregarVendasUnificadas() {
-        // Combinar pedidos online e vendas presenciais
-        let todasVendas = [];
-        // Pedidos online
-        pedidosArray.forEach(p => {
-            todasVendas.push({
-                id: p.id,
-                tipo: 'online',
-                cliente: p.cliente || 'Cliente',
-                itens: p.itens || [],
-                total: p.total || 0,
-                data: p.data,
-                dataLegivel: p.dataLegivel || new Date(p.data).toLocaleString('pt-BR'),
-                status: p.status || 'pendente',
-                pagamento: p.pagamento || '-',
-                origem: 'online'
-            });
-        });
-        // Vendas presenciais
-        vendasPresenciaisArray.forEach(v => {
-            todasVendas.push({
-                id: v.id || Math.random().toString(),
-                tipo: 'presencial',
-                cliente: v.cliente || 'Cliente',
-                itens: v.itens || [],
-                total: v.total || 0,
-                data: v.data,
-                dataLegivel: v.dataLegivel || new Date(v.data).toLocaleString('pt-BR'),
-                status: v.tipo === 'a prazo' ? 'a prazo' : 'concluída',
-                pagamento: v.tipo === 'a prazo' ? 'A prazo' : 'À vista',
-                origem: 'presencial'
-            });
-        });
-        // Ordenar por data decrescente
-        todasVendas.sort((a, b) => new Date(b.data) - new Date(a.data));
-        // Aplicar filtros
-        let filtradas = todasVendas;
-        if (filtroTipoAtual !== 'todos') {
-            filtradas = filtradas.filter(v => v.tipo === filtroTipoAtual);
-        }
-        if (filtroStatusAtual !== 'todos') {
-            filtradas = filtradas.filter(v => v.status === filtroStatusAtual);
-        }
-        const container = document.getElementById('listaVendasUnificadas');
-        if (!container) return;
-        if (!filtradas.length) {
-            container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma venda encontrada.</div>';
-            return;
-        }
-        const statusMap = {
-            pendente: '⏳ Pendente',
-            preparando: '🍳 Preparando',
-            pronto: '✅ Pronto',
-            retirado: '📦 Retirado',
-            concluída: '✅ Concluída',
-            'a prazo': '📅 A prazo'
-        };
-        const nextStatus = {
-            pendente: 'preparando',
-            preparando: 'pronto',
-            pronto: 'retirado',
-            retirado: null
-        };
-        container.innerHTML = filtradas.map(v => {
-            const itensHtml = v.itens.map(i => `${i.quantidade || i.qtd}x ${i.sabor}`).join(', ');
-            const tipoBadge = v.tipo === 'online' ? '🖥️ Online' : '🏪 Presencial';
-            let botoes = '';
-            if (v.tipo === 'online' && nextStatus[v.status]) {
-                botoes = `<button class="btn btn-success btn-small" data-id="${v.id}" data-status="${nextStatus[v.status]}">Avançar</button>`;
-            }
-            if (v.tipo === 'presencial') {
-                botoes = `<button class="btn btn-danger btn-small" data-id="${v.id}" data-excluir-presencial="true">Excluir</button>`;
-            } else {
-                botoes += `<button class="btn btn-danger btn-small" data-id="${v.id}" data-excluir="true">Excluir</button>`;
-            }
-            return `<div class="pedido-card" data-id="${v.id}" data-tipo="${v.tipo}">
-                <div style="display:flex; justify-content:space-between;">
-                    <strong>${escapeHtml(v.cliente)}</strong>
-                    <span>${tipoBadge} | ${statusMap[v.status] || v.status}</span>
-                </div>
-                <div style="margin:8px 0;">${itensHtml}</div>
-                <div>Total: R$ ${(v.total || 0).toFixed(2)} | ${v.pagamento}</div>
-                <div style="margin-top:4px; font-size:0.7rem;">📅 ${v.dataLegivel}</div>
-                <div style="display:flex; gap:8px; margin-top:8px;">
-                    ${botoes}
-                </div>
-            </div>`;
-        }).join('');
-        // Eventos para botões de avançar (online)
-        document.querySelectorAll('#listaVendasUnificadas .btn-success').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                const id = btn.dataset.id;
-                const status = btn.dataset.status;
-                await db.collection('pedidos').doc(id).update({ status });
-                showToast("Status atualizado");
-                addNotification('pedido', `Pedido ${id} atualizado para ${status}`);
-                carregarVendasUnificadas();
-                carregarAnaliseSemanal();
-            });
-        });
-        // Eventos para excluir (online)
-        document.querySelectorAll('#listaVendasUnificadas .btn-danger[data-excluir="true"]').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                const id = btn.dataset.id;
-                if (await Swal.fire({ title: 'Excluir pedido?', icon: 'warning', showCancelButton: true }).then(r => r.isConfirmed)) {
-                    await db.collection('pedidos').doc(id).delete();
-                    addNotification('pedido', `Pedido ${id} excluído`);
-                    carregarVendasUnificadas();
-                    carregarAnaliseSemanal();
-                }
-            });
-        });
-        // Eventos para excluir venda presencial
-        document.querySelectorAll('#listaVendasUnificadas .btn-danger[data-excluir-presencial="true"]').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                const card = btn.closest('.pedido-card');
-                const id = btn.dataset.id;
-                // Tentar encontrar no array de vendas presenciais e remover do Firestore
-                const venda = vendasPresenciaisArray.find(v => v.id === id);
-                if (!venda) {
-                    showToast("Venda não encontrada para exclusão", true);
-                    return;
-                }
-                if (await Swal.fire({ title: 'Excluir venda presencial?', text: `Remover venda de R$ ${venda.total.toFixed(2)}?`, icon: 'warning', showCancelButton: true }).then(r => r.isConfirmed)) {
-                    // Reverter estoque
-                    for (const item of venda.itens) {
-                        if (estoqueObj[item.sabor] !== undefined) {
-                            estoqueObj[item.sabor] += item.qtd;
-                        }
-                    }
-                    await db.collection('config').doc('cardapio').update({ estoque: estoqueObj });
-                    renderizarEstoqueUI();
-                    // Se for a prazo, remover devedor
-                    if (venda.tipo === 'a prazo' && venda.cliente) {
-                        const devedor = devedores.find(d => d.nome === venda.cliente && Math.abs(d.valor - venda.total) < 0.01);
-                        if (devedor) {
-                            await db.collection('devedores').doc(devedor.id).delete();
-                            devedores = devedores.filter(d => d.id !== devedor.id);
-                            renderizarDevedoresUI();
-                            atualizarTotalReceber();
-                        }
-                    }
-                    // Remover do Firestore
-                    if (venda.id && venda.id.toString().length > 5) {
-                        await db.collection('vendasPresenciais').doc(venda.id).delete();
-                    } else {
-                        // Se não tiver id (cache), remover por data aproximada (fallback)
-                        const snapshot = await db.collection('vendasPresenciais').where('data', '==', venda.data).get();
-                        for (const doc of snapshot.docs) {
-                            if (doc.data().total === venda.total) await doc.ref.delete();
-                        }
-                    }
-                    await carregarVendasPresenciais();
-                    showToast("Venda presencial excluída");
-                    addNotification('venda', `Venda presencial excluída (R$ ${venda.total.toFixed(2)})`);
-                    carregarVendasUnificadas();
-                    carregarAnaliseSemanal();
-                    atualizarGraficos();
-                }
-            });
-        });
-    }
-    document.getElementById('aplicarFiltrosVendas')?.addEventListener('click', () => {
-        filtroTipoAtual = document.getElementById('filtroTipoVenda').value;
-        filtroStatusAtual = document.getElementById('filtroStatusVenda').value;
-        carregarVendasUnificadas();
-    });
-
-    // ========== PEDIDOS ONLINE (escuta em tempo real) ==========
-    function escutarPedidos() {
-        db.collection('pedidos').orderBy('data', 'desc').onSnapshot(snapshot => {
-            pedidosArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), status: doc.data().status || 'pendente' }));
-            renderizarRanking();
-            carregarRelatorios();
-            atualizarGraficos();
-            atualizarVendasSemana().then(() => atualizarMetaSemanalProgresso());
-            carregarAnaliseSemanal();
-            carregarVendasUnificadas(); // atualiza página de vendas
-        });
-    }
-
-    // ========== ESTOQUE SABORES ==========
+    // ========== ESTOQUE DE SABORES ==========
     async function carregarCardapio() {
         try {
             const doc = await db.collection('config').doc('cardapio').get();
@@ -1665,14 +1353,14 @@
             if (input && display) { input.addEventListener('input', () => { display.innerText = input.value; }); display.innerText = input.value; }
         }
         document.querySelectorAll('.qty-btn').forEach(btn => btn.addEventListener('click', (e) => { const sabor = btn.dataset.sabor; const delta = parseInt(btn.dataset.delta); const input = document.getElementById(`qtd_${sabor.replace(/[^a-zA-Z0-9]/g, '_')}`); if (input) { let novo = (parseInt(input.value) || 0) + delta; if (novo < 0) novo = 0; input.value = novo; document.getElementById(`qtdDisplay_${sabor.replace(/[^a-zA-Z0-9]/g, '_')}`).innerText = novo; } }));
-        document.querySelectorAll('.btn-remover').forEach(btn => btn.addEventListener('click', async () => { const sabor = btn.dataset.sabor; if (await Swal.fire({ title: `Remover ${sabor}?`, icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { delete saboresMap[sabor]; delete estoqueObj[sabor]; await db.collection('config').doc('cardapio').set({ sabores: saboresMap, estoque: estoqueObj }); renderizarEstoqueUI(); atualizarSelectSaboresProducao(); atualizarCarrinho(); showToast(`Sabor ${sabor} removido`); verificarEstoqueBaixo(); carregarAnaliseSemanal(); carregarVendasUnificadas(); } }));
+        document.querySelectorAll('.btn-remover').forEach(btn => btn.addEventListener('click', async () => { const sabor = btn.dataset.sabor; if (await Swal.fire({ title: `Remover ${sabor}?`, icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { delete saboresMap[sabor]; delete estoqueObj[sabor]; await db.collection('config').doc('cardapio').set({ sabores: saboresMap, estoque: estoqueObj }); renderizarEstoqueUI(); atualizarSelectSaboresProducao(); atualizarCarrinho(); showToast(`Sabor ${sabor} removido`); verificarEstoqueBaixo(); } }));
         verificarEstoqueBaixo();
     }
     document.getElementById('addSaborBtn')?.addEventListener('click', async () => { const sabor = document.getElementById('novoSabor').value.trim(); const emoji = document.getElementById('novoEmoji').value.trim() || '🍧'; if (!sabor) return showToast("Digite o nome do sabor", true); if (saboresMap[sabor]) return showToast("Sabor já existe", true); saboresMap[sabor] = emoji; estoqueObj[sabor] = 20; await db.collection('config').doc('cardapio').set({ sabores: saboresMap, estoque: estoqueObj }); renderizarEstoqueUI(); atualizarSelectSaboresProducao(); atualizarCarrinho(); document.getElementById('novoSabor').value = ''; showToast(`Sabor ${sabor} adicionado`); verificarEstoqueBaixo(); });
     document.getElementById('salvarEstoqueBtn')?.addEventListener('click', async () => { const novoEstoque = {}; for (const sabor of Object.keys(saboresMap)) { const saborId = sabor.replace(/[^a-zA-Z0-9]/g, '_'); const input = document.getElementById(`qtd_${saborId}`); novoEstoque[sabor] = input ? (parseInt(input.value) || 0) : (estoqueObj[sabor] || 0); } await db.collection('config').doc('cardapio').update({ estoque: novoEstoque }); estoqueObj = novoEstoque; renderizarEstoqueUI(); showToast("Estoque de sabores salvo!"); verificarEstoqueBaixo(); });
     function verificarEstoqueBaixo() { const baixos = Object.entries(estoqueObj).filter(([_, qtd]) => qtd < 5).map(([s, q]) => `${saboresMap[s] || '🍧'} ${s} (${q})`); const alertDiv = document.getElementById('alertaEstoqueBaixo'); const listaDiv = document.getElementById('listaEstoqueBaixo'); if (baixos.length) { alertDiv.style.display = 'flex'; listaDiv.innerHTML = `🔻 ${baixos.join(', ')}`; } else alertDiv.style.display = 'none'; }
 
-    // ========== INGREDIENTES E PRODUÇÃO (resumido) ==========
+    // ========== INGREDIENTES E PRODUÇÃO ==========
     async function carregarIngredientes() { try { const doc = await db.collection('config').doc('ingredientesPorSabor').get(); ingredientesPorSabor = doc.exists ? doc.data().ingredientes || {} : {}; atualizarSelectSaboresProducao(); carregarHistoricoProducoes(); carregarResumoFinanceiroProducao(); } catch (err) { console.error(err); } }
     function atualizarSelectSaboresProducao() { const select = document.getElementById('selectSaborProducao'); if (!select) return; select.innerHTML = '<option value="">Selecione um sabor</option>'; Object.keys(saboresMap).sort().forEach(s => select.innerHTML += `<option value="${s}">${saboresMap[s] || '🍧'} ${s}</option>`); }
     function mostrarIngredientes(sabor) {
@@ -1725,7 +1413,7 @@
     async function carregarResumoFinanceiroProducao() { try { const snapshot = await db.collection('producoes').get(); let totalGasto = 0, totalUnidades = 0; snapshot.forEach(doc => { totalGasto += doc.data().custoTotal || 0; totalUnidades += doc.data().quantidade || 0; }); const totalReceita = totalUnidades * PRECO_VENDA; document.getElementById('totalGasto').innerHTML = `R$ ${totalGasto.toFixed(2)}`; document.getElementById('totalLucro').innerHTML = `R$ ${(totalReceita - totalGasto).toFixed(2)}`; document.getElementById('totalUnidades').innerHTML = totalUnidades; } catch (err) { console.error(err); } }
     document.getElementById('limparHistoricoBtn')?.addEventListener('click', async () => { if (!await Swal.fire({ title: 'Limpar histórico?', text: 'Irreversível', icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) return; const snapshot = await db.collection('producoes').get(); const batch = db.batch(); snapshot.forEach(doc => batch.delete(doc.ref)); await batch.commit(); carregarHistoricoProducoes(); carregarResumoFinanceiroProducao(); showToast("Histórico limpo"); addNotification('producao', 'Histórico de produções limpo'); });
 
-    // ========== INGREDIENTES ESTOQUE ==========
+    // ========== ESTOQUE DE INGREDIENTES ==========
     async function carregarIngredientesEstoque() { try { const doc = await db.collection('config').doc('ingredientesEstoque').get(); if (doc.exists) ingredientesEstoque = doc.data().ingredientes || {}; else { ingredientesEstoque = { "Leite integral": { quantidade: 1, unidade: "Litro" }, "Leite Condensado": { quantidade: 1, unidade: "Caixa" }, "Creme de Leite": { quantidade: 1, unidade: "Caixa" }, "Liga neutra": { quantidade: 15, unidade: "Grama" } }; await db.collection('config').doc('ingredientesEstoque').set({ ingredientes: ingredientesEstoque }); } renderizarIngredientesEstoqueUI(); } catch (err) { console.error(err); } }
     function renderizarIngredientesEstoqueUI() {
         const container = document.getElementById('listaIngredientesEstoque');
@@ -1751,7 +1439,31 @@
     document.getElementById('salvarIngredientesEstoqueBtn')?.addEventListener('click', async () => { for (const nome of Object.keys(ingredientesEstoque)) { const idSan = nome.replace(/[^a-zA-Z0-9]/g, '_'); const input = document.getElementById(`estoqueQtdInput_${idSan}`); if (input) ingredientesEstoque[nome].quantidade = parseFloat(input.value) || 0; } await salvarIngredientesEstoqueFirestore(); renderizarIngredientesEstoqueUI(); showToast("Estoque de ingredientes salvo"); carregarListaCompras(); });
     async function salvarIngredientesEstoqueFirestore() { await db.collection('config').doc('ingredientesEstoque').set({ ingredientes: ingredientesEstoque }); }
 
-    // ========== PROJEÇÃO DE ESTOQUE ==========
+    // ========== PROJEÇÃO DE ESTOQUE E LISTA DE COMPRAS ==========
+    async function carregarListaCompras() {
+        try {
+            const producoesSnap = await db.collection('producoes').where('data', '>=', new Date(Date.now() - 7*24*60*60*1000).toISOString()).get();
+            const consumoMap = {};
+            for (const doc of producoesSnap.docs) {
+                const data = doc.data();
+                const receita = ingredientesPorSabor[data.sabor] || [];
+                for (const ing of receita) consumoMap[ing.nome] = (consumoMap[ing.nome] || 0) + (ing.quantidade * data.quantidade);
+            }
+            const consumoDiario = {};
+            for (const [nome, total] of Object.entries(consumoMap)) consumoDiario[nome] = total / 7;
+            const container = document.getElementById('listaCompras');
+            const nomes = Object.keys(ingredientesEstoque).sort();
+            let html = '';
+            for (const nome of nomes) {
+                const qtdAtual = ingredientesEstoque[nome].quantidade;
+                const consumo = consumoDiario[nome] || 0;
+                let dias = consumo > 0 ? Math.floor(qtdAtual / consumo) : 999;
+                if (dias < 3 && qtdAtual > 0) html += `<div>⚠️ ${escapeHtml(nome)}: estoque para ~${dias} dias. Recomenda-se comprar.</div>`;
+                else if (qtdAtual === 0) html += `<div>🔴 ${escapeHtml(nome)}: em falta! Comprar urgente.</div>`;
+            }
+            container.innerHTML = html || '<div style="text-align:center;">✅ Estoque saudável. Nenhuma compra urgente.</div>';
+        } catch (err) { console.error(err); }
+    }
     async function carregarProjecaoEstoque() {
         try {
             const producoesSnap = await db.collection('producoes').where('data', '>=', new Date(Date.now() - 7*24*60*60*1000).toISOString()).get();
@@ -1759,16 +1471,12 @@
             for (const doc of producoesSnap.docs) {
                 const data = doc.data();
                 const receita = ingredientesPorSabor[data.sabor] || [];
-                for (const ing of receita) {
-                    consumoMap[ing.nome] = (consumoMap[ing.nome] || 0) + (ing.quantidade * data.quantidade);
-                }
+                for (const ing of receita) consumoMap[ing.nome] = (consumoMap[ing.nome] || 0) + (ing.quantidade * data.quantidade);
             }
             const consumoDiario = {};
             for (const [nome, total] of Object.entries(consumoMap)) consumoDiario[nome] = total / 7;
             const container = document.getElementById('projecaoEstoqueContainer');
-            if (!container) return;
             const nomes = Object.keys(ingredientesEstoque).sort();
-            if (!nomes.length) { container.innerHTML = '<div class="info-message">Nenhum ingrediente cadastrado.</div>'; return; }
             let html = '';
             for (const nome of nomes) {
                 const qtdAtual = ingredientesEstoque[nome].quantidade;
@@ -1781,7 +1489,7 @@
         } catch (err) { console.error(err); }
     }
 
-    // ========== DEVEDORES (mantido igual) ==========
+    // ========== DEVEDORES AGRUPADOS ==========
     async function carregarDevedores() {
         try {
             const snapshot = await db.collection('devedores').orderBy('dataHora', 'desc').get();
@@ -1812,66 +1520,58 @@
             const display = document.getElementById(`dividaValorDisplay_${d.id}`);
             if (input && display) {
                 input.addEventListener('change', async () => {
-                    const novoValor = parseFloat(input.value) || 0;
-                    if (novoValor !== d.valor) {
-                        await db.collection('devedores').doc(d.id).update({ valor: novoValor });
-                        d.valor = novoValor;
-                        display.innerText = `R$ ${novoValor.toFixed(2)}`;
+                    const novo = parseFloat(input.value) || 0;
+                    if (novo !== d.valor) {
+                        await db.collection('devedores').doc(d.id).update({ valor: novo });
+                        d.valor = novo;
+                        display.innerText = `R$ ${novo.toFixed(2)}`;
                         atualizarTotalReceber();
                         renderizarDevedoresUI();
-                        showToast("Valor atualizado");
-                        addNotification('devedor', `Valor da dívida de ${d.nome} alterado para R$ ${novoValor.toFixed(2)}`);
+                        addNotification('devedor', `Valor da dívida de ${d.nome} alterado para R$ ${novo.toFixed(2)}`);
                     }
                 });
             }
         }
         document.querySelectorAll('.quitar-divida').forEach(btn => btn.addEventListener('click', async () => { const id = btn.dataset.id; const divida = devedores.find(d => d.id === id); if (divida) await quitarDevedor(divida); }));
-        document.querySelectorAll('.excluir-divida').forEach(btn => btn.addEventListener('click', async () => { const id = btn.dataset.id; const divida = devedores.find(d => d.id === id); if (!divida) return; if (await Swal.fire({ title: 'Excluir dívida?', text: `Remover dívida de ${divida.nome} - R$ ${divida.valor.toFixed(2)}?`, icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { await db.collection('devedores').doc(id).delete(); devedores = devedores.filter(d => d.id !== id); renderizarDevedoresUI(); atualizarTotalReceber(); showToast("Dívida removida"); addNotification('devedor', `Dívida de ${divida.nome} (R$ ${divida.valor.toFixed(2)}) excluída`); } }));
-        document.querySelectorAll('.add-divida-cliente').forEach(btn => btn.addEventListener('click', async () => { const nomeCliente = btn.dataset.nome; const { value: valor } = await Swal.fire({ title: `Nova dívida para ${nomeCliente}`, input: 'number', inputLabel: 'Valor (R$)', inputAttributes: { step: '0.01', min: '0' }, showCancelButton: true }); if (valor && parseFloat(valor) > 0) { const agora = new Date(); const docRef = await db.collection('devedores').add({ nome: nomeCliente, valor: parseFloat(valor), dataHora: agora.toISOString(), criadoEm: agora.toISOString() }); devedores.push({ id: docRef.id, nome: nomeCliente, valor: parseFloat(valor), dataHora: agora.toISOString() }); renderizarDevedoresUI(); atualizarTotalReceber(); showToast(`Dívida de R$ ${parseFloat(valor).toFixed(2)} adicionada para ${nomeCliente}`); addNotification('devedor', `Nova dívida de R$ ${parseFloat(valor).toFixed(2)} para ${nomeCliente}`); } }));
+        document.querySelectorAll('.excluir-divida').forEach(btn => btn.addEventListener('click', async () => { const id = btn.dataset.id; const divida = devedores.find(d => d.id === id); if (await Swal.fire({ title: 'Excluir dívida?', text: `Remover dívida de ${divida.nome} - R$ ${divida.valor.toFixed(2)}?`, icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { await db.collection('devedores').doc(id).delete(); devedores = devedores.filter(d => d.id !== id); renderizarDevedoresUI(); atualizarTotalReceber(); addNotification('devedor', 'Dívida excluída'); } }));
+        document.querySelectorAll('.add-divida-cliente').forEach(btn => btn.addEventListener('click', async () => { const nome = btn.dataset.nome; const { value: valor } = await Swal.fire({ title: `Nova dívida para ${nome}`, input: 'number', inputLabel: 'Valor (R$)', inputAttributes: { step: '0.01', min: '0' }, showCancelButton: true }); if (valor && parseFloat(valor) > 0) { const agora = new Date(); const docRef = await db.collection('devedores').add({ nome, valor: parseFloat(valor), dataHora: agora.toISOString(), criadoEm: agora.toISOString() }); devedores.push({ id: docRef.id, nome, valor: parseFloat(valor), dataHora: agora.toISOString() }); renderizarDevedoresUI(); atualizarTotalReceber(); addNotification('devedor', `Nova dívida de R$ ${parseFloat(valor).toFixed(2)} para ${nome}`); } }));
     }
     async function quitarDevedor(devedor) {
-        const result = await Swal.fire({ title: 'Quitar dívida', text: `Receber R$ ${devedor.valor.toFixed(2)} de ${devedor.nome}?`, icon: 'question', showCancelButton: true, confirmButtonText: 'Sim, receber' });
-        if (result.isConfirmed) {
-            await registrarMovimentacao('entrada', devedor.valor, `Recebimento de venda a prazo - ${devedor.nome}`);
-            await db.collection('devedores').doc(devedor.id).delete();
-            devedores = devedores.filter(d => d.id !== devedor.id);
-            renderizarDevedoresUI();
-            atualizarTotalReceber();
-            showToast(`R$ ${devedor.valor.toFixed(2)} quitado de ${devedor.nome}`);
-            addNotification('devedor', `Recebido R$ ${devedor.valor.toFixed(2)} de ${devedor.nome}`);
-            carregarAnaliseSemanal();
-            carregarVendasUnificadas();
-        }
+        if (!await Swal.fire({ title: 'Quitar dívida', text: `Receber R$ ${devedor.valor.toFixed(2)} de ${devedor.nome}?`, icon: 'question', showCancelButton: true }).then(r=>r.isConfirmed)) return;
+        await registrarMovimentacao('entrada', devedor.valor, `Recebimento de venda a prazo - ${devedor.nome}`);
+        await db.collection('devedores').doc(devedor.id).delete();
+        devedores = devedores.filter(d => d.id !== devedor.id);
+        renderizarDevedoresUI();
+        atualizarTotalReceber();
+        showToast(`R$ ${devedor.valor.toFixed(2)} quitado de ${devedor.nome}`);
+        addNotification('devedor', `Recebido R$ ${devedor.valor.toFixed(2)} de ${devedor.nome}`);
+        carregarAnaliseSemanal(); carregarVendasUnificadas();
     }
     document.getElementById('addDevedorBtn')?.addEventListener('click', async () => {
         const nome = document.getElementById('novoDevedorNome').value.trim();
         const valor = parseFloat(document.getElementById('novoDevedorValor').value);
-        if (!nome) return showToast("Digite o nome", true);
-        if (isNaN(valor) || valor <= 0) return showToast("Valor inválido", true);
+        if (!nome || isNaN(valor) || valor <= 0) return showToast("Preencha nome e valor válido", true);
         const agora = new Date();
         const docRef = await db.collection('devedores').add({ nome, valor, dataHora: agora.toISOString(), criadoEm: agora.toISOString() });
         devedores.push({ id: docRef.id, nome, valor, dataHora: agora.toISOString() });
         renderizarDevedoresUI();
-        document.getElementById('novoDevedorNome').value = '';
-        document.getElementById('novoDevedorValor').value = '';
+        document.getElementById('novoDevedorNome').value = ''; document.getElementById('novoDevedorValor').value = '';
         showToast(`Devedor ${nome} adicionado`);
         addNotification('devedor', `Novo devedor: ${nome} - R$ ${valor.toFixed(2)}`);
     });
 
-    // ========== DESPESAS (mantido) ==========
+    // ========== DESPESAS ==========
     async function carregarDespesas() { try { const snapshot = await db.collection('despesas').orderBy('data', 'desc').limit(50).get(); despesasArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); renderizarDespesas(); carregarResumoDespesas(); } catch (err) { console.error(err); } }
     function renderizarDespesas() {
         const container = document.getElementById('listaDespesas');
-        if (!container) return;
         if (!despesasArray.length) { container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma despesa cadastrada.</div>'; return; }
         container.innerHTML = despesasArray.map(d => `<div class="despesa-item"><div><strong>${escapeHtml(d.descricao)}</strong> - ${d.categoria}</div><div>R$ ${(d.valor || 0).toFixed(2)} - ${new Date(d.data).toLocaleDateString('pt-BR')}</div><div><button class="btn btn-small btn-danger" data-id="${d.id}">Excluir</button></div></div>`).join('');
         document.querySelectorAll('#listaDespesas .btn-danger').forEach(btn => btn.addEventListener('click', async () => { const id = btn.dataset.id; if (await Swal.fire({ title: 'Excluir despesa?', icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { await db.collection('despesas').doc(id).delete(); carregarDespesas(); carregarRelatorios(); addNotification('despesa', 'Despesa excluída'); } }));
     }
     function carregarResumoDespesas() {
         const totalPorCat = {};
-        despesasArray.forEach(d => { totalPorCat[d.categoria] = (totalPorCat[d.categoria] || 0) + (d.valor || 0); });
+        despesasArray.forEach(d => totalPorCat[d.categoria] = (totalPorCat[d.categoria] || 0) + (d.valor || 0));
         const container = document.getElementById('resumoDespesasCategorias');
-        if (!container) return;
         if (!Object.keys(totalPorCat).length) { container.innerHTML = '<div>Nenhuma despesa registrada.</div>'; return; }
         container.innerHTML = Object.entries(totalPorCat).map(([cat, total]) => `<div>${cat}: R$ ${total.toFixed(2)}</div>`).join('');
     }
@@ -1879,29 +1579,162 @@
         const desc = document.getElementById('novaDespesaDesc').value.trim();
         const valor = parseFloat(document.getElementById('novaDespesaValor').value);
         const categoria = document.getElementById('novaDespesaCategoria').value;
-        const data = document.getElementById('novaDespesaData').value;
-        if (!desc || isNaN(valor) || valor <= 0) { showToast("Preencha descrição e valor válido", true); return; }
-        const dataFinal = data || new Date().toISOString().slice(0,10);
-        await db.collection('despesas').add({ descricao: desc, valor, categoria, data: dataFinal, dataLegivel: new Date(dataFinal).toLocaleDateString('pt-BR') });
+        const data = document.getElementById('novaDespesaData').value || new Date().toISOString().slice(0,10);
+        if (!desc || isNaN(valor) || valor <= 0) return showToast("Preencha descrição e valor válido", true);
+        await db.collection('despesas').add({ descricao: desc, valor, categoria, data, dataLegivel: new Date(data).toLocaleDateString('pt-BR') });
         await registrarMovimentacao('saida', valor, `Despesa: ${desc}`);
-        document.getElementById('novaDespesaDesc').value = '';
-        document.getElementById('novaDespesaValor').value = '';
-        document.getElementById('novaDespesaData').value = '';
-        carregarDespesas();
-        carregarRelatorios();
-        addNotification('despesa', `Despesa adicionada: ${desc} - R$ ${valor.toFixed(2)}`);
+        document.getElementById('novaDespesaDesc').value = ''; document.getElementById('novaDespesaValor').value = '';
+        carregarDespesas(); carregarRelatorios(); addNotification('despesa', `Despesa adicionada: ${desc} - R$ ${valor.toFixed(2)}`);
         showToast("Despesa registrada");
     });
     document.getElementById('novaDespesaData')?.setAttribute('value', new Date().toISOString().slice(0,10));
 
-    // ========== RANKING E RELATÓRIOS ==========
+    // ========== AVARIAS (NOVA PÁGINA) ==========
+    async function carregarAvarias() {
+        try {
+            const snapshot = await db.collection('avarias').orderBy('dataHora', 'desc').limit(30).get();
+            avariasArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderizarHistoricoAvarias();
+            renderizarListaAvariasEstoque();
+        } catch (err) { console.error(err); }
+    }
+    function renderizarListaAvariasEstoque() {
+        const container = document.getElementById('listaAvariasEstoque');
+        if (!container) return;
+        const saboresOrdenados = Object.keys(saboresMap).sort();
+        if (!saboresOrdenados.length) { container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhum sabor cadastrado.</div>'; return; }
+        container.innerHTML = '<div class="card-title" style="margin-bottom:12px;">Selecione o sabor e a quantidade avariada:</div>';
+        for (const sabor of saboresOrdenados) {
+            const qtdAtual = estoqueObj[sabor] || 0;
+            const saborId = sabor.replace(/[^a-zA-Z0-9]/g, '_');
+            container.innerHTML += `
+                <div class="ingrediente-estoque-item" data-sabor="${sabor}">
+                    <div class="ingrediente-info">
+                        <span class="ingrediente-nome">${saboresMap[sabor] || '🍧'} ${escapeHtml(sabor)}</span>
+                        <span class="ingrediente-unidade">(estoque: ${qtdAtual})</span>
+                    </div>
+                    <div class="ingrediente-controles">
+                        <button class="qty-btn avaria-minus" data-sabor="${sabor}">-</button>
+                        <input type="number" id="avariaQtd_${saborId}" value="0" min="0" max="${qtdAtual}" step="1" style="width:70px;">
+                        <button class="qty-btn avaria-plus" data-sabor="${sabor}">+</button>
+                        <button class="btn btn-danger btn-remover registrar-avaria" data-sabor="${sabor}" style="padding:6px 12px;">Registrar</button>
+                    </div>
+                    <div style="margin-top:8px;">
+                        <input type="text" id="avariaObs_${saborId}" placeholder="Motivo (opcional)" style="font-size:0.75rem; padding:6px;">
+                    </div>
+                </div>
+            `;
+        }
+        // Eventos dos botões +/- da avaria
+        document.querySelectorAll('.avaria-minus').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const sabor = btn.dataset.sabor;
+                const saborId = sabor.replace(/[^a-zA-Z0-9]/g, '_');
+                const input = document.getElementById(`avariaQtd_${saborId}`);
+                let val = parseInt(input.value) || 0;
+                if (val > 0) val--;
+                input.value = val;
+            });
+        });
+        document.querySelectorAll('.avaria-plus').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const sabor = btn.dataset.sabor;
+                const saborId = sabor.replace(/[^a-zA-Z0-9]/g, '_');
+                const input = document.getElementById(`avariaQtd_${saborId}`);
+                let val = parseInt(input.value) || 0;
+                const max = estoqueObj[sabor] || 0;
+                if (val < max) val++;
+                input.value = val;
+            });
+        });
+        document.querySelectorAll('.registrar-avaria').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const sabor = btn.dataset.sabor;
+                const saborId = sabor.replace(/[^a-zA-Z0-9]/g, '_');
+                const qtdInput = document.getElementById(`avariaQtd_${saborId}`);
+                const quantidade = parseInt(qtdInput.value) || 0;
+                const observacao = document.getElementById(`avariaObs_${saborId}`).value.trim();
+                if (quantidade <= 0) {
+                    showToast("Digite uma quantidade válida para avaria", true);
+                    return;
+                }
+                if (quantidade > (estoqueObj[sabor] || 0)) {
+                    showToast(`Quantidade maior que o estoque atual (${estoqueObj[sabor]})`, true);
+                    return;
+                }
+                const confirmado = await Swal.fire({
+                    title: 'Confirmar avaria',
+                    text: `Registrar avaria de ${quantidade} unidade(s) de ${sabor}?${observacao ? ` Motivo: ${observacao}` : ''}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, registrar',
+                    cancelButtonText: 'Cancelar'
+                });
+                if (!confirmado.isConfirmed) return;
+                // Subtrair do estoque
+                const novoEstoque = { ...estoqueObj };
+                novoEstoque[sabor] -= quantidade;
+                await db.collection('config').doc('cardapio').update({ estoque: novoEstoque });
+                estoqueObj = novoEstoque;
+                renderizarEstoqueUI();
+                // Registrar avaria no Firestore
+                const agora = new Date();
+                const avariaReg = {
+                    sabor: sabor,
+                    quantidade: quantidade,
+                    observacao: observacao || null,
+                    dataHora: agora.toISOString(),
+                    dataLegivel: agora.toLocaleString('pt-BR'),
+                    estoqueApos: novoEstoque[sabor]
+                };
+                await db.collection('avarias').add(avariaReg);
+                // Registrar movimentação de saída no caixa (opcional, para controle financeiro simbólico)
+                await registrarMovimentacao('saida', 0, `Avaria: ${quantidade}x ${sabor}${observacao ? ` - ${observacao}` : ''}`);
+                addNotification('avaria', `Registrou avaria de ${quantidade} unidade(s) de ${sabor}`);
+                showToast(`Avaria de ${quantidade} ${sabor} registrada!`);
+                // Limpar campos
+                qtdInput.value = '0';
+                document.getElementById(`avariaObs_${saborId}`).value = '';
+                // Recarregar avarias e estoque
+                await carregarAvarias();
+                verificarEstoqueBaixo();
+            });
+        });
+    }
+    function renderizarHistoricoAvarias() {
+        const container = document.getElementById('historicoAvarias');
+        if (!avariasArray.length) {
+            container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma avaria registrada.</div>';
+            return;
+        }
+        container.innerHTML = avariasArray.map(a => `
+            <div class="avaria-item">
+                <div><strong>${escapeHtml(a.sabor)}</strong> - ${a.quantidade} unidade(s)</div>
+                <div>📅 ${a.dataLegivel}</div>
+                ${a.observacao ? `<div>📝 Motivo: ${escapeHtml(a.observacao)}</div>` : ''}
+                <div>📦 Estoque após: ${a.estoqueApos}</div>
+            </div>
+        `).join('');
+    }
+    document.getElementById('limparHistoricoAvariasBtn')?.addEventListener('click', async () => {
+        if (!await Swal.fire({ title: 'Limpar histórico de avarias?', text: 'Irreversível', icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) return;
+        const snapshot = await db.collection('avarias').get();
+        const batch = db.batch();
+        snapshot.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        avariasArray = [];
+        renderizarHistoricoAvarias();
+        showToast("Histórico de avarias limpo");
+        addNotification('avaria', 'Histórico de avarias limpo');
+    });
+
+    // ========== RANKING, RELATÓRIOS, GRÁFICOS ==========
     function renderizarRanking() {
         const vendas = new Map();
         pedidosArray.forEach(p => { if (p.itens) p.itens.forEach(i => vendas.set(i.sabor, (vendas.get(i.sabor) || 0) + (i.quantidade || 0))); });
         vendasPresenciaisArray.forEach(v => { if (v.itens) v.itens.forEach(i => vendas.set(i.sabor, (vendas.get(i.sabor) || 0) + (i.qtd || 0))); });
         const ranking = Array.from(vendas.entries()).map(([s, q]) => ({ s, q, e: saboresMap[s] || '🍧' })).sort((a, b) => b.q - a.q).slice(0, 10);
         const container = document.getElementById('rankingLista');
-        if (!container) return;
         if (!ranking.length) { container.innerHTML = '<div style="padding:20px; text-align:center;">Nenhuma venda ainda</div>'; return; }
         container.innerHTML = ranking.map((r, idx) => `<div class="rank-row"><div><span class="rank-number" style="background:var(--primary-color); display:inline-block; width:28px; height:28px; line-height:28px; text-align:center; border-radius:50%; margin-right:10px;">${idx+1}</span> ${r.e} ${r.s}</div><span>${r.q} vendidos</span></div>`).join('');
     }
@@ -1921,18 +1754,14 @@
         let csv = "ID,Data,Cliente,Total,Pagamento,Status\n";
         pedidosArray.forEach(p => csv += `"${p.id}","${p.dataLegivel || ''}","${p.cliente || ''}",${p.total || 0},"${p.pagamento || ''}","${p.status}"\n`);
         const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = `pedidos_${new Date().toISOString().slice(0, 10)}.csv`;
-        link.click();
-        URL.revokeObjectURL(link.href);
+        const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `pedidos_${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(link.href);
         showToast("CSV exportado");
     }
     document.getElementById('exportarCSVBtn')?.addEventListener('click', exportarCSV);
     document.getElementById('exportarPDFBtn')?.addEventListener('click', async () => {
         Swal.fire({ title: 'Gerando PDF...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
         try {
-            const htmlContent = `<div style="font-family: 'Inter', sans-serif; padding:20px; background:white; color:black; width:800px;"><h1 style="color:#e91e63;">Andrea Geladinhos - Relatório</h1><h2>${new Date().toLocaleDateString('pt-BR')}</h2><hr><h3>Resumo Financeiro</h3><p><strong>Vendas Online:</strong> R$ ${pedidosArray.reduce((s,p)=>s+(p.total||0),0).toFixed(2)}</p><p><strong>Vendas Presenciais:</strong> R$ ${vendasPresenciaisArray.reduce((s,v)=>s+(v.total||0),0).toFixed(2)}</p><p><strong>Saldo em Caixa:</strong> R$ ${saldoAtualCaixa.toFixed(2)}</p><p><strong>Total a Receber:</strong> R$ ${devedores.reduce((s,d)=>s+(d.valor||0),0).toFixed(2)}</p><hr><h3>Top Sabores</h3>${document.getElementById('rankingLista').innerHTML}</div>`;
+            const htmlContent = `<div style="font-family: 'Inter', sans-serif; padding:20px; background:white; color:black; width:800px;"><h1 style="color:#e91e63;">Geladinhos ADM - Relatório</h1><h2>${new Date().toLocaleDateString('pt-BR')}</h2><hr><h3>Resumo Financeiro</h3><p><strong>Vendas Online:</strong> R$ ${pedidosArray.reduce((s,p)=>s+(p.total||0),0).toFixed(2)}</p><p><strong>Vendas Presenciais:</strong> R$ ${vendasPresenciaisArray.reduce((s,v)=>s+(v.total||0),0).toFixed(2)}</p><p><strong>Saldo em Caixa:</strong> R$ ${saldoAtualCaixa.toFixed(2)}</p><p><strong>Total a Receber:</strong> R$ ${devedores.reduce((s,d)=>s+(d.valor||0),0).toFixed(2)}</p><hr><h3>Top Sabores</h3>${document.getElementById('rankingLista').innerHTML}</div>`;
             const tempDiv = document.createElement('div'); tempDiv.style.position = 'absolute'; tempDiv.style.left = '-9999px'; tempDiv.style.top = '-9999px'; tempDiv.style.width = '800px'; tempDiv.innerHTML = htmlContent; document.body.appendChild(tempDiv);
             await new Promise(r => setTimeout(r, 100));
             const canvas = await html2canvas(tempDiv, { scale: 2, backgroundColor: '#ffffff' });
@@ -1944,8 +1773,7 @@
     function popularFiltroRelatorio() {
         const mesSelect = document.getElementById('relatorioMes');
         const anoSelect = document.getElementById('relatorioAno');
-        mesSelect.innerHTML = '';
-        anoSelect.innerHTML = '';
+        mesSelect.innerHTML = ''; anoSelect.innerHTML = '';
         for (let i = 0; i < 12; i++) mesSelect.innerHTML += `<option value="${i}" ${i === new Date().getMonth() ? 'selected' : ''}>${new Date(2000, i, 1).toLocaleDateString('pt-BR', { month: 'long' })}</option>`;
         const anoAtual = new Date().getFullYear();
         for (let i = anoAtual-2; i <= anoAtual+2; i++) anoSelect.innerHTML += `<option value="${i}" ${i === anoAtual ? 'selected' : ''}>${i}</option>`;
@@ -1956,7 +1784,6 @@
         carregarRelatorios(mes, ano);
     });
 
-    // ========== GRÁFICOS ==========
     async function atualizarGraficos() {
         try {
             const vendasPorDia = new Array(7).fill(0);
@@ -1964,8 +1791,7 @@
             for (let i = 0; i < 7; i++) { const dia = new Date(hoje); dia.setDate(hoje.getDate() - i); const diaStr = dia.toISOString().slice(0,10); let total = 0; pedidosArray.forEach(p => { if (p.data && p.data.startsWith(diaStr)) total += p.total || 0; }); vendasPresenciaisArray.forEach(v => { if (v.data && v.data.startsWith(diaStr)) total += v.total || 0; }); vendasPorDia[6-i] = total; }
             const labels = Array(7).fill().map((_,i) => { const d = new Date(hoje); d.setDate(hoje.getDate() - (6-i)); return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' }); });
             if (vendasChart) vendasChart.destroy();
-            const ctxVendas = document.getElementById('vendasChart').getContext('2d');
-            vendasChart = new Chart(ctxVendas, { type: 'line', data: { labels, datasets: [{ label: 'Vendas (R$)', data: vendasPorDia, borderColor: '#e91e63', tension: 0.2, fill: false }] } });
+            vendasChart = new Chart(document.getElementById('vendasChart').getContext('2d'), { type: 'line', data: { labels, datasets: [{ label: 'Vendas (R$)', data: vendasPorDia, borderColor: '#e91e63', tension: 0.2, fill: false }] } });
             const mesesLabels = [], faturamentoMensal = [];
             for (let i = 5; i >= 0; i--) {
                 const d = new Date(); d.setMonth(d.getMonth() - i);
@@ -1976,79 +1802,156 @@
                 faturamentoMensal.push(total);
             }
             if (evolucaoMensalChart) evolucaoMensalChart.destroy();
-            const ctxEvolucao = document.getElementById('evolucaoMensalChart').getContext('2d');
-            evolucaoMensalChart = new Chart(ctxEvolucao, { type: 'line', data: { labels: mesesLabels, datasets: [{ label: 'Faturamento (R$)', data: faturamentoMensal, borderColor: '#ffb74d', tension: 0.2, fill: false }] } });
+            evolucaoMensalChart = new Chart(document.getElementById('evolucaoMensalChart').getContext('2d'), { type: 'line', data: { labels: mesesLabels, datasets: [{ label: 'Faturamento (R$)', data: faturamentoMensal, borderColor: '#ffb74d', tension: 0.2, fill: false }] } });
             const lucroPorSabor = new Map();
             const producoesSnap = await db.collection('producoes').get();
             for (const doc of producoesSnap.docs) { const data = doc.data(); const custo = data.custoTotal || 0; const receita = data.quantidade * PRECO_VENDA; lucroPorSabor.set(data.sabor, (lucroPorSabor.get(data.sabor) || 0) + (receita - custo)); }
             const topLucro = Array.from(lucroPorSabor.entries()).sort((a,b) => b[1] - a[1]).slice(0,5);
             if (lucroChart) lucroChart.destroy();
-            const ctxLucro = document.getElementById('lucroChart').getContext('2d');
-            lucroChart = new Chart(ctxLucro, { type: 'bar', data: { labels: topLucro.map(l => l[0]), datasets: [{ label: 'Lucro (R$)', data: topLucro.map(l => l[1]), backgroundColor: '#ffb74d' }] } });
+            lucroChart = new Chart(document.getElementById('lucroChart').getContext('2d'), { type: 'bar', data: { labels: topLucro.map(l => l[0]), datasets: [{ label: 'Lucro (R$)', data: topLucro.map(l => l[1]), backgroundColor: '#ffb74d' }] } });
         } catch (err) { console.error(err); }
     }
 
+    // ========== FLUXO DE CAIXA (ENTRADAS) ==========
+    async function carregarFluxoEntradas(tipo = 'semana') {
+        try {
+            const agora = new Date();
+            let dataInicio = tipo === 'semana' ? new Date(agora.setDate(agora.getDate()-7)) : new Date(agora.setDate(agora.getDate()-30));
+            const snapshot = await db.collection('movimentacoesCaixa').where('data', '>=', dataInicio.toISOString()).orderBy('data', 'desc').get();
+            const entradas = snapshot.docs.map(doc => doc.data()).filter(mov => mov.tipo === 'entrada');
+            const container = document.getElementById('fluxoEntradasContainer');
+            if (!entradas.length) { container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma entrada no período.</div>'; return; }
+            let total = 0, html = '';
+            entradas.forEach(e => {
+                total += e.valor || 0;
+                let saboresHtml = '';
+                if (e.vendaData && e.vendaData.itens) saboresHtml = `<div style="font-size:0.75rem; opacity:0.8;">🍦 ${e.vendaData.itens.map(i=>`${i.qtd}x ${i.sabor}`).join(', ')}</div>`;
+                html += `<div class="entrada-item"><div><strong>${e.dataLegivel || new Date(e.data).toLocaleString('pt-BR')}</strong></div><div>R$ ${(e.valor || 0).toFixed(2)} - ${e.descricao || ''}</div>${saboresHtml}</div>`;
+            });
+            container.innerHTML = `<div class="fluxo-card">📊 Total de entradas no período: <strong>R$ ${total.toFixed(2)}</strong></div>${html}`;
+        } catch (err) { console.error(err); document.getElementById('fluxoEntradasContainer').innerHTML = '<div class="card" style="color:red;">Erro ao carregar dados.</div>'; }
+    }
+    document.getElementById('verEntradasSemana')?.addEventListener('click', () => carregarFluxoEntradas('semana'));
+    document.getElementById('verEntradasMensal')?.addEventListener('click', () => carregarFluxoEntradas('mensal'));
+
+    // ========== VENDAS UNIFICADAS (PÁGINA 1) ==========
+    let filtroTipoAtual = 'todos', filtroStatusAtual = 'todos';
+    function carregarVendasUnificadas() {
+        let todasVendas = [];
+        pedidosArray.forEach(p => todasVendas.push({ ...p, tipo: 'online', data: p.data, status: p.status || 'pendente', pagamento: p.pagamento || '-' }));
+        vendasPresenciaisArray.forEach(v => todasVendas.push({ ...v, tipo: 'presencial', status: v.tipo === 'a prazo' ? 'a prazo' : 'concluída', pagamento: v.tipo === 'a prazo' ? 'A prazo' : 'À vista' }));
+        todasVendas.sort((a,b) => new Date(b.data) - new Date(a.data));
+        let filtradas = todasVendas;
+        if (filtroTipoAtual !== 'todos') filtradas = filtradas.filter(v => v.tipo === filtroTipoAtual);
+        if (filtroStatusAtual !== 'todos') filtradas = filtradas.filter(v => v.status === filtroStatusAtual);
+        const container = document.getElementById('listaVendasUnificadas');
+        if (!filtradas.length) { container.innerHTML = '<div style="text-align:center; padding:20px;">Nenhuma venda encontrada.</div>'; return; }
+        const statusMap = { pendente: '⏳ Pendente', preparando: '🍳 Preparando', pronto: '✅ Pronto', retirado: '📦 Retirado', concluída: '✅ Concluída', 'a prazo': '📅 A prazo' };
+        const nextStatus = { pendente: 'preparando', preparando: 'pronto', pronto: 'retirado' };
+        container.innerHTML = filtradas.map(v => {
+            const itensHtml = v.itens.map(i => `${i.quantidade || i.qtd}x ${i.sabor}`).join(', ');
+            const tipoBadge = v.tipo === 'online' ? '🖥️ Online' : '🏪 Presencial';
+            let botoes = '';
+            if (v.tipo === 'online' && nextStatus[v.status]) botoes = `<button class="btn btn-success btn-small" data-id="${v.id}" data-status="${nextStatus[v.status]}">Avançar</button>`;
+            if (v.tipo === 'online') botoes += `<button class="btn btn-danger btn-small" data-id="${v.id}" data-excluir="true">Excluir</button>`;
+            else botoes = `<button class="btn btn-danger btn-small" data-id="${v.id}" data-excluir-presencial="true">Excluir</button>`;
+            return `<div class="pedido-card"><div style="display:flex; justify-content:space-between;"><strong>${escapeHtml(v.cliente || 'Cliente')}</strong><span>${tipoBadge} | ${statusMap[v.status] || v.status}</span></div><div style="margin:8px 0;">${itensHtml}</div><div>Total: R$ ${(v.total || 0).toFixed(2)} | ${v.pagamento}</div><div style="margin-top:4px; font-size:0.7rem;">📅 ${v.dataLegivel || new Date(v.data).toLocaleString('pt-BR')}</div><div style="display:flex; gap:8px; margin-top:8px;">${botoes}</div></div>`;
+        }).join('');
+        document.querySelectorAll('#listaVendasUnificadas .btn-success').forEach(btn => btn.addEventListener('click', async () => { await db.collection('pedidos').doc(btn.dataset.id).update({ status: btn.dataset.status }); showToast("Status atualizado"); carregarVendasUnificadas(); carregarAnaliseSemanal(); }));
+        document.querySelectorAll('#listaVendasUnificadas .btn-danger[data-excluir="true"]').forEach(btn => btn.addEventListener('click', async () => { if (await Swal.fire({ title: 'Excluir pedido?', icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { await db.collection('pedidos').doc(btn.dataset.id).delete(); carregarVendasUnificadas(); } }));
+        document.querySelectorAll('#listaVendasUnificadas .btn-danger[data-excluir-presencial="true"]').forEach(btn => btn.addEventListener('click', async () => { const venda = vendasPresenciaisArray.find(v => v.id === btn.dataset.id); if (venda && await Swal.fire({ title: 'Excluir venda presencial?', text: `Remover venda de R$ ${venda.total.toFixed(2)}?`, icon: 'warning', showCancelButton: true }).then(r=>r.isConfirmed)) { for (const i of venda.itens) estoqueObj[i.sabor] += i.qtd; await db.collection('config').doc('cardapio').update({ estoque: estoqueObj }); renderizarEstoqueUI(); if (venda.tipo === 'a prazo' && venda.cliente) { const d = devedores.find(d => d.nome === venda.cliente && Math.abs(d.valor - venda.total) < 0.01); if (d) await db.collection('devedores').doc(d.id).delete(); } if (venda.id) await db.collection('vendasPresenciais').doc(venda.id).delete(); else { const snap = await db.collection('vendasPresenciais').where('data', '==', venda.data).get(); for (const doc of snap.docs) if (doc.data().total === venda.total) await doc.ref.delete(); } await carregarVendasPresenciais(); carregarVendasUnificadas(); carregarAnaliseSemanal(); } }));
+    }
+    document.getElementById('aplicarFiltrosVendas')?.addEventListener('click', () => { filtroTipoAtual = document.getElementById('filtroTipoVenda').value; filtroStatusAtual = document.getElementById('filtroStatusVenda').value; carregarVendasUnificadas(); });
+
     // ========== ANÁLISE SEMANAL ==========
     function carregarAnaliseSemanal() {
-        const hoje = new Date();
-        const inicioSemana = new Date(hoje);
-        inicioSemana.setDate(hoje.getDate() - hoje.getDay());
-        let vendasSemana = [];
-        pedidosArray.forEach(p => { if (p.data && new Date(p.data) >= inicioSemana) vendasSemana.push(p); });
-        vendasPresenciaisArray.forEach(v => { if (v.data && new Date(v.data) >= inicioSemana) vendasSemana.push(v); });
+        const inicioSemana = new Date(); inicioSemana.setDate(inicioSemana.getDate() - inicioSemana.getDay());
+        let vendasSemana = [...pedidosArray, ...vendasPresenciaisArray].filter(v => v.data && new Date(v.data) >= inicioSemana);
         const qtdPorSabor = new Map();
-        vendasSemana.forEach(v => { (v.itens || []).forEach(item => { const nome = item.sabor; const qtd = item.quantidade || item.qtd || 0; qtdPorSabor.set(nome, (qtdPorSabor.get(nome) || 0) + qtd); }); });
-        const rankingSabores = Array.from(qtdPorSabor.entries()).map(([s, q]) => ({ s, q, e: saboresMap[s] || '🍧' })).sort((a,b) => b.q - a.q);
-        const containerSabores = document.getElementById('analiseRankingSabores');
-        if (rankingSabores.length === 0) containerSabores.innerHTML = '<div>Nenhuma venda nesta semana.</div>';
-        else containerSabores.innerHTML = rankingSabores.map(r => `<div class="ranking-sabor"><span>${r.e} ${escapeHtml(r.s)}</span><span>${r.q} vendidos</span></div>`).join('');
+        vendasSemana.forEach(v => (v.itens || []).forEach(i => qtdPorSabor.set(i.sabor, (qtdPorSabor.get(i.sabor) || 0) + (i.quantidade || i.qtd || 0))));
+        const ranking = Array.from(qtdPorSabor.entries()).map(([s,q]) => ({ s, q, e: saboresMap[s] || '🍧' })).sort((a,b) => b.q - a.q);
+        document.getElementById('analiseRankingSabores').innerHTML = ranking.length ? ranking.map(r => `<div class="ranking-sabor"><span>${r.e} ${r.s}</span><span>${r.q} vendidos</span></div>`).join('') : '<div>Nenhuma venda nesta semana.</div>';
         const vendasPorHora = new Array(24).fill(0);
-        vendasSemana.forEach(v => { let dataVenda = v.data ? new Date(v.data) : null; if (dataVenda && !isNaN(dataVenda)) vendasPorHora[dataVenda.getHours()]++; });
-        const topHorarios = vendasPorHora.map((q, h) => ({ h, q })).sort((a,b) => b.q - a.q).filter(h => h.q > 0).slice(0,3);
-        const containerHorarios = document.getElementById('analiseHorarios');
-        if (topHorarios.length === 0) containerHorarios.innerHTML = '<div>Nenhuma venda registrada.</div>';
-        else containerHorarios.innerHTML = topHorarios.map(h => `<span class="badge-horario">${h.h}:00 - ${h.h+1}:00 (${h.q} vendas)</span>`).join('');
+        vendasSemana.forEach(v => { let d = new Date(v.data); if (!isNaN(d)) vendasPorHora[d.getHours()]++; });
+        const topHoras = vendasPorHora.map((q,h) => ({ h, q })).sort((a,b) => b.q - a.q).filter(h => h.q > 0).slice(0,3);
+        document.getElementById('analiseHorarios').innerHTML = topHoras.length ? topHoras.map(h => `<span class="badge-horario">${h.h}:00 - ${h.h+1}:00 (${h.q} vendas)</span>`).join('') : '<div>Nenhuma venda registrada.</div>';
         const faturamentoPorDia = new Array(7).fill(0);
-        vendasSemana.forEach(v => { let dataVenda = v.data ? new Date(v.data) : null; if (dataVenda && !isNaN(dataVenda)) faturamentoPorDia[dataVenda.getDay()] += (v.total || 0); });
-        let melhorDiaIndex = 0;
-        for (let i = 1; i < 7; i++) if (faturamentoPorDia[i] > faturamentoPorDia[melhorDiaIndex]) melhorDiaIndex = i;
-        const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-        document.getElementById('analiseDiaSemana').innerHTML = `<div><strong>${diasSemana[melhorDiaIndex]}</strong> com faturamento de <strong>R$ ${faturamentoPorDia[melhorDiaIndex].toFixed(2)}</strong></div>`;
+        vendasSemana.forEach(v => { let d = new Date(v.data); if (!isNaN(d)) faturamentoPorDia[d.getDay()] += v.total || 0; });
+        let melhorIdx = faturamentoPorDia.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
+        const dias = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+        document.getElementById('analiseDiaSemana').innerHTML = `<div><strong>${dias[melhorIdx]}</strong> com faturamento de <strong>R$ ${faturamentoPorDia[melhorIdx].toFixed(2)}</strong></div>`;
     }
 
     // ========== BACKUP AUTOMÁTICO ==========
-    async function performAutoBackup(showNotif = false) { if (!autoBackupEnabled) return false; try { const dados = { pedidos: pedidosArray, estoqueObj, saboresMap, vendasPresenciais: vendasPresenciaisArray, movimentacoesCaixa, ingredientesPorSabor, ingredientesEstoque, devedores, despesas: despesasArray, metaSemanal }; localStorage.setItem('andreageladinhos_backup', JSON.stringify(dados)); localStorage.setItem('andreageladinhos_last_backup', Date.now().toString()); lastBackupTimestamp = Date.now(); document.getElementById('lastBackupDate').innerText = new Date().toLocaleString('pt-BR'); if (showNotif) { showToast('Backup automático realizado'); addNotification('backup', 'Backup automático concluído'); } return true; } catch (err) { console.error(err); return false; } }
-    function carregarConfigBackup() { const enabled = localStorage.getItem('andreageladinhos_auto_backup') === 'true'; const interval = localStorage.getItem('andreageladinhos_backup_interval') || 'weekly'; const last = parseInt(localStorage.getItem('andreageladinhos_last_backup') || '0'); autoBackupEnabled = enabled; backupInterval = interval; lastBackupTimestamp = last; document.getElementById('autoBackupToggle').checked = enabled; document.getElementById('backupInterval').value = interval; if (last) document.getElementById('lastBackupDate').innerText = new Date(last).toLocaleString('pt-BR'); if (autoBackupEnabled) startBackupScheduler(); }
-    function startBackupScheduler() { if (backupCheckInterval) clearInterval(backupCheckInterval); backupCheckInterval = setInterval(() => { const now = Date.now(); let intervalMs = backupInterval === 'daily' ? 86400000 : backupInterval === 'weekly' ? 604800000 : 2592000000; if (now - lastBackupTimestamp >= intervalMs) performAutoBackup(false); }, 3600000); }
-    document.getElementById('autoBackupToggle')?.addEventListener('change', (e) => { autoBackupEnabled = e.target.checked; localStorage.setItem('andreageladinhos_auto_backup', autoBackupEnabled); if (autoBackupEnabled) startBackupScheduler(); else if (backupCheckInterval) clearInterval(backupCheckInterval); });
-    document.getElementById('backupInterval')?.addEventListener('change', (e) => { backupInterval = e.target.value; localStorage.setItem('andreageladinhos_backup_interval', backupInterval); });
+    async function performAutoBackup(showNotif = false) {
+        if (!autoBackupEnabled) return false;
+        try {
+            const dados = { pedidos: pedidosArray, estoqueObj, saboresMap, vendasPresenciais: vendasPresenciaisArray, movimentacoesCaixa, ingredientesPorSabor, ingredientesEstoque, devedores, despesas: despesasArray, metaSemanal, avarias: avariasArray };
+            localStorage.setItem('geladinhos_backup', JSON.stringify(dados));
+            localStorage.setItem('geladinhos_last_backup', Date.now().toString());
+            lastBackupTimestamp = Date.now();
+            document.getElementById('lastBackupDate').innerText = new Date().toLocaleString('pt-BR');
+            if (showNotif) { showToast('Backup automático realizado'); addNotification('backup', 'Backup automático concluído'); }
+            return true;
+        } catch (err) { console.error(err); return false; }
+    }
+    function carregarConfigBackup() {
+        autoBackupEnabled = localStorage.getItem('geladinhos_auto_backup') === 'true';
+        backupInterval = localStorage.getItem('geladinhos_backup_interval') || 'weekly';
+        lastBackupTimestamp = parseInt(localStorage.getItem('geladinhos_last_backup') || '0');
+        document.getElementById('autoBackupToggle').checked = autoBackupEnabled;
+        document.getElementById('backupInterval').value = backupInterval;
+        if (lastBackupTimestamp) document.getElementById('lastBackupDate').innerText = new Date(lastBackupTimestamp).toLocaleString('pt-BR');
+        if (autoBackupEnabled) startBackupScheduler();
+    }
+    function startBackupScheduler() { if (backupCheckInterval) clearInterval(backupCheckInterval); backupCheckInterval = setInterval(() => { let ms = backupInterval === 'daily' ? 86400000 : backupInterval === 'weekly' ? 604800000 : 2592000000; if (Date.now() - lastBackupTimestamp >= ms) performAutoBackup(false); }, 3600000); }
+    document.getElementById('autoBackupToggle')?.addEventListener('change', (e) => { autoBackupEnabled = e.target.checked; localStorage.setItem('geladinhos_auto_backup', autoBackupEnabled); if (autoBackupEnabled) startBackupScheduler(); else if (backupCheckInterval) clearInterval(backupCheckInterval); });
+    document.getElementById('backupInterval')?.addEventListener('change', (e) => { backupInterval = e.target.value; localStorage.setItem('geladinhos_backup_interval', backupInterval); });
     document.getElementById('forceBackupBtn')?.addEventListener('click', () => performAutoBackup(true));
     document.getElementById('restoreBackupBtn')?.addEventListener('click', () => document.getElementById('restoreFileInput').click());
-    document.getElementById('restoreFileInput')?.addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = async (ev) => { try { const dados = JSON.parse(ev.target.result); if (dados.pedidos) { for (const p of dados.pedidos) await db.collection('pedidos').doc(p.id).set(p); } if (dados.estoqueObj && dados.saboresMap) await db.collection('config').doc('cardapio').set({ sabores: dados.saboresMap, estoque: dados.estoqueObj }); if (dados.ingredientesPorSabor) await db.collection('config').doc('ingredientesPorSabor').set({ ingredientes: dados.ingredientesPorSabor }); if (dados.ingredientesEstoque) await db.collection('config').doc('ingredientesEstoque').set({ ingredientes: dados.ingredientesEstoque }); if (dados.devedores) { for (const d of dados.devedores) await db.collection('devedores').doc(d.id).set(d); } if (dados.vendasPresenciais) { for (const v of dados.vendasPresenciais) await db.collection('vendasPresenciais').add(v); } if (dados.movimentacoesCaixa) { for (const m of dados.movimentacoesCaixa) await db.collection('movimentacoesCaixa').add(m); } if (dados.despesas) { for (const d of dados.despesas) await db.collection('despesas').doc(d.id).set(d); } if (dados.metaSemanal) await db.collection('config').doc('metaSemanal').set({ metaSemanal: dados.metaSemanal }); Swal.fire('Restauração concluída!', 'Recarregue a página.', 'success'); } catch (err) { console.error(err); Swal.fire('Erro', 'Arquivo inválido', 'error'); } }; reader.readAsText(file); });
-    document.getElementById('exportAllDataBtn')?.addEventListener('click', async () => { const dados = { pedidos: pedidosArray, estoqueObj, saboresMap, vendasPresenciais: vendasPresenciaisArray, movimentacoesCaixa, ingredientesPorSabor, ingredientesEstoque, devedores, despesas: despesasArray, metaSemanal }; const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `backup_${new Date().toISOString().slice(0,19)}.json`; a.click(); URL.revokeObjectURL(a.href); showToast("Dados exportados"); addNotification('backup', 'Exportação manual de dados'); });
+    document.getElementById('restoreFileInput')?.addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = async (ev) => { try { const dados = JSON.parse(ev.target.result); if (dados.pedidos) for (const p of dados.pedidos) await db.collection('pedidos').doc(p.id).set(p); if (dados.estoqueObj && dados.saboresMap) await db.collection('config').doc('cardapio').set({ sabores: dados.saboresMap, estoque: dados.estoqueObj }); if (dados.ingredientesPorSabor) await db.collection('config').doc('ingredientesPorSabor').set({ ingredientes: dados.ingredientesPorSabor }); if (dados.ingredientesEstoque) await db.collection('config').doc('ingredientesEstoque').set({ ingredientes: dados.ingredientesEstoque }); if (dados.devedores) for (const d of dados.devedores) await db.collection('devedores').doc(d.id).set(d); if (dados.vendasPresenciais) for (const v of dados.vendasPresenciais) await db.collection('vendasPresenciais').add(v); if (dados.movimentacoesCaixa) for (const m of dados.movimentacoesCaixa) await db.collection('movimentacoesCaixa').add(m); if (dados.despesas) for (const d of dados.despesas) await db.collection('despesas').doc(d.id).set(d); if (dados.metaSemanal) await db.collection('config').doc('metaSemanal').set({ metaSemanal: dados.metaSemanal }); if (dados.avarias) for (const a of dados.avarias) await db.collection('avarias').add(a); Swal.fire('Restauração concluída!', 'Recarregue a página.', 'success'); } catch (err) { console.error(err); Swal.fire('Erro', 'Arquivo inválido', 'error'); } }; reader.readAsText(file); });
+    document.getElementById('exportAllDataBtn')?.addEventListener('click', async () => { const dados = { pedidos: pedidosArray, estoqueObj, saboresMap, vendasPresenciais: vendasPresenciaisArray, movimentacoesCaixa, ingredientesPorSabor, ingredientesEstoque, devedores, despesas: despesasArray, metaSemanal, avarias: avariasArray }; const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `backup_${new Date().toISOString().slice(0,19)}.json`; a.click(); URL.revokeObjectURL(a.href); showToast("Dados exportados"); addNotification('backup', 'Exportação manual de dados'); });
 
-    // ========== NAVEGAÇÃO ==========
+    // ========== PEDIDOS ONLINE (LISTENER) ==========
+    function escutarPedidos() {
+        db.collection('pedidos').orderBy('data', 'desc').onSnapshot(snapshot => {
+            pedidosArray = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), status: doc.data().status || 'pendente' }));
+            renderizarRanking(); carregarRelatorios(); atualizarGraficos(); atualizarVendasSemana().then(() => atualizarMetaSemanalProgresso());
+            carregarAnaliseSemanal(); carregarVendasUnificadas();
+        });
+    }
+
+    // ========== SWIPE E INDICADORES ==========
     function setupSwipe() {
         const container = document.getElementById('swipeContainer');
         const indicators = document.getElementById('pageIndicators');
         const pages = document.querySelectorAll('.swipe-page');
         indicators.innerHTML = '';
         for (let i = 0; i < pages.length; i++) { const dot = document.createElement('div'); dot.className = 'indicator'; dot.onclick = () => container.scrollTo({ left: container.clientWidth * i, behavior: 'smooth' }); indicators.appendChild(dot); }
-        function updateIndicators() { const activeIndex = Math.round(container.scrollLeft / container.clientWidth); document.querySelectorAll('.indicator').forEach((dot, idx) => dot.classList.toggle('active', idx === activeIndex)); document.querySelectorAll('.nav-btn').forEach((btn, idx) => btn.classList.toggle('active', idx === activeIndex)); }
+        function updateIndicators() { const active = Math.round(container.scrollLeft / container.clientWidth); document.querySelectorAll('.indicator').forEach((dot, idx) => dot.classList.toggle('active', idx === active)); document.querySelectorAll('.nav-btn').forEach((btn, idx) => btn.classList.toggle('active', idx === active)); }
         container.addEventListener('scroll', updateIndicators); setTimeout(updateIndicators, 100);
         document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => { const page = parseInt(btn.dataset.page); container.scrollTo({ left: container.clientWidth * page, behavior: 'smooth' }); }));
     }
-    function configurarFiltros() { /* filtros de pedidos online foram movidos para página de vendas unificada */ }
 
-    // ========== TEMA ==========
-    function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('lightTheme', isLight ? 'enabled' : 'disabled'); document.getElementById('theme-icon-header').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
-    document.getElementById('theme-icon-header')?.addEventListener('click', toggleTheme);
-    if (localStorage.getItem('lightTheme') === 'enabled') { document.body.classList.add('light-theme'); document.getElementById('theme-icon-header').innerHTML = '<i class="fas fa-sun"></i>'; }
+    // ========== TEMA (CLARO/ESCURO) ==========
+    function toggleTheme() { document.body.classList.toggle('light-theme'); const isLight = document.body.classList.contains('light-theme'); localStorage.setItem('lightTheme', isLight ? 'enabled' : 'disabled'); document.getElementById('themeIconHeader').innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; }
+    document.getElementById('themeIconHeader')?.addEventListener('click', toggleTheme);
+    if (localStorage.getItem('lightTheme') === 'enabled') { document.body.classList.add('light-theme'); document.getElementById('themeIconHeader').innerHTML = '<i class="fas fa-sun"></i>'; }
 
-    // ========== MODAL NOTIFICAÇÕES ==========
-    document.getElementById('bellIcon')?.addEventListener('click', async () => { await carregarNotificacoes(); document.getElementById('notificationsModal').style.display = 'flex'; });
-    document.getElementById('closeNotificationsBtn')?.addEventListener('click', () => document.getElementById('notificationsModal').style.display = 'none');
-    window.onclick = function(event) { const modal = document.getElementById('notificationsModal'); if (event.target === modal) modal.style.display = 'none'; };
+    // ========== CALENDÁRIO (CABEÇALHO) ==========
+    function updateMonthDisplay() { 
+        const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro']; 
+        document.getElementById('globalMonthDisplay').innerText = monthNames[selectedMonth]; 
+    }
+    async function openCalendarPicker() {
+        const { value } = await Swal.fire({ title: 'Selecionar mês', input: 'select', inputOptions: {
+            0: 'Janeiro', 1: 'Fevereiro', 2: 'Março', 3: 'Abril', 4: 'Maio', 5: 'Junho',
+            6: 'Julho', 7: 'Agosto', 8: 'Setembro', 9: 'Outubro', 10: 'Novembro', 11: 'Dezembro'
+        }, inputValue: selectedMonth, showCancelButton: true });
+        if (value !== undefined) { selectedMonth = parseInt(value); updateMonthDisplay(); }
+    }
+    document.getElementById('calendarBtn')?.addEventListener('click', openCalendarPicker);
+    updateMonthDisplay();
 
     // ========== AUTH ==========
     const loginScreen = document.getElementById('loginScreen'), appContainer = document.getElementById('appContainer');
@@ -2057,31 +1960,29 @@
     auth.onAuthStateChanged(async (user) => {
         if (user && ALLOWED_UIDS.includes(user.uid)) {
             loginScreen.style.display = 'none'; appContainer.style.display = 'block';
-            const firstLetter = user.email ? user.email.charAt(0).toUpperCase() : 'A';
-            document.getElementById('userAvatar').innerText = firstLetter;
+            const email = user.email || '';
+            const avatarLetter = email ? email.charAt(0).toUpperCase() : 'A';
+            document.getElementById('userAvatar').innerText = avatarLetter;
+            let userName = email.split('@')[0] || 'Admin';
+            userName = userName.split('.')[0];
+            userName = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
+            document.getElementById('userNameDisplay').innerText = userName;
             showLoading(true);
             try {
-                await Promise.all([
-                    carregarCaixa(),
-                    carregarVendasPresenciais(),
-                    carregarCardapio(),
-                    carregarIngredientes(),
-                    carregarIngredientesEstoque(),
-                    carregarDevedores(),
-                    carregarDespesas(),
-                    carregarProjecaoEstoque(),
-                    carregarMetaSemanal(),
-                    carregarFluxoEntradas('semana')
-                ]);
-            } catch (err) { console.error("Erro ao carregar dados iniciais:", err); showToast("Erro ao carregar alguns dados. Tente recarregar.", true); }
+                await Promise.all([ carregarCaixa(), carregarVendasPresenciais(), carregarCardapio(), carregarIngredientes(), carregarIngredientesEstoque(), carregarDevedores(), carregarDespesas(), carregarProjecaoEstoque(), carregarMetaSemanal(), carregarFluxoEntradas('semana'), carregarAvarias() ]);
+            } catch (err) { console.error(err); showToast("Erro ao carregar alguns dados.", true); }
             escutarPedidos(); setupSwipe(); carregarConfigBackup(); carregarNotificacoes(); atualizarBadgeNotificacoes(); popularFiltroRelatorio(); carregarListaCompras(); carregarAnaliseSemanal(); carregarVendasUnificadas();
-            document.getElementById('selectSaborProducao').addEventListener('change', (e) => { const sabor = e.target.value; const panel = document.getElementById('ingredientesPanel'); if (!sabor) { panel.style.display = 'none'; return; } panel.style.display = 'block'; document.getElementById('saborSelecionadoNome').innerText = sabor; mostrarIngredientes(sabor); });
-            atualizarGraficos();
-            showLoading(false);
+            document.getElementById('selectSaborProducao').addEventListener('change', (e) => { const sabor = e.target.value; const panel = document.getElementById('ingredientesPanel'); if (!sabor) panel.style.display = 'none'; else { panel.style.display = 'block'; document.getElementById('saborSelecionadoNome').innerText = sabor; mostrarIngredientes(sabor); } });
+            atualizarGraficos(); showLoading(false);
         } else { loginScreen.style.display = 'flex'; appContainer.style.display = 'none'; if (user) auth.signOut(); }
     });
     loginBtn.onclick = () => { const email = document.getElementById('loginEmail').value, pwd = document.getElementById('loginPassword').value; auth.signInWithEmailAndPassword(email, pwd).catch(() => document.getElementById('loginError').innerText = 'E-mail ou senha inválidos.'); };
     if (logoutBtn) logoutBtn.onclick = () => auth.signOut();
+
+    // ========== MODAL NOTIFICAÇÕES ==========
+    document.getElementById('bellIcon')?.addEventListener('click', async () => { await carregarNotificacoes(); document.getElementById('notificationsModal').style.display = 'flex'; });
+    document.getElementById('closeNotificationsBtn')?.addEventListener('click', () => document.getElementById('notificationsModal').style.display = 'none');
+    window.onclick = function(event) { const modal = document.getElementById('notificationsModal'); if (event.target === modal) modal.style.display = 'none'; };
 </script>
 </body>
 </html>
