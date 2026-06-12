@@ -983,7 +983,7 @@
             <div class="card"><div class="card-title"><i class="fas fa-chart-simple"></i> Análise Semanal de Vendas</div><div class="analise-item"><div class="analise-titulo">🍦 Sabores mais vendidos (quantidade)</div><div id="analiseRankingSabores"></div></div><div class="analise-item"><div class="analise-titulo">⏰ Horários de pico</div><div id="analiseHorarios"></div></div><div class="analise-item"><div class="analise-titulo">📆 Dia da semana com maior faturamento</div><div id="analiseDiaSemana"></div></div></div>
         </div>
 
-        <!-- NOVA PÁGINA 11: AVARIAS -->
+        <!-- Página 11: AVARIAS -->
         <div class="swipe-page" data-page="11">
             <div class="card">
                 <div class="card-title"><i class="fas fa-boxes"></i> Controle de Avarias (Perda de Estoque)</div>
@@ -1093,22 +1093,48 @@
         setTimeout(() => toast.remove(), 3000);
     }
     function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
+
+    // ========== NOTIFICAÇÕES CORRIGIDAS (COM CAMPO 'lida') ==========
     async function addNotification(action, description) {
-        const notif = { action, description, data: new Date().toLocaleString('pt-BR'), timestamp: firebase.firestore.FieldValue.serverTimestamp() };
+        const notif = {
+            action: action,
+            description: description,
+            data: new Date().toLocaleString('pt-BR'),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            lida: false
+        };
         await db.collection('notificacoes').add(notif);
         carregarNotificacoes();
         atualizarBadgeNotificacoes();
     }
+
     async function carregarNotificacoes() {
         const snapshot = await db.collection('notificacoes').orderBy('timestamp', 'desc').limit(30).get();
         notificacoes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         const container = document.getElementById('notificationsList');
-        if (!notificacoes.length) { container.innerHTML = '<div style="text-align:center; padding:16px;">Nenhuma atividade.</div>'; return; }
-        container.innerHTML = notificacoes.map(n => `<div class="notification-item"><div class="notification-time">${n.data}</div><div>${escapeHtml(n.description)}</div></div>`).join('');
+        if (!notificacoes.length) {
+            container.innerHTML = '<div style="text-align:center; padding:16px;">Nenhuma atividade.</div>';
+            return;
+        }
+        container.innerHTML = notificacoes.map(n => `
+            <div class="notification-item">
+                <div class="notification-time">${n.data}</div>
+                <div>${escapeHtml(n.description)}</div>
+            </div>
+        `).join('');
     }
+
+    async function marcarNotificacoesComoLidas() {
+        const snapshot = await db.collection('notificacoes').where('lida', '==', false).get();
+        const batch = db.batch();
+        snapshot.forEach(doc => batch.update(doc.ref, { lida: true }));
+        await batch.commit();
+        atualizarBadgeNotificacoes();
+    }
+
     async function atualizarBadgeNotificacoes() {
-        const snap = await db.collection('notificacoes').get();
-        const currentCount = snap.size;
+        const snapshot = await db.collection('notificacoes').where('lida', '==', false).get();
+        const currentCount = snapshot.size;
         if (currentCount > lastUnreadCount) playBeep();
         lastUnreadCount = currentCount;
         const badge = document.getElementById('bellBadge');
@@ -1121,6 +1147,16 @@
             }
         }
     }
+
+    // Evento do sino
+    document.getElementById('bellIcon')?.addEventListener('click', async () => {
+        await carregarNotificacoes();
+        await marcarNotificacoesComoLidas();
+        document.getElementById('notificationsModal').style.display = 'flex';
+    });
+    document.getElementById('closeNotificationsBtn')?.addEventListener('click', () => document.getElementById('notificationsModal').style.display = 'none');
+    window.onclick = function(event) { const modal = document.getElementById('notificationsModal'); if (event.target === modal) modal.style.display = 'none'; };
+
     function atualizarTotalReceber() { const total = devedores.reduce((acc, d) => acc + (d.valor || 0), 0); document.getElementById('totalReceber').innerHTML = `R$ ${total.toFixed(2).replace('.', ',')}`; }
 
     // ========== CAIXA (mantido igual, mas incluindo avaria como saída) ==========
@@ -1589,7 +1625,7 @@
     });
     document.getElementById('novaDespesaData')?.setAttribute('value', new Date().toISOString().slice(0,10));
 
-    // ========== AVARIAS (NOVA PÁGINA) ==========
+    // ========== AVARIAS ==========
     async function carregarAvarias() {
         try {
             const snapshot = await db.collection('avarias').orderBy('dataHora', 'desc').limit(30).get();
@@ -1625,7 +1661,6 @@
                 </div>
             `;
         }
-        // Eventos dos botões +/- da avaria
         document.querySelectorAll('.avaria-minus').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const sabor = btn.dataset.sabor;
@@ -1671,13 +1706,11 @@
                     cancelButtonText: 'Cancelar'
                 });
                 if (!confirmado.isConfirmed) return;
-                // Subtrair do estoque
                 const novoEstoque = { ...estoqueObj };
                 novoEstoque[sabor] -= quantidade;
                 await db.collection('config').doc('cardapio').update({ estoque: novoEstoque });
                 estoqueObj = novoEstoque;
                 renderizarEstoqueUI();
-                // Registrar avaria no Firestore
                 const agora = new Date();
                 const avariaReg = {
                     sabor: sabor,
@@ -1688,14 +1721,11 @@
                     estoqueApos: novoEstoque[sabor]
                 };
                 await db.collection('avarias').add(avariaReg);
-                // Registrar movimentação de saída no caixa (opcional, para controle financeiro simbólico)
                 await registrarMovimentacao('saida', 0, `Avaria: ${quantidade}x ${sabor}${observacao ? ` - ${observacao}` : ''}`);
                 addNotification('avaria', `Registrou avaria de ${quantidade} unidade(s) de ${sabor}`);
                 showToast(`Avaria de ${quantidade} ${sabor} registrada!`);
-                // Limpar campos
                 qtdInput.value = '0';
                 document.getElementById(`avariaObs_${saborId}`).value = '';
-                // Recarregar avarias e estoque
                 await carregarAvarias();
                 verificarEstoqueBaixo();
             });
@@ -1967,6 +1997,17 @@
             userName = userName.split('.')[0];
             userName = userName.charAt(0).toUpperCase() + userName.slice(1).toLowerCase();
             document.getElementById('userNameDisplay').innerText = userName;
+            
+            // Migração inicial para adicionar campo 'lida' em notificações antigas (se necessário)
+            const notifSnapshot = await db.collection('notificacoes').get();
+            const batchFix = db.batch();
+            notifSnapshot.forEach(doc => {
+                if (doc.data().lida === undefined) {
+                    batchFix.update(doc.ref, { lida: false });
+                }
+            });
+            await batchFix.commit();
+            
             showLoading(true);
             try {
                 await Promise.all([ carregarCaixa(), carregarVendasPresenciais(), carregarCardapio(), carregarIngredientes(), carregarIngredientesEstoque(), carregarDevedores(), carregarDespesas(), carregarProjecaoEstoque(), carregarMetaSemanal(), carregarFluxoEntradas('semana'), carregarAvarias() ]);
@@ -1978,11 +2019,6 @@
     });
     loginBtn.onclick = () => { const email = document.getElementById('loginEmail').value, pwd = document.getElementById('loginPassword').value; auth.signInWithEmailAndPassword(email, pwd).catch(() => document.getElementById('loginError').innerText = 'E-mail ou senha inválidos.'); };
     if (logoutBtn) logoutBtn.onclick = () => auth.signOut();
-
-    // ========== MODAL NOTIFICAÇÕES ==========
-    document.getElementById('bellIcon')?.addEventListener('click', async () => { await carregarNotificacoes(); document.getElementById('notificationsModal').style.display = 'flex'; });
-    document.getElementById('closeNotificationsBtn')?.addEventListener('click', () => document.getElementById('notificationsModal').style.display = 'none');
-    window.onclick = function(event) { const modal = document.getElementById('notificationsModal'); if (event.target === modal) modal.style.display = 'none'; };
 </script>
 </body>
 </html>
